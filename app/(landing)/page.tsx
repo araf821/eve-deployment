@@ -1,7 +1,8 @@
 import { getCurrentUser } from "@/server/lib/auth";
 import { Button } from "@/components/ui/button";
 import { redirect } from "next/navigation";
-import { Heart, Rocket } from "lucide-react"
+import { Sparkle } from "lucide-react"
+import { TypingAnimation } from "@/components/ui/typing-animation";
 
 export default async function Home() {
   const user = await getCurrentUser();
@@ -12,37 +13,37 @@ export default async function Home() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-purple-100 to-purple-300 flex flex-col items-center justify-center p-6">
+    <div className="min-h-screen bg-gradient-to-tl from-background to-purple-300 flex flex-col items-center justify-center p-6">
       <div className="flex flex-col items-center space-y-8 max-w-sm w-full">
-        {/* App Icon */}
         <div className="relative">
-          <div className="w-16 h-16 bg-blue-500 rounded-full flex items-center justify-center">
-            <Heart className="w-8 h-8 text-red-500 fill-current" />
+          <div className="w-16 h-16 flex items-center justify-center">
+            <Sparkle className="w-8 h-8 text-black animate-spin" />
           </div>
         </div>
-
-        {/* Rocket Icon */}
-        <div className="text-gray-700">
-          <Rocket className="w-12 h-12" />
-        </div>
-
-        {/* Main Heading */}
+        {/* Main Heading with Typing Animation */}
         <div className="text-center space-y-2">
-          <h1 className="text-3xl font-bold text-black">Stay Safe. Feel Seen.</h1>
-          <p className="text-gray-700 italic text-lg">You don't have to be alone.</p>
+          <TypingAnimation />
+          <p className="text-black text-lg">with Eve.</p>
         </div>
-
         {/* Spacer */}
-        <div className="flex-1 min-h-[100px]"></div>
-
+        <div className="flex-1 min-h-[14vh]"></div>
         {/* Discord Login Button */}
         <Button
-          className="w-full bg-transparent border-none text-gray-700 hover:bg-white/20 text-base font-normal"
+          className="w-full bg-transparent border-none text-gray-700 bg-white/70 hover:bg-white/20 text-base font-normal"
           variant="ghost"
         >
-          Log in with Discord
+          <img src="google.png" className="w-5 h-5" />
+          Continue with Google
+        </Button>
+        <Button
+          className="w-full bg-transparent border-none text-gray-700 bg-white/70 hover:bg-white/20 text-base font-normal"
+          variant="ghost"
+        >
+          <img src="discord.png" className="w-7 h-7" />
+          Continue with Discord
         </Button>
       </div>
+      <img src="logo.svg" className="absolute bottom-0 py-10" />
     </div>
   );
 }

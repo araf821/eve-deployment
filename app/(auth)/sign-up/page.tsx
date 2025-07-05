@@ -9,9 +9,9 @@ import SocialLogin from "@/components/auth/SocialLogin";
 
 export default function SignUpPage() {
   return (
-    <Card>
+    <Card className="bg-transparent border-transparent">
       <CardHeader className="text-center">
-        <CardTitle className="text-2xl">Join NiteLite</CardTitle>
+        <CardTitle className="text-2xl">Join eve</CardTitle>
         <CardDescription>
           Create your account and start building your campus safety community
         </CardDescription>

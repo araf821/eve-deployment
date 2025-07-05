@@ -9,9 +9,9 @@ import SocialLogin from "@/components/auth/SocialLogin";
 
 export default function SignInPage() {
   return (
-    <Card>
+    <Card className="bg-transparent border-transparent">
       <CardHeader className="text-center">
-        <CardTitle className="text-2xl">Welcome back to NiteLite</CardTitle>
+        <CardTitle className="text-2xl">Welcome back to eve</CardTitle>
         <CardDescription>
           Sign in to your account to continue your safe campus journey
         </CardDescription>

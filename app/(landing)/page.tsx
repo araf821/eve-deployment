@@ -1,8 +1,9 @@
 import { getCurrentUser } from "@/server/lib/auth";
 import { Button } from "@/components/ui/button";
 import { redirect } from "next/navigation";
-import { Sparkle } from "lucide-react"
+import { Sparkle } from "lucide-react";
 import { TypingAnimation } from "@/components/ui/typing-animation";
+import Link from "next/link";
 
 export default async function Home() {
   const user = await getCurrentUser();
@@ -26,22 +27,16 @@ export default async function Home() {
           <p className="text-black text-lg">with Eve.</p>
         </div>
         {/* Spacer */}
-        <div className="flex-1 min-h-[14vh]"></div>
+        <div className="flex-1 min-h-[3vh]"></div>
         {/* Discord Login Button */}
+        <Link href="/sign-in">
         <Button
-          className="w-full bg-transparent border-none text-gray-700 bg-white/70 hover:bg-white/20 text-base font-normal"
+          className="w-40 bg-transparent border-none text-gray-700 bg-white/70 hover:bg-white/20 text-base font-normal"
           variant="ghost"
         >
-          <img src="google.png" className="w-5 h-5" />
-          Continue with Google
+          Get Started
         </Button>
-        <Button
-          className="w-full bg-transparent border-none text-gray-700 bg-white/70 hover:bg-white/20 text-base font-normal"
-          variant="ghost"
-        >
-          <img src="discord.png" className="w-7 h-7" />
-          Continue with Discord
-        </Button>
+        </Link>
       </div>
       <img src="logo.svg" className="absolute bottom-0 py-10" />
     </div>

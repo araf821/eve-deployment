@@ -35,7 +35,7 @@ NEXTAUTH_SECRET=your-secret-key-here
 GOOGLE_CLIENT_ID=your-google-client-id
 GOOGLE_CLIENT_SECRET=your-google-client-secret
 
-# Discord OAuth  
+# Discord OAuth
 DISCORD_CLIENT_ID=your-discord-client-id
 DISCORD_CLIENT_SECRET=your-discord-client-secret
 
@@ -46,6 +46,7 @@ DATABASE_URL=your-neon-database-url
 ### 2. Get OAuth Credentials
 
 #### Google OAuth Setup
+
 1. Go to [Google Cloud Console](https://console.cloud.google.com/)
 2. Create a new project or select existing one
 3. Enable Google+ API
@@ -54,6 +55,7 @@ DATABASE_URL=your-neon-database-url
 6. Copy Client ID and Client Secret
 
 #### Discord OAuth Setup
+
 1. Go to [Discord Developer Portal](https://discord.com/developers/applications)
 2. Create a new application
 3. Go to "OAuth2" section
@@ -63,11 +65,13 @@ DATABASE_URL=your-neon-database-url
 ### 3. Database Setup
 
 #### Neon DB Setup
+
 1. Sign up at [Neon](https://neon.tech/)
 2. Create a new database
 3. Copy the connection string to `DATABASE_URL`
 
 #### Run Database Migrations
+
 ```bash
 npm run db:push
 ```

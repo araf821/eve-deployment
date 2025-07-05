@@ -1,10 +1,12 @@
 import { getCurrentUser } from "@/server/lib/auth";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { Zap, Smile, MapPin, Expand, Bell, AlertTriangle } from "lucide-react";
+import { Zap, Smile, Expand, Bell, AlertTriangle } from "lucide-react";
 import { redirect } from "next/navigation";
 import { AlertModalWrapper } from "@/components/alert-wrapper";
 import { SuccessMessage } from "@/components/success-msg";
+import MiniMapComponent from "@/components/MiniMapComponent";
+import CurrentLocation from "@/components/CurrentLocation";
 interface DashboardProps {
   searchParams: { success?: string };
 }
@@ -16,7 +18,8 @@ export default async function Dashboard({ searchParams }: DashboardProps) {
     redirect("/sign-in");
   }
 
-  const showSuccess = searchParams.success === "true";
+  const resolvedSearchParams = await searchParams;
+  const showSuccess = resolvedSearchParams.success === "true";
 
   return (
     <>
@@ -37,28 +40,11 @@ export default async function Dashboard({ searchParams }: DashboardProps) {
       {showSuccess && <SuccessMessage />}
 
       {/* Location Card */}
-      <div className="mb-3 text-xs text-gray-800 italic">
-        Your Location: Mohel Centre, 31 St George St, Toronto
-      </div>
+      <CurrentLocation />
 
-      {/* Map Placeholder */}
-      <div className="relative mb-4 h-48 overflow-hidden rounded-lg bg-gray-100 shadow-md">
-        <img
-          src="/placeholder.svg?height=200&width=300"
-          alt="Campus map showing current location"
-          className="h-full w-full object-cover"
-        />
-        {/* Location pins overlay */}
-        <div className="absolute top-4 left-4">
-          <div className="flex size-6 items-center justify-center rounded-full bg-red-500">
-            <MapPin className="h-4 w-4 text-white" />
-          </div>
-        </div>
-        <div className="absolute right-4 bottom-4">
-          <div className="flex size-6 items-center justify-center rounded-full bg-red-500">
-            <MapPin className="h-4 w-4 text-white" />
-          </div>
-        </div>
+      {/* Mini Map */}
+      <div className="relative mb-4 h-48 overflow-hidden rounded-lg shadow-md">
+        <MiniMapComponent className="h-full w-full rounded-lg" />
       </div>
 
       <div className="flex justify-between">

@@ -1,6 +1,6 @@
 import { Phone, MapPin, Users, AlertTriangle } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Logo, LogoCompact } from "@/components/logo";
+import { PageHeader } from "@/components/layout/PageHeader";
 
 export default function EmergencyPage() {
   return (
@@ -12,19 +12,10 @@ export default function EmergencyPage() {
       </div>
 
       {/* Header */}
-      <div className="space-y-3 md:space-y-4">
-        <LogoCompact className="md:hidden" />
-        <Logo className="hidden md:block" />
-        <div className="space-y-1 md:space-y-2">
-          <h1 className="font-heading text-xl font-bold text-foreground md:text-2xl">
-            Emergency Help
-          </h1>
-          <p className="text-sm text-muted-foreground md:text-base">
-            Quick access to emergency features and contacts
-          </p>
-        </div>
-      </div>
-
+      <PageHeader
+        title="Emergency Help"
+        subtitle="Quick access to emergency features and contacts"
+      />
       {/* Emergency SOS Button */}
       <div className="space-y-3 md:space-y-4">
         <h2 className="font-heading text-base font-semibold text-foreground md:text-lg">
@@ -35,7 +26,7 @@ export default function EmergencyPage() {
         </p>
         <Button
           size="lg"
-          className="text-destructive-foreground h-14 w-full bg-destructive text-base font-semibold hover:bg-destructive/90 md:h-16 md:text-lg"
+          className="text-shadow h-14 w-full bg-destructive text-base font-semibold hover:bg-destructive md:h-16 md:text-lg"
         >
           <AlertTriangle className="mr-2 h-5 w-5 md:mr-3 md:h-6 md:w-6" />
           Send Emergency Alert

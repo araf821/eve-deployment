@@ -4,6 +4,7 @@ import {
   timestamp,
   primaryKey,
   integer,
+  real,
 } from "drizzle-orm/pg-core";
 import type { AdapterAccountType } from "next-auth/adapters";
 
@@ -15,6 +16,9 @@ export const usersTable = pgTable("user", {
   email: text("email").unique(),
   emailVerified: timestamp("emailVerified", { mode: "date" }),
   image: text("image"),
+  lat: real("lat"),
+  lng: real("lng"),
+  locationUpdated: timestamp("locationUpdated", { mode: "date" }),
 });
 
 export const accountsTable = pgTable(

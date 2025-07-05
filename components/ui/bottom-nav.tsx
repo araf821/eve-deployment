@@ -33,9 +33,9 @@ export function BottomNav() {
   const pathname = usePathname();
 
   return (
-    <nav className="fixed right-0 bottom-0 left-0 z-40 max-w-screen md:left-1/2 md:max-w-md md:-translate-x-1/2">
-      <div className="bg-card shadow-[0_-4px_4px] shadow-black/5 max-md:rounded-t-lg md:mx-4 md:mb-4 md:rounded-xl md:border md:shadow-lg">
-        <div className="flex items-center justify-around px-2 py-2 md:px-4">
+    <nav className="fixed right-0 bottom-0 left-0 z-40 w-full max-w-screen sm:left-1/2 sm:max-w-md sm:-translate-x-1/2">
+      <div className="bg-card shadow-[0_-4px_4px] shadow-black/5 max-sm:rounded-t-lg sm:mb-4 sm:rounded-xl sm:border sm:shadow-lg">
+        <div className="flex items-center justify-around px-2 py-2 sm:px-4">
           <Image
             src="navlogo.svg"
             className="px-4"
@@ -62,7 +62,10 @@ export function BottomNav() {
                 )}
               >
                 <item.icon
-                  className={cn("mb-1 h-5 w-5", isActive ? "h-6 w-6" : "")}
+                  className={cn(
+                    "mb-1 size-5 transition-transform",
+                    isActive ? "scale-110" : ""
+                  )}
                 />
                 <span
                   className={cn(

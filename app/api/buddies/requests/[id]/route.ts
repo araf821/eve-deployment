@@ -1,11 +1,7 @@
 import { NextRequest } from "next/server";
 import { getCurrentUser } from "@/server/lib/auth";
 import { db } from "@/server/db";
-import {
-  buddyRequestsTable,
-  buddyConnectionsTable,
-  usersTable,
-} from "@/server/db/schema";
+import { buddyRequestsTable, buddyConnectionsTable } from "@/server/db/schema";
 import { buddyRequestActionSchema } from "@/lib/validations/buddy";
 import { eq, and } from "drizzle-orm";
 
@@ -52,38 +48,50 @@ export async function PATCH(
     }
 
     if (action === "accept") {
-      // Create buddy connections (bidirectional)
-      await db.transaction(async tx => {
+      try {
+        // Create buddy connections (bidirectional)
+        // Note: Since neon-http doesn't support transactions, we handle this sequentially
+
         // Create connection from user to buddy
-        await tx.insert(buddyConnectionsTable).values({
+        await db.insert(buddyConnectionsTable).values({
           userId: user.id,
           buddyId: buddyRequest.senderId,
           nickname: buddyRequest.nickname,
-          phoneNumber: buddyRequest.phoneNumber || null,
+          phoneNumber: buddyRequest.phoneNumber,
         });
 
         // Create reverse connection from buddy to user
-        const [senderUser] = await tx
-          .select({ name: usersTable.name })
-          .from(usersTable)
-          .where(eq(usersTable.id, buddyRequest.senderId));
+        // Use the current user's name, or fallback to email or "Buddy"
+        const reverseNickname =
+          user.name || (user.email ? user.email.split("@")[0] : "Buddy");
 
-        await tx.insert(buddyConnectionsTable).values({
+        await db.insert(buddyConnectionsTable).values({
           userId: buddyRequest.senderId,
           buddyId: user.id,
-          nickname: user.name || senderUser?.name || "Buddy",
-          phoneNumber: buddyRequest.phoneNumber || null,
+          nickname: reverseNickname,
+          phoneNumber: buddyRequest.phoneNumber,
         });
 
-        // Delete the request
-        await tx
+        // Delete the request after successful connections
+        await db
           .delete(buddyRequestsTable)
           .where(eq(buddyRequestsTable.id, id));
-      });
 
-      return Response.json({
-        message: "Buddy request accepted successfully",
-      });
+        return Response.json({
+          message: "Buddy request accepted successfully",
+        });
+      } catch (dbError) {
+        console.error(
+          "Database error during buddy request acceptance:",
+          dbError
+        );
+        // If we get here, some operations may have succeeded and others failed
+        // In a production app, you'd want more sophisticated cleanup logic
+        return Response.json(
+          { error: "Failed to create buddy connection" },
+          { status: 500 }
+        );
+      }
     } else {
       // Reject the request - just delete it
       await db.delete(buddyRequestsTable).where(eq(buddyRequestsTable.id, id));

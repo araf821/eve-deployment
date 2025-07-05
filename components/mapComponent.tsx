@@ -244,7 +244,9 @@ export default function MapComponent({ userId }: { userId: string }) {
             <div className="w-8 h-8 bg-pink-500 rounded-full flex items-center justify-center">
               <MessageCircleHeart className="w-4 h-4 text-white" />
             </div>
-            <span className="text-xs text-gray-600">Add Alert</span>
+            <span className="text-xs text-gray-600">
+              Add Alert
+              </span>
           </button>
           <button className="flex flex-col items-center space-y-1 p-3 bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow">
             <div className="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center">

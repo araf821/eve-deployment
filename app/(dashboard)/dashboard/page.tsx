@@ -3,13 +3,20 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button"
 import { Zap, Smile, MapPin, Expand, Bell, Home, MessageCircle, Phone, Settings, AlertTriangle } from "lucide-react"
 import { redirect } from "next/navigation";
+import { AlertModalWrapper } from "@/components/alert-wrapper";
+import { SuccessMessage } from "@/components/success-msg";
+interface DashboardProps {
+  searchParams: { success?: string }
+}
 
-export default async function DashboardPage() {
+export default async function Dashboard({ searchParams }: DashboardProps) {
   const user = await getCurrentUser();
 
   if (!user) {
     redirect("/sign-in");
   }
+
+  const showSuccess = searchParams.success === "true"
 
   return (
     <>
@@ -27,6 +34,9 @@ export default async function DashboardPage() {
             <p className="text-black italic">Happy Saturday.</p>
           </div>
         </div>
+
+        {showSuccess && <SuccessMessage />}
+        
       {/* Location Card */}
             <div className="text-xs text-gray-800 mb-3 italic">Your Location: Mohel Centre, 31 St George St, Toronto</div>
 
@@ -85,11 +95,14 @@ export default async function DashboardPage() {
         </div>
 
         {/* Report Incident Button */}
-        <Button className="w-full h-14 bg-red-500 hover:bg-red-600 text-white font-medium text-lg rounded-xl">
-          <AlertTriangle className="w-5 h-5 mr-2" />
-          Report Incident
-          <div className="text-xs opacity-80 ml-2">to Safety Centre</div>
-        </Button>
+        <AlertModalWrapper>
+          <Button 
+          className="w-full h-14 bg-red-500 hover:bg-red-600 text-white font-medium text-lg rounded-xl">
+            <AlertTriangle className="w-4 h-4 mr-2" />
+            Report Incident
+            <div className="text-xs opacity-80 ml-2">to Safety Centre</div>
+          </Button>
+        </AlertModalWrapper>
     </>
   );
 }

@@ -2,7 +2,7 @@ import { getCurrentUser } from "@/server/lib/auth";
 import { Button } from "@/components/ui/button";
 import { redirect } from "next/navigation";
 import { Sparkle } from "lucide-react";
-import { TypingAnimation } from "@/components/ui/typing-animation";
+import { TypingAnimation } from "@/components/typing-animation";
 import Link from "next/link";
 
 export default async function Home() {

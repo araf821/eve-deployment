@@ -32,7 +32,7 @@ export function BottomNav() {
   const pathname = usePathname();
 
   return (
-    <nav className="fixed right-0 bottom-0 left-0 z-50 md:left-1/2 md:max-w-screen-md md:-translate-x-1/2">
+    <nav className="fixed right-0 bottom-0 left-0 z-40 md:left-1/2 md:max-w-screen-md md:-translate-x-1/2">
       <div className="bg-card shadow-[0_-4px_4px] shadow-black/5 max-md:rounded-t-lg md:mx-4 md:mb-4 md:rounded-xl md:border md:shadow-lg">
         <div className="flex items-center justify-around px-2 py-2 md:px-4">
           <img src="navlogo.svg" className="px-4"/>

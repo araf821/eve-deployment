@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Join NiteLite - Campus Safety Community",
+  title: "Join Eve - Campus Safety Community",
   description:
-    "Sign in or sign up to join the NiteLite community and start feeling safer on campus walks.",
+    "Sign in or sign up to join the Eve community and start feeling safer on campus walks.",
 };
 
 export default function AuthLayout({

@@ -6,6 +6,7 @@ import {
   integer,
   real,
 } from "drizzle-orm/pg-core";
+import { relations } from "drizzle-orm";
 import type { AdapterAccountType } from "next-auth/adapters";
 
 export const usersTable = pgTable("user", {
@@ -63,6 +64,89 @@ export const verificationTokensTable = pgTable(
   verificationToken => ({
     compositePk: primaryKey({
       columns: [verificationToken.identifier, verificationToken.token],
+    }),
+  })
+);
+
+// Buddy requests table
+export const buddyRequestsTable = pgTable("buddy_request", {
+  id: text("id")
+    .primaryKey()
+    .$defaultFn(() => crypto.randomUUID()),
+  senderId: text("sender_id")
+    .notNull()
+    .references(() => usersTable.id, { onDelete: "cascade" }),
+  receiverId: text("receiver_id")
+    .notNull()
+    .references(() => usersTable.id, { onDelete: "cascade" }),
+  nickname: text("nickname").notNull(),
+  phoneNumber: text("phone_number"),
+  status: text("status").default("pending").notNull(), // pending, accepted, rejected
+  createdAt: timestamp("created_at", { mode: "date" }).defaultNow().notNull(),
+  updatedAt: timestamp("updated_at", { mode: "date" }).defaultNow().notNull(),
+});
+
+// Buddy connections table
+export const buddyConnectionsTable = pgTable("buddy_connection", {
+  id: text("id")
+    .primaryKey()
+    .$defaultFn(() => crypto.randomUUID()),
+  userId: text("user_id")
+    .notNull()
+    .references(() => usersTable.id, { onDelete: "cascade" }),
+  buddyId: text("buddy_id")
+    .notNull()
+    .references(() => usersTable.id, { onDelete: "cascade" }),
+  nickname: text("nickname").notNull(),
+  phoneNumber: text("phone_number"),
+  createdAt: timestamp("created_at", { mode: "date" }).defaultNow().notNull(),
+  updatedAt: timestamp("updated_at", { mode: "date" }).defaultNow().notNull(),
+});
+
+// Relations
+export const usersRelations = relations(usersTable, ({ many }) => ({
+  sentBuddyRequests: many(buddyRequestsTable, {
+    relationName: "sentRequests",
+  }),
+  receivedBuddyRequests: many(buddyRequestsTable, {
+    relationName: "receivedRequests",
+  }),
+  buddyConnections: many(buddyConnectionsTable, {
+    relationName: "userBuddies",
+  }),
+  buddyOf: many(buddyConnectionsTable, {
+    relationName: "buddyOfUser",
+  }),
+}));
+
+export const buddyRequestsRelations = relations(
+  buddyRequestsTable,
+  ({ one }) => ({
+    sender: one(usersTable, {
+      fields: [buddyRequestsTable.senderId],
+      references: [usersTable.id],
+      relationName: "sentRequests",
+    }),
+    receiver: one(usersTable, {
+      fields: [buddyRequestsTable.receiverId],
+      references: [usersTable.id],
+      relationName: "receivedRequests",
+    }),
+  })
+);
+
+export const buddyConnectionsRelations = relations(
+  buddyConnectionsTable,
+  ({ one }) => ({
+    user: one(usersTable, {
+      fields: [buddyConnectionsTable.userId],
+      references: [usersTable.id],
+      relationName: "userBuddies",
+    }),
+    buddy: one(usersTable, {
+      fields: [buddyConnectionsTable.buddyId],
+      references: [usersTable.id],
+      relationName: "buddyOfUser",
     }),
   })
 );

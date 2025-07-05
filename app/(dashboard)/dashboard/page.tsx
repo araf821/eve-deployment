@@ -1,7 +1,7 @@
 import { getCurrentUser } from "@/server/lib/auth";
 import Link from "next/link";
-import { Button } from "@/components/ui/button"
-import { Zap, Smile, MapPin, Expand, Bell, Home, MessageCircle, Phone, Settings, AlertTriangle } from "lucide-react"
+import { Button } from "@/components/ui/button";
+import { Zap, Smile, MapPin, Expand, Bell, AlertTriangle } from "lucide-react";
 import { redirect } from "next/navigation";
 import { AlertModalWrapper } from "@/components/alert-wrapper";
 import { SuccessMessage } from "@/components/success-msg";
@@ -20,89 +20,100 @@ export default async function Dashboard({ searchParams }: DashboardProps) {
 
   return (
     <>
-    {/* Header */}
-        <div className="pt-8 pb-4">
-          <div className="text-2xl font-bold text-black mb-6">
-            <img src="logo.svg"/>
-          </div>
-          <div className="space-y-1">
-            <h1 className="text-2xl font-bold font-serif text-black">
-              Welcome, <span className="text-purple-600">
-                {user.name}
-                </span>.
-            </h1>
-            <p className="text-black italic">Happy Saturday.</p>
-          </div>
+      {/* Header */}
+      <div className="pt-8 pb-4">
+        <div className="mb-6 text-2xl font-bold text-black">
+          <img src="logo.svg" />
         </div>
+        <div className="space-y-1">
+          <h1 className="font-serif text-2xl font-bold text-black">
+            Welcome,{" "}
+            <span className="text-purple-600">{user.name?.split(" ")[0]}</span>.
+          </h1>
+          <p className="text-black italic">Happy Saturday.</p>
+        </div>
+      </div>
 
-        {showSuccess && <SuccessMessage />}
-        
+      {showSuccess && <SuccessMessage />}
+
       {/* Location Card */}
-            <div className="text-xs text-gray-800 mb-3 italic">Your Location: Mohel Centre, 31 St George St, Toronto</div>
+      <div className="mb-3 text-xs text-gray-800 italic">
+        Your Location: Mohel Centre, 31 St George St, Toronto
+      </div>
 
-            {/* Map Placeholder */}
-            <div className="relative h-48 bg-gray-100 rounded-lg overflow-hidden mb-4 shadow-md">
-              <img
-                src="/placeholder.svg?height=200&width=300"
-                alt="Campus map showing current location"
-                className="w-full h-full object-cover"
-              />
-              {/* Location pins overlay */}
-              <div className="absolute top-4 left-4">
-                <div className="w-6 h-6 bg-red-500 rounded-full flex items-center justify-center">
-                  <MapPin className="w-4 h-4 text-white" />
-                </div>
-              </div>
-              <div className="absolute bottom-4 right-4">
-                <div className="w-6 h-6 bg-red-500 rounded-full flex items-center justify-center">
-                  <MapPin className="w-4 h-4 text-white" />
-                </div>
-              </div>
-            </div>
-
-           <div className="flex justify-between">
-  <Link href="/map">
-    <Button variant="ghost" size="sm" 
-    className="text-gray-600 px-8 bg-white/90 backdrop-blur-sm border-gray-200 hover:bg-white shadow-lg">
-      <Expand className="w-4 h-4 mr-2" />
-      Expand
-    </Button>
-  </Link>
-  <Button variant="ghost" size="sm" 
-  className="text-gray-600 px-8 bg-white/90 backdrop-blur-sm border-gray-200 hover:bg-white shadow-lg">
-    <Bell className="w-4 h-4 mr-2" />
-    Recent Alerts
-  </Button>
-</div>
-
-        {/* Action Buttons */}
-        <div className="grid grid-cols-2 gap-4">
-          <Button
-            variant="outline"
-            className="h-40 bg-white/90 backdrop-blur-sm border-gray-200 hover:bg-white flex flex-col items-center justify-center space-y-2 shadow-lg"
-          >
-            <Zap className="text-black" style={{ width: "8vh", height: "8vh" }} />
-            <span className="text-sm font-medium text-black">Call Eve</span>
-          </Button>
-
-          <Button
-            variant="outline"
-            className="h-40 bg-white/90 backdrop-blur-sm border-gray-200 hover:bg-white flex flex-col items-center justify-center space-y-2 shadow-lg"
-          >
-            <Smile className="text-black" style={{ width: "8vh", height: "8vh" }} />
-            <span className="text-sm font-medium text-black">Speed Dial Jerry</span>
-          </Button>
+      {/* Map Placeholder */}
+      <div className="relative mb-4 h-48 overflow-hidden rounded-lg bg-gray-100 shadow-md">
+        <img
+          src="/placeholder.svg?height=200&width=300"
+          alt="Campus map showing current location"
+          className="h-full w-full object-cover"
+        />
+        {/* Location pins overlay */}
+        <div className="absolute top-4 left-4">
+          <div className="flex h-6 w-6 items-center justify-center rounded-full bg-red-500">
+            <MapPin className="h-4 w-4 text-white" />
+          </div>
         </div>
+        <div className="absolute right-4 bottom-4">
+          <div className="flex h-6 w-6 items-center justify-center rounded-full bg-red-500">
+            <MapPin className="h-4 w-4 text-white" />
+          </div>
+        </div>
+      </div>
 
-        {/* Report Incident Button */}
-        <AlertModalWrapper>
-          <Button 
-          className="w-full h-14 bg-red-500 hover:bg-red-600 text-white font-medium text-lg rounded-xl">
-            <AlertTriangle className="w-4 h-4 mr-2" />
-            Report Incident
-            <div className="text-xs opacity-80 ml-2">to Safety Centre</div>
+      <div className="flex justify-between">
+        <Link href="/map">
+          <Button
+            variant="ghost"
+            size="sm"
+            className="border-gray-200 bg-white/90 px-8 text-gray-600 shadow-lg backdrop-blur-sm hover:bg-white"
+          >
+            <Expand className="mr-2 h-4 w-4" />
+            Expand
           </Button>
-        </AlertModalWrapper>
+        </Link>
+        <Button
+          variant="ghost"
+          size="sm"
+          className="border-gray-200 bg-white/90 px-8 text-gray-600 shadow-lg backdrop-blur-sm hover:bg-white"
+        >
+          <Bell className="mr-2 h-4 w-4" />
+          Recent Alerts
+        </Button>
+      </div>
+
+      {/* Action Buttons */}
+      <div className="grid grid-cols-2 gap-4">
+        <Button
+          variant="outline"
+          className="flex h-40 flex-col items-center justify-center space-y-2 border-gray-200 bg-white/90 shadow-lg backdrop-blur-sm hover:bg-white"
+        >
+          <Zap className="text-black" style={{ width: "8vh", height: "8vh" }} />
+          <span className="text-sm font-medium text-black">Call Eve</span>
+        </Button>
+
+        <Button
+          variant="outline"
+          className="flex h-40 flex-col items-center justify-center space-y-2 border-gray-200 bg-white/90 shadow-lg backdrop-blur-sm hover:bg-white"
+        >
+          <Smile
+            className="text-black"
+            style={{ width: "8vh", height: "8vh" }}
+          />
+          <span className="text-sm font-medium text-black">
+            Speed Dial Jerry
+          </span>
+        </Button>
+      </div>
+
+      {/* Report Incident Button */}
+      <AlertModalWrapper>
+      <Button className="h-14 w-full rounded-xl bg-red-500 text-lg font-medium text-white hover:bg-red-600">
+        <AlertTriangle className="mr-2 h-5 w-5" />
+        Report Incident
+        <div className="ml-2 text-xs opacity-80">to Safety Centre</div>
+      </Button>
+      </AlertModalWrapper>
     </>
   );
 }

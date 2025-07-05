@@ -6,6 +6,8 @@ import { db } from "@/server/db";
 import { usersTable } from "@/server/db/schema";
 import { eq } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
+import { signOut } from "next-auth/react";
+import SignOutButton from "@/components/ui/sign-out-button";
 
 // Server actions for updating user data
 async function updateUserName(formData: FormData) {
@@ -213,12 +215,7 @@ export default async function SettingsPage() {
 
       {/* Sign Out Button */}
       <div className="mt-8">
-        <Button 
-          variant="outline"
-          className="w-full h-12 bg-white/90 backdrop-blur-sm border-red-200 text-red-600 hover:bg-red-50 hover:border-red-300 font-medium rounded-lg"
-        >
-          Sign Out
-        </Button>
+        <SignOutButton />
       </div>
     </>
   );

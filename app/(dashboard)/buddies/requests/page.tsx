@@ -19,7 +19,7 @@ export default async function BuddyRequestsPage() {
       <header className="mt-12 mb-8">
         <Image
           src="/logo.svg"
-          alt="NiteLite Logo"
+          alt="Eve Logo"
           width={64}
           height={64}
           priority
@@ -34,7 +34,7 @@ export default async function BuddyRequestsPage() {
           </Link>
           <PageHeader
             title="Buddy Requests"
-            subtitle="Manage your incoming buddy requests"
+            subtitle="Manage your incoming and outgoing buddy requests"
           />
         </div>
         <div className="mt-6 h-px bg-border"></div>

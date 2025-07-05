@@ -14,9 +14,9 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "NextAuth with Google & Discord",
+  title: "NiteLite - Your Personal Campus Beacon",
   description:
-    "Authentication demo with NextAuth, Google, Discord, and Neon DB",
+    "A friendly digital companion that acts as a personal light in the dark, ensuring every student on campus feels connected and safe during any walk, day or night.",
 };
 
 export default async function RootLayout({

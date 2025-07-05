@@ -11,7 +11,7 @@ export async function GET() {
     }
 
     // Get all pending buddy requests received by the user
-    const requests = await db
+    const receivedRequests = await db
       .select({
         id: buddyRequestsTable.id,
         nickname: buddyRequestsTable.nickname,
@@ -30,7 +30,30 @@ export async function GET() {
       .where(eq(buddyRequestsTable.receiverId, user.id))
       .orderBy(buddyRequestsTable.createdAt);
 
-    return Response.json({ requests });
+    // Get all pending buddy requests sent by the user
+    const sentRequests = await db
+      .select({
+        id: buddyRequestsTable.id,
+        nickname: buddyRequestsTable.nickname,
+        phoneNumber: buddyRequestsTable.phoneNumber,
+        status: buddyRequestsTable.status,
+        createdAt: buddyRequestsTable.createdAt,
+        receiver: {
+          id: usersTable.id,
+          name: usersTable.name,
+          email: usersTable.email,
+          image: usersTable.image,
+        },
+      })
+      .from(buddyRequestsTable)
+      .innerJoin(usersTable, eq(buddyRequestsTable.receiverId, usersTable.id))
+      .where(eq(buddyRequestsTable.senderId, user.id))
+      .orderBy(buddyRequestsTable.createdAt);
+
+    return Response.json({
+      receivedRequests,
+      sentRequests,
+    });
   } catch (error) {
     console.error("Get buddy requests error:", error);
     return Response.json({ error: "Internal server error" }, { status: 500 });

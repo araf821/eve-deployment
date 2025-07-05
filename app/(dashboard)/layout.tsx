@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button"
 import { Zap, Smile, MapPin, Expand, Bell, Home, MessageCircle, Phone, Settings, AlertTriangle } from "lucide-react"
 
 export const metadata: Metadata = {
-  title: "NiteLite Dashboard",
+  title: "Eve Dashboard",
   description:
     "Manage your buddies, start walks, and stay connected with your campus safety community.",
 };

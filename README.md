@@ -1,10 +1,10 @@
-# NiteLite - Your Personal Campus Beacon
+# Eve - Your Personal Campus Beacon
 
 A friendly digital companion that acts as a personal light in the dark, ensuring every student on campus feels connected and safe during any walk, day or night.
 
-## 🌟 About NiteLite
+## 🌟 About Eve
 
-NiteLite transforms campus safety through community connection rather than fear. Built as a Progressive Web App, it provides three core safety features that work together to create a comprehensive campus safety network.
+Eve transforms campus safety through community connection rather than fear. Built as a Progressive Web App, it provides three core safety features that work together to create a comprehensive campus safety network.
 
 ### Core Features
 
@@ -119,7 +119,7 @@ bun install
 bun dev
 ```
 
-Visit `http://localhost:3000` to start using NiteLite!
+Visit `http://localhost:3000` to start using Eve!
 
 ## 📜 Available Scripts
 
@@ -141,7 +141,7 @@ bun db:push           # Push schema changes
 bun db:studio         # Open Drizzle Studio
 ```
 
-## 📱 How to Use NiteLite
+## 📱 How to Use Eve
 
 ### Getting Started
 1. **Sign Up**: Create account with Google or Discord
@@ -149,7 +149,7 @@ bun db:studio         # Open Drizzle Studio
 3. **Set Availability**: Toggle when you're available to be a buddy
 
 ### Starting a Guided Walk
-1. **Open NiteLite** and tap "Start Walk"
+1. **Open Eve** and tap "Start Walk"
 2. **Set Destination** by tapping the map or entering an address
 3. **Choose Buddy** from your available crew members
 4. **Start Walking** - your buddy will see your live location
@@ -220,7 +220,7 @@ web/
 
 ## 🌍 Campus Deployment
 
-NiteLite is designed to scale across university campuses:
+Eve is designed to scale across university campuses:
 
 - **Multi-tenant Architecture**: Supports multiple campuses
 - **Campus-specific Maps**: Customized for each campus layout
@@ -230,7 +230,7 @@ NiteLite is designed to scale across university campuses:
 
 ## 🤝 Contributing
 
-NiteLite is built with campus safety in mind. We welcome contributions that enhance student safety through technology and community connection.
+Eve is built with campus safety in mind. We welcome contributions that enhance student safety through technology and community connection.
 
 ## 📄 License
 

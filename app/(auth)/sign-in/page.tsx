@@ -11,7 +11,7 @@ export default function SignInPage() {
   return (
     <div className="bg-transparent border-transparent">
       <CardHeader className="text-center">
-        <CardTitle className="text-2xl">Welcome back to eve</CardTitle>
+        <CardTitle className="text-2xl">Welcome Back to Eve</CardTitle>
         <CardDescription>
           Sign in to your account to continue your safe campus journey
         </CardDescription>

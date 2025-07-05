@@ -63,24 +63,25 @@ export function EmptyState({ type, onRetry, error }: EmptyStateProps) {
         <h3 className="mb-2 font-heading text-xl font-semibold text-gray-900">
           No buddy requests yet
         </h3>
-        <p className="mb-6 text-sm leading-relaxed text-gray-600">
+        <p className="mb-6 text-sm leading-relaxed text-balance text-gray-600">
           When you send or receive buddy requests, they&apos;ll appear here.
-          <br />
-          Start building your safety network!
         </p>
-        <div className="flex flex-col gap-3 sm:flex-row sm:justify-center">
-          <Link href="/buddies/add">
-            <Button className="relative w-full bg-primary text-primary-foreground hover:bg-primary/90 sm:w-auto">
+        <div className="flex flex-col gap-3">
+          <Button
+            asChild
+            className="relative w-full bg-primary text-primary-foreground hover:bg-primary/90"
+          >
+            <Link href="/buddies/add">
               <Plus size={16} className="absolute left-3" />
               <span className="flex-1 text-center">Add a Buddy</span>
-            </Button>
-          </Link>
-          <Link href="/buddies">
-            <Button variant="outline" className="relative w-full sm:w-auto">
+            </Link>
+          </Button>
+          <Button asChild variant="outline" className="relative w-full">
+            <Link href="/buddies">
               <Users size={16} className="absolute left-3" />
               <span className="flex-1 text-center">View Buddies</span>
-            </Button>
-          </Link>
+            </Link>
+          </Button>
         </div>
       </div>
     </Card>

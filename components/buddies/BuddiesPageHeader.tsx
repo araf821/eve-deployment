@@ -41,7 +41,7 @@ export function BuddiesPageHeader() {
 
       <Link href="/buddies/requests">
         <Button variant="outline" className="relative h-12">
-          <Bell size={20} className="absolute left-3" />
+          <Bell size={20} />
           <span className="flex-1 text-center">Requests</span>
           {!loading && requestCount > 0 && (
             <span className="text-destructive-foreground absolute -top-2 -right-2 flex h-5 w-5 items-center justify-center rounded-full bg-destructive text-xs">

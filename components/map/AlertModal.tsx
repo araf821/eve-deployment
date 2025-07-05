@@ -104,7 +104,7 @@ export default function AlertModal({
         <DialogFooter className="pt-4">
           <Button
             variant="outline"
-            onClick={onClose}
+            onClick={() => onClose()}
             className="h-12 w-full rounded-xl border-gray-200 hover:bg-gray-50"
           >
             Close

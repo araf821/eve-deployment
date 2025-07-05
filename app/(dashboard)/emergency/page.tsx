@@ -28,7 +28,7 @@ export default function EmergencyPage() {
           size="lg"
           className="text-shadow h-14 w-full bg-destructive text-base font-semibold hover:bg-destructive md:h-16 md:text-lg"
         >
-          <AlertTriangle className="mr-2 h-5 w-5 md:mr-3 md:h-6 md:w-6" />
+          <AlertTriangle className="mr-2 size-5 md:mr-3 md:h-6 md:w-6" />
           Send Emergency Alert
         </Button>
       </div>

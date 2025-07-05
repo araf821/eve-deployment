@@ -44,7 +44,7 @@ export function BuddiesPageHeader() {
           <Bell size={20} />
           <span className="flex-1 text-center">Requests</span>
           {!loading && requestCount > 0 && (
-            <span className="text-destructive-foreground absolute -top-2 -right-2 flex h-5 w-5 items-center justify-center rounded-full bg-destructive text-xs">
+            <span className="text-destructive-foreground absolute -top-2 -right-2 flex size-5 items-center justify-center rounded-full bg-destructive text-xs">
               {requestCount > 9 ? "9+" : requestCount}
             </span>
           )}

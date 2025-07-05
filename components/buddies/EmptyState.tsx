@@ -32,7 +32,7 @@ export function EmptyState({ type, onRetry, error }: EmptyStateProps) {
       <Card className="border shadow-sm">
         <div className="p-8 text-center">
           <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-gray-100">
-            <div className="h-6 w-6 rounded-full bg-gray-500"></div>
+            <div className="size-6 rounded-full bg-gray-500"></div>
           </div>
           <h3 className="mb-2 font-heading text-lg font-semibold text-gray-900">
             Something went wrong

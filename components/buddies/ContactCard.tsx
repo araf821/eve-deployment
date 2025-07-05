@@ -67,7 +67,7 @@ export function ContactCard({
         <DialogTrigger asChild>
           <div className="flex cursor-pointer items-center justify-between rounded-xl bg-card p-6 shadow-sm backdrop-blur-sm transition-all hover:bg-card/90 hover:shadow-md">
             <div className="flex items-center gap-3">
-              <div className="flex h-10 w-10 items-center justify-center rounded-full bg-primary/10">
+              <div className="flex size-10 items-center justify-center rounded-full bg-primary/10">
                 <User size={20} className="text-primary" />
               </div>
               <div>

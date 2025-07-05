@@ -57,7 +57,7 @@ export default function MapSearch({ map, onLocationSelect }: MapSearchProps) {
 
   return (
     <div className="relative" ref={searchContainerRef}>
-      <Search className="absolute top-1/2 left-3 z-10 h-5 w-5 -translate-y-1/2 transform text-muted-foreground" />
+      <Search className="absolute top-1/2 left-3 z-10 size-5 -translate-y-1/2 transform text-muted-foreground" />
       <Input
         type="text"
         placeholder="Search for a location"
@@ -68,7 +68,7 @@ export default function MapSearch({ map, onLocationSelect }: MapSearchProps) {
       {(query || isSearchLoading) && (
         <button
           onClick={clearSearch}
-          className="absolute top-1/2 right-3 z-10 flex h-6 w-6 -translate-y-1/2 transform items-center justify-center rounded-full text-muted-foreground transition-colors hover:bg-gray-100 hover:text-foreground"
+          className="absolute top-1/2 right-3 z-10 flex size-6 -translate-y-1/2 transform items-center justify-center rounded-full text-muted-foreground transition-colors hover:bg-gray-100 hover:text-foreground"
         >
           {isSearchLoading ? (
             <div className="h-4 w-4 animate-spin rounded-full border-2 border-gray-300 border-t-primary" />

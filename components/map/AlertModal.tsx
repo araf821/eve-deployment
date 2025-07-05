@@ -49,8 +49,8 @@ export default function AlertModal({
           <div className="space-y-6 py-2">
             {/* Timestamp */}
             <div className="flex items-start space-x-4">
-              <div className="flex h-10 w-10 items-center justify-center rounded-full bg-blue-100">
-                <Clock className="h-5 w-5 text-blue-600" />
+              <div className="flex size-10 items-center justify-center rounded-full bg-blue-100">
+                <Clock className="size-5 text-blue-600" />
               </div>
               <div className="flex-1">
                 <h3 className="mb-1 text-sm font-semibold text-gray-900">
@@ -65,8 +65,8 @@ export default function AlertModal({
 
             {/* Location */}
             <div className="flex items-start space-x-4">
-              <div className="flex h-10 w-10 items-center justify-center rounded-full bg-red-100">
-                <MapPin className="h-5 w-5 text-red-600" />
+              <div className="flex size-10 items-center justify-center rounded-full bg-red-100">
+                <MapPin className="size-5 text-red-600" />
               </div>
               <div className="flex-1">
                 <h3 className="mb-1 text-sm font-semibold text-gray-900">
@@ -83,8 +83,8 @@ export default function AlertModal({
 
             {/* User */}
             <div className="flex items-start space-x-4">
-              <div className="flex h-10 w-10 items-center justify-center rounded-full bg-green-100">
-                <User className="h-5 w-5 text-green-600" />
+              <div className="flex size-10 items-center justify-center rounded-full bg-green-100">
+                <User className="size-5 text-green-600" />
               </div>
               <div className="flex-1">
                 <h3 className="mb-1 text-sm font-semibold text-gray-900">

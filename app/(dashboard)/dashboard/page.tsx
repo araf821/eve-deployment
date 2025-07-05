@@ -50,12 +50,12 @@ export default async function Dashboard({ searchParams }: DashboardProps) {
         />
         {/* Location pins overlay */}
         <div className="absolute top-4 left-4">
-          <div className="flex h-6 w-6 items-center justify-center rounded-full bg-red-500">
+          <div className="flex size-6 items-center justify-center rounded-full bg-red-500">
             <MapPin className="h-4 w-4 text-white" />
           </div>
         </div>
         <div className="absolute right-4 bottom-4">
-          <div className="flex h-6 w-6 items-center justify-center rounded-full bg-red-500">
+          <div className="flex size-6 items-center justify-center rounded-full bg-red-500">
             <MapPin className="h-4 w-4 text-white" />
           </div>
         </div>
@@ -109,7 +109,7 @@ export default async function Dashboard({ searchParams }: DashboardProps) {
       {/* Report Incident Button */}
       <AlertModalWrapper>
         <Button className="h-14 w-full rounded-xl bg-red-500 text-lg font-medium text-white hover:bg-red-600">
-          <AlertTriangle className="mr-2 h-5 w-5" />
+          <AlertTriangle className="mr-2 size-5" />
           Report Incident
           <div className="ml-2 text-xs opacity-80">to Safety Centre</div>
         </Button>

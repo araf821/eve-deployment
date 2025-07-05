@@ -23,8 +23,8 @@ export default function MapFab({
     <div className="absolute bottom-6 left-4 z-20">
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <button className="flex h-14 w-14 items-center justify-center rounded-full bg-gradient-to-r from-primary to-purple-600 shadow-lg transition-all duration-200 hover:scale-105 hover:shadow-xl focus:ring-2 focus:ring-primary/50 focus:ring-offset-2 focus:outline-none data-[state=open]:rotate-45 data-[state=open]:bg-gradient-to-r data-[state=open]:from-gray-600 data-[state=open]:to-gray-700">
-            <Plus className="h-6 w-6 text-white" />
+          <button className="flex size-12 items-center justify-center rounded-full bg-gradient-to-r from-primary to-purple-600 shadow-lg transition-all duration-200 hover:scale-105 hover:shadow-xl focus:ring-2 focus:ring-primary/50 focus:ring-offset-2 focus:outline-none data-[state=open]:rotate-45 data-[state=open]:bg-gradient-to-r data-[state=open]:from-gray-600 data-[state=open]:to-gray-700">
+            <Plus className="size-6 text-white" />
           </button>
         </DropdownMenuTrigger>
 
@@ -36,10 +36,10 @@ export default function MapFab({
         >
           <DropdownMenuItem
             onClick={onAddAlert}
-            className="flex cursor-pointer items-center space-x-3 border-b border-gray-100 px-4 py-4 text-left transition-colors hover:bg-gray-50 focus:bg-gray-50"
+            className="flex cursor-pointer items-center space-x-3 px-4 py-4 text-left transition-colors focus:bg-gray-50"
           >
-            <div className="flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-r from-pink-500 to-pink-600 shadow-sm">
-              <MessageCircleHeart className="h-5 w-5 text-white" />
+            <div className="flex size-10 items-center justify-center rounded-full bg-gradient-to-r from-pink-500 to-pink-600 shadow-sm">
+              <MessageCircleHeart className="size-5 text-white" />
             </div>
             <div>
               <span className="text-sm font-medium text-gray-900">
@@ -53,8 +53,8 @@ export default function MapFab({
             onClick={onFindBuddies}
             className="flex cursor-pointer items-center space-x-3 border-b border-gray-100 px-4 py-4 text-left transition-colors hover:bg-gray-50 focus:bg-gray-50"
           >
-            <div className="flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-r from-green-500 to-green-600 shadow-sm">
-              <Users className="h-5 w-5 text-white" />
+            <div className="flex size-10 items-center justify-center rounded-full bg-gradient-to-r from-green-500 to-green-600 shadow-sm">
+              <Users className="size-5 text-white" />
             </div>
             <div>
               <span className="text-sm font-medium text-gray-900">
@@ -70,8 +70,8 @@ export default function MapFab({
             onClick={onFindRoute}
             className="flex cursor-pointer items-center space-x-3 px-4 py-4 text-left transition-colors hover:bg-gray-50 focus:bg-gray-50"
           >
-            <div className="flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-r from-blue-500 to-blue-600 shadow-sm">
-              <Navigation className="h-5 w-5 text-white" />
+            <div className="flex size-10 items-center justify-center rounded-full bg-gradient-to-r from-blue-500 to-blue-600 shadow-sm">
+              <Navigation className="size-5 text-white" />
             </div>
             <div>
               <span className="text-sm font-medium text-gray-900">

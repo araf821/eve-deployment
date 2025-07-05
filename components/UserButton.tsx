@@ -21,7 +21,7 @@ export const UserButton = () => {
 
   if (status === "loading") {
     return (
-      <div className="h-10 w-10 animate-pulse rounded-full border-2 border-gray-200 bg-gray-100" />
+      <div className="size-10 animate-pulse rounded-full border-2 border-gray-200 bg-gray-100" />
     );
   }
 
@@ -30,7 +30,7 @@ export const UserButton = () => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <button className="relative h-10 w-10 overflow-hidden rounded-full border-2 border-gray-200 transition-colors hover:border-gray-300 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:outline-none">
+        <button className="relative size-10 overflow-hidden rounded-full border-2 border-gray-200 transition-colors hover:border-gray-300 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:outline-none">
           <Image
             src={user.image || "/default-avatar.png"}
             alt={user.name || "User avatar"}

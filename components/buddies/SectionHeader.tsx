@@ -12,7 +12,7 @@ export function SectionHeader({ type, count }: SectionHeaderProps) {
 
   return (
     <div className="mb-4 flex items-center gap-3">
-      <div className="flex h-10 w-10 items-center justify-center rounded-full bg-gray-100">
+      <div className="flex size-10 items-center justify-center rounded-full bg-gray-100">
         {isReceived ? (
           <UserCheck size={20} className="text-gray-600" />
         ) : (

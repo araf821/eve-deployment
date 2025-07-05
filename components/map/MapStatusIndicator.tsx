@@ -29,7 +29,7 @@ export default function MapStatusIndicator({
       >
         <div className="flex items-center space-x-3">
           {alertStatus.type === "success" ? (
-            <div className="flex h-6 w-6 items-center justify-center rounded-full bg-white/20">
+            <div className="flex size-6 items-center justify-center rounded-full bg-white/20">
               <svg
                 className="h-4 w-4"
                 fill="none"
@@ -45,7 +45,7 @@ export default function MapStatusIndicator({
               </svg>
             </div>
           ) : (
-            <div className="flex h-6 w-6 items-center justify-center rounded-full bg-white/20">
+            <div className="flex size-6 items-center justify-center rounded-full bg-white/20">
               <X className="h-4 w-4" />
             </div>
           )}

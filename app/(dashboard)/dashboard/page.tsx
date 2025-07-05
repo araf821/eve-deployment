@@ -7,6 +7,7 @@ import { AlertModalWrapper } from "@/components/alert-wrapper";
 import { SuccessMessage } from "@/components/success-msg";
 import MiniMapComponent from "@/components/MiniMapComponent";
 import CurrentLocation from "@/components/CurrentLocation";
+import Image from "next/image";
 interface DashboardProps {
   searchParams: { success?: string };
 }
@@ -24,82 +25,126 @@ export default async function Dashboard({ searchParams }: DashboardProps) {
   return (
     <>
       {/* Header */}
-      <div className="pt-8 pb-4">
-        <div className="mb-6 text-2xl font-bold text-black">
-          <img src="logo.svg" />
-        </div>
+      <header className="mb-8">
+        <Image
+          src="/logo.svg"
+          alt="NiteLite Logo"
+          width={64}
+          height={64}
+          priority
+          className="mb-8"
+        />
         <div className="space-y-1">
-          <h1 className="font-serif text-2xl font-bold text-black">
+          <h1 className="font-heading text-3xl font-semibold text-foreground">
             Welcome,{" "}
-            <span className="text-purple-600">{user.name?.split(" ")[0]}</span>.
+            <span className="text-primary">{user.name?.split(" ")[0]}</span>.
           </h1>
-          <p className="text-black italic">Happy Saturday.</p>
+          <p className="font-heading text-lg text-muted-foreground italic">
+            Happy Saturday.
+          </p>
         </div>
-      </div>
+        <div className="mt-6 h-px bg-border"></div>
+      </header>
 
-      {showSuccess && <SuccessMessage />}
+      <main className="space-y-8">
+        {showSuccess && <SuccessMessage />}
 
-      {/* Location Card */}
-      <CurrentLocation />
+        {/* Location Card */}
+        <CurrentLocation />
 
-      {/* Mini Map */}
-      <div className="relative mb-4 h-48 overflow-hidden rounded-lg shadow-md">
-        <MiniMapComponent className="h-full w-full rounded-lg" />
-      </div>
+        {/* Mini Map Section */}
+        <section className="space-y-4">
+          <div className="flex items-center gap-3">
+            <div className="flex size-10 items-center justify-center rounded-full bg-primary/10">
+              <Expand size={20} className="text-primary" />
+            </div>
+            <h2 className="font-heading text-2xl font-bold text-foreground">
+              Your Area
+            </h2>
+          </div>
 
-      <div className="flex justify-between">
-        <Link href="/map">
-          <Button
-            variant="ghost"
-            size="sm"
-            className="border-gray-200 bg-white/90 px-8 text-gray-600 shadow-lg backdrop-blur-sm hover:bg-white"
-          >
-            <Expand className="mr-2 h-4 w-4" />
-            Expand
-          </Button>
-        </Link>
-        <Button
-          variant="ghost"
-          size="sm"
-          className="border-gray-200 bg-white/90 px-8 text-gray-600 shadow-lg backdrop-blur-sm hover:bg-white"
-        >
-          <Bell className="mr-2 h-4 w-4" />
-          Recent Alerts
-        </Button>
-      </div>
+          <div className="relative h-48 overflow-hidden rounded-xl shadow-lg">
+            <MiniMapComponent className="h-full w-full rounded-xl" />
+          </div>
 
-      {/* Action Buttons */}
-      <div className="grid grid-cols-2 gap-4">
-        <Button
-          variant="outline"
-          className="flex h-40 flex-col items-center justify-center space-y-2 border-gray-200 bg-white/90 shadow-lg backdrop-blur-sm hover:bg-white"
-        >
-          <Zap className="text-black" style={{ width: "8vh", height: "8vh" }} />
-          <span className="text-sm font-medium text-black">Call Eve</span>
-        </Button>
+          <div className="grid grid-cols-2 gap-3">
+            <Link href="/map" className="flex-1">
+              <Button
+                variant="outline"
+                size="lg"
+                className="h-12 w-full border-border bg-card text-foreground shadow-sm hover:bg-accent"
+              >
+                <Expand className="mr-2 h-5 w-5" />
+                View Full Map
+              </Button>
+            </Link>
+            <Button
+              variant="outline"
+              size="lg"
+              className="h-12 w-full border-border bg-card text-foreground shadow-sm hover:bg-accent"
+            >
+              <Bell className="mr-2 h-5 w-5" />
+              Recent Alerts
+            </Button>
+          </div>
+        </section>
 
-        <Button
-          variant="outline"
-          className="flex h-40 flex-col items-center justify-center space-y-2 border-gray-200 bg-white/90 shadow-lg backdrop-blur-sm hover:bg-white"
-        >
-          <Smile
-            className="text-black"
-            style={{ width: "8vh", height: "8vh" }}
-          />
-          <span className="text-sm font-medium text-black">
-            Speed Dial Jerry
-          </span>
-        </Button>
-      </div>
+        {/* Quick Actions Section */}
+        <section className="space-y-4">
+          <div className="flex items-center gap-3">
+            <div className="flex size-10 items-center justify-center rounded-full bg-primary/10">
+              <Zap size={20} className="text-primary" />
+            </div>
+            <h2 className="font-heading text-2xl font-bold text-foreground">
+              Quick Actions
+            </h2>
+          </div>
 
-      {/* Report Incident Button */}
-      <AlertModalWrapper>
-        <Button className="h-14 w-full rounded-xl bg-red-500 text-lg font-medium text-white hover:bg-red-600">
-          <AlertTriangle className="mr-2 size-5" />
-          Report Incident
-          <div className="ml-2 text-xs opacity-80">to Safety Centre</div>
-        </Button>
-      </AlertModalWrapper>
+          <div className="grid grid-cols-2 gap-4">
+            <Button
+              variant="outline"
+              className="flex h-32 flex-col items-center justify-center space-y-3 border-border bg-card shadow-sm transition-all duration-200 hover:bg-accent hover:shadow-md"
+            >
+              <Zap className="text-primary" size={32} />
+              <span className="text-sm font-medium text-foreground">
+                Call Eve
+              </span>
+            </Button>
+
+            <Button
+              variant="outline"
+              className="flex h-32 flex-col items-center justify-center space-y-3 border-border bg-card shadow-sm transition-all duration-200 hover:bg-accent hover:shadow-md"
+            >
+              <Smile className="text-primary" size={32} />
+              <span className="text-sm font-medium text-foreground">
+                Speed Dial Jerry
+              </span>
+            </Button>
+          </div>
+        </section>
+
+        {/* Emergency Section */}
+        <section className="space-y-4">
+          <div className="flex items-center gap-3">
+            <div className="flex size-10 items-center justify-center rounded-full bg-red-100">
+              <AlertTriangle size={20} className="text-red-600" />
+            </div>
+            <h2 className="font-heading text-2xl font-bold text-foreground">
+              Emergency
+            </h2>
+          </div>
+
+          <AlertModalWrapper>
+            <Button className="h-16 w-full rounded-xl bg-red-500 text-lg font-semibold text-white shadow-lg transition-all duration-200 hover:bg-red-600 hover:shadow-xl">
+              <AlertTriangle className="mr-3 size-6" />
+              <div className="flex flex-col items-start">
+                <span>Report Incident</span>
+                <span className="text-xs opacity-90">to Safety Centre</span>
+              </div>
+            </Button>
+          </AlertModalWrapper>
+        </section>
+      </main>
     </>
   );
 }

@@ -15,12 +15,12 @@ export default async function DashboardPage() {
     <>
     {/* Header */}
         <div className="pt-8 pb-4">
-          <div className="text-2xl font-bold text-black mb-2">
+          <div className="text-2xl font-bold text-black mb-6">
             <img src="logo.svg"/>
           </div>
           <div className="space-y-1">
-            <h1 className="text-2xl font-serif text-black">
-              Welcome, <span className="text-purple-600 font-bold">
+            <h1 className="text-2xl font-bold font-serif text-black">
+              Welcome, <span className="text-purple-600">
                 {user.name}
                 </span>.
             </h1>
@@ -50,19 +50,20 @@ export default async function DashboardPage() {
               </div>
             </div>
 
-            {/* Map Actions */}
-            <div className="flex justify-between">
-              <Button variant="ghost" size="sm" 
-              className="text-gray-600 px-8 bg-white/90 backdrop-blur-sm border-gray-200 hover:bg-white shadow-lg">
-                <Expand className="w-4 h-4 mr-2" />
-                Expand
-              </Button>
-              <Button variant="ghost" size="sm" 
-              className="text-gray-600 px-8 bg-white/90 backdrop-blur-sm border-gray-200 hover:bg-white shadow-lg">
-                <Bell className="w-4 h-4 mr-2" />
-                Recent Alerts
-              </Button>
-            </div>
+           <div className="flex justify-between">
+  <Link href="/map">
+    <Button variant="ghost" size="sm" 
+    className="text-gray-600 px-8 bg-white/90 backdrop-blur-sm border-gray-200 hover:bg-white shadow-lg">
+      <Expand className="w-4 h-4 mr-2" />
+      Expand
+    </Button>
+  </Link>
+  <Button variant="ghost" size="sm" 
+  className="text-gray-600 px-8 bg-white/90 backdrop-blur-sm border-gray-200 hover:bg-white shadow-lg">
+    <Bell className="w-4 h-4 mr-2" />
+    Recent Alerts
+  </Button>
+</div>
 
         {/* Action Buttons */}
         <div className="grid grid-cols-2 gap-4">

@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
-import { Home, Users, Map, Cog, Shield, Phone } from "lucide-react";
+import { Home, Map, Cog, Phone } from "lucide-react";
 
 const navItems = [
   {

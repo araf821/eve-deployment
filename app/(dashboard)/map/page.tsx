@@ -1,6 +1,6 @@
+import MapComponent from "@/components/MapComponent";
 import { getCurrentUser } from "@/server/lib/auth";
 import { redirect } from "next/navigation";
-import MapComponent from "@/components/mapComponent";
 
 export default async function CommunityMapPage() {
   const user = await getCurrentUser();
@@ -9,5 +9,5 @@ export default async function CommunityMapPage() {
     redirect("/sign-in");
   }
 
-  return <MapComponent userId={user.id}/>;
+  return <MapComponent userId={user.id} />;
 }

@@ -1,7 +1,7 @@
 import { getCurrentUser } from "@/server/lib/auth";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { Zap, Smile, Expand, Bell, AlertTriangle } from "lucide-react";
+import { Zap, Smile, Expand, Bell, Users } from "lucide-react";
 import { redirect } from "next/navigation";
 import { AlertModalWrapper } from "@/components/alert-wrapper";
 import { SuccessMessage } from "@/components/success-msg";
@@ -46,59 +46,36 @@ export default async function Dashboard({ searchParams }: DashboardProps) {
         <div className="mt-6 h-px bg-border"></div>
       </header>
 
-      <main className="space-y-8">
+      <div className="space-y-8">
         {showSuccess && <SuccessMessage />}
 
         {/* Location Card */}
         <CurrentLocation />
 
-        {/* Mini Map Section */}
+        {/* Buddies Section - Most Important */}
         <section className="space-y-4">
-          <div className="flex items-center gap-3">
-            <div className="flex size-10 items-center justify-center rounded-full bg-primary/10">
-              <Expand size={20} className="text-primary" />
-            </div>
-            <h2 className="font-heading text-2xl font-bold text-foreground">
-              Your Area
-            </h2>
-          </div>
+          <h2 className="font-heading text-2xl font-bold text-foreground">
+            Your Crew
+          </h2>
 
-          <div className="relative h-48 overflow-hidden rounded-xl shadow-lg">
-            <MiniMapComponent className="h-full w-full rounded-xl" />
-          </div>
-
-          <div className="grid grid-cols-2 gap-3">
-            <Link href="/map" className="flex-1">
-              <Button
-                variant="outline"
-                size="lg"
-                className="h-12 w-full border-border bg-card text-foreground shadow-sm hover:bg-accent"
-              >
-                <Expand className="mr-2 h-5 w-5" />
-                View Full Map
-              </Button>
+          <Button
+            asChild
+            variant="outline"
+            size="lg"
+            className="flex h-16 w-full items-center justify-center border-border bg-card shadow-sm transition-all duration-200 hover:bg-accent hover:shadow-md"
+          >
+            <Link href="/buddies">
+              <Users className="mr-3 size-6 text-primary" />
+              <div className="flex flex-col items-center">
+                <span className="text-lg font-semibold text-foreground">
+                  Manage Buddies
+                </span>
+                <span className="text-sm text-muted-foreground">
+                  Connect with your safety network
+                </span>
+              </div>
             </Link>
-            <Button
-              variant="outline"
-              size="lg"
-              className="h-12 w-full border-border bg-card text-foreground shadow-sm hover:bg-accent"
-            >
-              <Bell className="mr-2 h-5 w-5" />
-              Recent Alerts
-            </Button>
-          </div>
-        </section>
-
-        {/* Quick Actions Section */}
-        <section className="space-y-4">
-          <div className="flex items-center gap-3">
-            <div className="flex size-10 items-center justify-center rounded-full bg-primary/10">
-              <Zap size={20} className="text-primary" />
-            </div>
-            <h2 className="font-heading text-2xl font-bold text-foreground">
-              Quick Actions
-            </h2>
-          </div>
+          </Button>
 
           <div className="grid grid-cols-2 gap-4">
             <Button
@@ -125,26 +102,63 @@ export default async function Dashboard({ searchParams }: DashboardProps) {
 
         {/* Emergency Section */}
         <section className="space-y-4">
-          <div className="flex items-center gap-3">
-            <div className="flex size-10 items-center justify-center rounded-full bg-red-100">
-              <AlertTriangle size={20} className="text-red-600" />
-            </div>
-            <h2 className="font-heading text-2xl font-bold text-foreground">
-              Emergency
-            </h2>
-          </div>
+          <h2 className="font-heading text-2xl font-bold text-foreground">
+            Emergency
+          </h2>
 
           <AlertModalWrapper>
-            <Button className="h-16 w-full rounded-xl bg-red-500 text-lg font-semibold text-white shadow-lg transition-all duration-200 hover:bg-red-600 hover:shadow-xl">
+            {/* <Button className="h-16 w-full rounded-xl bg-red-500 text-lg font-semibold text-white shadow-lg transition-all duration-200 hover:bg-red-600 hover:shadow-xl">
               <AlertTriangle className="mr-3 size-6" />
               <div className="flex flex-col items-start">
                 <span>Report Incident</span>
                 <span className="text-xs opacity-90">to Safety Centre</span>
               </div>
-            </Button>
+            </Button> */}
+
+            <button className="w-full rounded-lg bg-[#FF6767]/50 p-1.5">
+              <div className="flex h-16 items-center justify-center rounded-lg bg-[#FF6767] p-4 text-lg font-semibold">
+                Report Incident
+              </div>
+            </button>
           </AlertModalWrapper>
         </section>
-      </main>
+
+        {/* Mini Map Section */}
+        <section className="space-y-4">
+          <h2 className="font-heading text-2xl font-bold text-foreground">
+            Your Area
+          </h2>
+
+          <div className="relative h-48 overflow-hidden rounded-xl shadow-lg">
+            <MiniMapComponent className="h-full w-full rounded-xl" />
+          </div>
+
+          <div className="grid grid-cols-2 gap-3">
+            <Button
+              asChild
+              variant="outline"
+              size="lg"
+              className="h-12 w-full border-border bg-card text-foreground shadow-sm hover:bg-accent"
+            >
+              <Link href="/map" className="flex-1">
+                <Expand className="mr-2 h-5 w-5" />
+                View Full Map
+              </Link>
+            </Button>
+            <Button
+              variant="outline"
+              size="lg"
+              className="h-12 w-full border-border bg-card text-foreground shadow-sm hover:bg-accent"
+              asChild
+            >
+              <Link href="/map" className="flex-1">
+                <Bell className="mr-2 h-5 w-5" />
+                Recent Alerts
+              </Link>
+            </Button>
+          </div>
+        </section>
+      </div>
     </>
   );
 }

@@ -20,7 +20,7 @@ export default function BuddyProfile() {
   };
 
   return (
-    <div className="bg-gray-50 flex flex-col items-center justify-center p-4">
+    <div className="flex flex-col items-center justify-center p-4">
       <div className="bg-white rounded-3xl shadow-lg p-8 w-full max-w-sm text-center flex items-center justify-center flex-col">
         {/* Avatar */}
         <div className="mb-6">

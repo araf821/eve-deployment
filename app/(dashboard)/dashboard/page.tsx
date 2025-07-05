@@ -12,8 +12,13 @@ export default async function DashboardPage() {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-3xl font-bold">Welcome back, {user.name}</h1>
-        <p className="text-muted-foreground">
+<h1 className="text-3xl font-bold">
+  Welcome back,<br />
+  <span className="bg-gradient-to-r from-[#A617E3] to-[#870FF0] text-transparent bg-clip-text">
+    {user.name}.
+  </span>
+</h1>
+        <p className="text-muted-foreground italic">
           Ready to light up your next campus walk?
         </p>
       </div>

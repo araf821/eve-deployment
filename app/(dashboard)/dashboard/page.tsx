@@ -1,4 +1,5 @@
 import { getCurrentUser } from "@/server/lib/auth";
+import Link from "next/link";
 import { redirect } from "next/navigation";
 
 export default async function DashboardPage() {
@@ -23,12 +24,12 @@ export default async function DashboardPage() {
           <p className="mb-4 text-muted-foreground">
             Start a guided walk with your buddies
           </p>
-          <a
+          <Link
             href="/walk/start"
             className="inline-flex items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground hover:bg-primary/90"
           >
             Start Walk
-          </a>
+          </Link>
         </div>
 
         <div className="rounded-lg border bg-card p-6">
@@ -36,12 +37,12 @@ export default async function DashboardPage() {
           <p className="mb-4 text-muted-foreground">
             Manage your safety network
           </p>
-          <a
+          <Link
             href="/buddies"
             className="inline-flex items-center justify-center rounded-md bg-secondary px-4 py-2 text-sm font-medium text-secondary-foreground hover:bg-secondary/80"
           >
             Manage Buddies
-          </a>
+          </Link>
         </div>
       </div>
 
@@ -50,12 +51,12 @@ export default async function DashboardPage() {
         <p className="mb-4 text-muted-foreground">
           See what&apos;s happening around campus
         </p>
-        <a
+        <Link
           href="/map"
           className="inline-flex items-center justify-center rounded-md bg-accent px-4 py-2 text-sm font-medium text-accent-foreground hover:bg-accent/80"
         >
           View Map
-        </a>
+        </Link>
       </div>
     </div>
   );

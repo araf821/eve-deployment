@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { BottomNav } from "@/components/ui/bottom-nav";
 
 export const metadata: Metadata = {
   title: "NiteLite Dashboard",
@@ -12,11 +13,11 @@ export default function DashboardLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-svh bg-background">
       <div className="mx-auto max-w-screen-md">
-        {/* TODO: Add navigation header here */}
-        <main className="p-4">{children}</main>
+        <main className="p-4 pb-20 md:pb-24">{children}</main>
       </div>
+      <BottomNav />
     </div>
   );
 }

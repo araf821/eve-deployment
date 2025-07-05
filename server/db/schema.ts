@@ -1,13 +1,6 @@
-import {
-  pgTable,
-  text,
-  timestamp,
-  primaryKey,
-  integer,
-  real,
-} from "drizzle-orm/pg-core";
-import { relations } from "drizzle-orm";
-import type { AdapterAccountType } from "next-auth/adapters";
+import { pgTable, text, timestamp, primaryKey, integer, real } from "drizzle-orm/pg-core"
+import { relations } from "drizzle-orm"
+import type { AdapterAccountType } from "next-auth/adapters"
 
 export const usersTable = pgTable("user", {
   id: text("id")
@@ -20,7 +13,7 @@ export const usersTable = pgTable("user", {
   lat: real("lat"),
   lng: real("lng"),
   locationUpdated: timestamp("locationUpdated", { mode: "date" }),
-});
+})
 
 export const accountsTable = pgTable(
   "account",
@@ -39,12 +32,12 @@ export const accountsTable = pgTable(
     id_token: text("id_token"),
     session_state: text("session_state"),
   },
-  account => ({
+  (account) => ({
     compoundKey: primaryKey({
       columns: [account.provider, account.providerAccountId],
     }),
-  })
-);
+  }),
+)
 
 export const sessionsTable = pgTable("session", {
   sessionToken: text("sessionToken").primaryKey(),
@@ -52,7 +45,7 @@ export const sessionsTable = pgTable("session", {
     .notNull()
     .references(() => usersTable.id, { onDelete: "cascade" }),
   expires: timestamp("expires", { mode: "date" }).notNull(),
-});
+})
 
 export const verificationTokensTable = pgTable(
   "verificationToken",
@@ -61,12 +54,12 @@ export const verificationTokensTable = pgTable(
     token: text("token").notNull(),
     expires: timestamp("expires", { mode: "date" }).notNull(),
   },
-  verificationToken => ({
+  (verificationToken) => ({
     compositePk: primaryKey({
       columns: [verificationToken.identifier, verificationToken.token],
     }),
-  })
-);
+  }),
+)
 
 // Buddy requests table
 export const buddyRequestsTable = pgTable("buddy_request", {
@@ -84,7 +77,7 @@ export const buddyRequestsTable = pgTable("buddy_request", {
   status: text("status").default("pending").notNull(), // pending, accepted, rejected
   createdAt: timestamp("created_at", { mode: "date" }).defaultNow().notNull(),
   updatedAt: timestamp("updated_at", { mode: "date" }).defaultNow().notNull(),
-});
+})
 
 // Buddy connections table
 export const buddyConnectionsTable = pgTable("buddy_connection", {
@@ -101,7 +94,21 @@ export const buddyConnectionsTable = pgTable("buddy_connection", {
   phoneNumber: text("phone_number"),
   createdAt: timestamp("created_at", { mode: "date" }).defaultNow().notNull(),
   updatedAt: timestamp("updated_at", { mode: "date" }).defaultNow().notNull(),
-});
+})
+
+// Alerts table
+export const alertsTable = pgTable("alert", {
+  id: text("id")
+    .primaryKey()
+    .$defaultFn(() => crypto.randomUUID()),
+  userId: text("user_id")
+    .notNull()
+    .references(() => usersTable.id, { onDelete: "cascade" }),
+  lat: real("lat").notNull(),
+  lng: real("lng").notNull(),
+  address: text("address"),
+  createdAt: timestamp("created_at", { mode: "date" }).defaultNow().notNull(),
+})
 
 // Relations
 export const usersRelations = relations(usersTable, ({ many }) => ({
@@ -117,36 +124,38 @@ export const usersRelations = relations(usersTable, ({ many }) => ({
   buddyOf: many(buddyConnectionsTable, {
     relationName: "buddyOfUser",
   }),
-}));
+  alerts: many(alertsTable),
+}))
 
-export const buddyRequestsRelations = relations(
-  buddyRequestsTable,
-  ({ one }) => ({
-    sender: one(usersTable, {
-      fields: [buddyRequestsTable.senderId],
-      references: [usersTable.id],
-      relationName: "sentRequests",
-    }),
-    receiver: one(usersTable, {
-      fields: [buddyRequestsTable.receiverId],
-      references: [usersTable.id],
-      relationName: "receivedRequests",
-    }),
-  })
-);
+export const buddyRequestsRelations = relations(buddyRequestsTable, ({ one }) => ({
+  sender: one(usersTable, {
+    fields: [buddyRequestsTable.senderId],
+    references: [usersTable.id],
+    relationName: "sentRequests",
+  }),
+  receiver: one(usersTable, {
+    fields: [buddyRequestsTable.receiverId],
+    references: [usersTable.id],
+    relationName: "receivedRequests",
+  }),
+}))
 
-export const buddyConnectionsRelations = relations(
-  buddyConnectionsTable,
-  ({ one }) => ({
-    user: one(usersTable, {
-      fields: [buddyConnectionsTable.userId],
-      references: [usersTable.id],
-      relationName: "userBuddies",
-    }),
-    buddy: one(usersTable, {
-      fields: [buddyConnectionsTable.buddyId],
-      references: [usersTable.id],
-      relationName: "buddyOfUser",
-    }),
-  })
-);
+export const buddyConnectionsRelations = relations(buddyConnectionsTable, ({ one }) => ({
+  user: one(usersTable, {
+    fields: [buddyConnectionsTable.userId],
+    references: [usersTable.id],
+    relationName: "userBuddies",
+  }),
+  buddy: one(usersTable, {
+    fields: [buddyConnectionsTable.buddyId],
+    references: [usersTable.id],
+    relationName: "buddyOfUser",
+  }),
+}))
+
+export const alertsRelations = relations(alertsTable, ({ one }) => ({
+  user: one(usersTable, {
+    fields: [alertsTable.userId],
+    references: [usersTable.id],
+  }),
+}))

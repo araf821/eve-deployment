@@ -1,7 +1,11 @@
 import { getCurrentUser } from "@/server/lib/auth";
 import { redirect } from "next/navigation";
 import { PageHeader } from "@/components/layout/PageHeader";
-import { BuddiesSection, ContactsSection } from "@/components/buddies";
+import {
+  BuddiesPageHeader,
+  BuddiesSection,
+  ContactsSection,
+} from "@/components/buddies";
 import Image from "next/image";
 
 export default async function BuddiesPage() {
@@ -26,6 +30,7 @@ export default async function BuddiesPage() {
           title="Buddies"
           subtitle="Connect with your safety network"
         />
+        <BuddiesPageHeader />
         <div className="mt-6 h-px bg-border"></div>
       </header>
       <main className="space-y-8">

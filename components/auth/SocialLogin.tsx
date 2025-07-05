@@ -36,6 +36,17 @@ export default function SocialLogin({
     }
   };
 
+  const handleSignIn = async (provider: string) => {
+    try {
+      await signIn(provider, { 
+        callbackUrl: "/dashboard",
+        redirect: true 
+      });
+    } catch (error) {
+      console.error("Sign in error:", error);
+    }
+  };
+
   return (
     <div className={`flex flex-col gap-3 ${className || ""}`}>
       {providers.map(provider => {
@@ -44,7 +55,7 @@ export default function SocialLogin({
           <Button
             key={provider}
             variant={config.variant}
-            onClick={() => signIn(provider)}
+            onClick={() => handleSignIn(provider)}
             className="w-full"
           >
             {config.icon}

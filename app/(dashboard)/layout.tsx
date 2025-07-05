@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { BottomNav } from "@/components/ui/bottom-nav";
+import TopBar from "@/components/layout/TopBar";
 
 export const metadata: Metadata = {
   title: "NiteLite Dashboard",
@@ -15,7 +16,10 @@ export default function DashboardLayout({
   return (
     <div className="min-h-svh bg-background">
       <div className="mx-auto max-w-screen-md">
-        <main className="p-4 pb-20 md:pb-24">{children}</main>
+        <main className="flex flex-col gap-8 px-4 pb-24 md:pb-28">
+          <TopBar />
+          {children}
+        </main>
       </div>
       <BottomNav />
     </div>

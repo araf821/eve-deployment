@@ -1,36 +1,146 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# NextAuth Authentication Demo
 
-## Getting Started
+A complete authentication system built with Next.js 15, NextAuth v5, Google & Discord OAuth, Drizzle ORM, and Neon DB.
 
-First, run the development server:
+## Features
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+- 🔐 Authentication with Google and Discord
+- 💾 User data stored in Neon PostgreSQL database
+- 🏗️ Drizzle ORM for type-safe database operations
+- 🔒 Server-side session management
+- 🎨 Tailwind CSS for styling
+- 📱 Responsive design
+
+## Tech Stack
+
+- **Framework**: Next.js 15 (App Router)
+- **Authentication**: NextAuth v5
+- **Database**: Neon PostgreSQL
+- **ORM**: Drizzle ORM
+- **Styling**: Tailwind CSS
+- **Language**: TypeScript
+
+## Setup Instructions
+
+### 1. Environment Variables
+
+Update the `.env.local` file with your actual credentials:
+
+```env
+# Auth
+NEXTAUTH_URL=http://localhost:3000
+NEXTAUTH_SECRET=your-secret-key-here
+
+# Google OAuth
+GOOGLE_CLIENT_ID=your-google-client-id
+GOOGLE_CLIENT_SECRET=your-google-client-secret
+
+# Discord OAuth  
+DISCORD_CLIENT_ID=your-discord-client-id
+DISCORD_CLIENT_SECRET=your-discord-client-secret
+
+# Neon Database
+DATABASE_URL=your-neon-database-url
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 2. Get OAuth Credentials
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+#### Google OAuth Setup
+1. Go to [Google Cloud Console](https://console.cloud.google.com/)
+2. Create a new project or select existing one
+3. Enable Google+ API
+4. Go to "Credentials" → "Create Credentials" → "OAuth 2.0 Client IDs"
+5. Set authorized redirect URIs: `http://localhost:3000/api/auth/callback/google`
+6. Copy Client ID and Client Secret
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+#### Discord OAuth Setup
+1. Go to [Discord Developer Portal](https://discord.com/developers/applications)
+2. Create a new application
+3. Go to "OAuth2" section
+4. Add redirect URI: `http://localhost:3000/api/auth/callback/discord`
+5. Copy Client ID and Client Secret
 
-## Learn More
+### 3. Database Setup
 
-To learn more about Next.js, take a look at the following resources:
+#### Neon DB Setup
+1. Sign up at [Neon](https://neon.tech/)
+2. Create a new database
+3. Copy the connection string to `DATABASE_URL`
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+#### Run Database Migrations
+```bash
+npm run db:push
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### 4. Install Dependencies & Run
 
-## Deploy on Vercel
+```bash
+npm install
+npm run dev
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Visit `http://localhost:3000` to see the authentication demo.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Available Scripts
+
+- `npm run dev` - Start development server
+- `npm run build` - Build for production
+- `npm run start` - Start production server
+- `npm run lint` - Run ESLint
+- `npm run format` - Format code with Prettier
+- `npm run format:check` - Check code formatting
+- `npm run db:generate` - Generate database migrations
+- `npm run db:migrate` - Run database migrations
+- `npm run db:push` - Push schema changes to database
+- `npm run db:studio` - Open Drizzle Studio
+
+## Project Structure
+
+```
+web/
+├── app/
+│   ├── api/auth/[...nextauth]/route.ts  # NextAuth API routes
+│   ├── layout.tsx                       # Root layout with SessionProvider
+│   └── page.tsx                         # Main demo page
+├── components/
+│   ├── auth/
+│   │   ├── SignInButton.tsx             # Sign in button component
+│   │   └── SignOutButton.tsx            # Sign out button component
+│   └── SessionProvider.tsx              # Client-side session provider
+├── lib/
+│   └── auth.ts                          # NextAuth configuration
+├── server/
+│   ├── db/
+│   │   ├── index.ts                     # Database connection
+│   │   └── schema.ts                    # Drizzle schema definitions
+│   └── lib/
+│       └── auth.ts                      # Server-side auth helpers
+├── types/
+│   └── next-auth.d.ts                   # NextAuth type definitions
+├── drizzle.config.ts                    # Drizzle configuration
+└── .env.local                           # Environment variables
+```
+
+## How It Works
+
+1. **Authentication Flow**: Users can sign in with Google or Discord
+2. **Session Management**: NextAuth handles sessions with database storage
+3. **User Data**: User information is stored in Neon DB via Drizzle ORM
+4. **Server Components**: Main page uses server components to fetch user data
+5. **Client Components**: Auth buttons use client components for interactivity
+
+## Key Files
+
+- `lib/auth.ts` - NextAuth configuration with providers and callbacks
+- `server/db/schema.ts` - Database schema for users, accounts, sessions
+- `server/lib/auth.ts` - Server-side helpers for getting current user/session
+- `components/auth/` - Reusable authentication components
+- `app/api/auth/[...nextauth]/route.ts` - NextAuth API endpoints
+
+## Next Steps
+
+- Add middleware for route protection
+- Implement role-based access control
+- Add more OAuth providers
+- Customize sign-in pages
+- Add user profile management

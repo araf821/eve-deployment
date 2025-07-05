@@ -16,7 +16,7 @@ export default async function BuddiesPage() {
   }
 
   return (
-    <div className="container mx-auto max-w-screen-md">
+    <div className="container mx-auto max-w-md">
       <header className="mt-12 mb-8">
         <Image
           src="/logo.svg"

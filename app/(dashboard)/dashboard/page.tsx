@@ -6,7 +6,7 @@ import { redirect } from "next/navigation";
 import { AlertModalWrapper } from "@/components/alert-wrapper";
 import { SuccessMessage } from "@/components/success-msg";
 interface DashboardProps {
-  searchParams: { success?: string }
+  searchParams: { success?: string };
 }
 
 export default async function Dashboard({ searchParams }: DashboardProps) {
@@ -16,7 +16,7 @@ export default async function Dashboard({ searchParams }: DashboardProps) {
     redirect("/sign-in");
   }
 
-  const showSuccess = searchParams.success === "true"
+  const showSuccess = searchParams.success === "true";
 
   return (
     <>
@@ -108,11 +108,11 @@ export default async function Dashboard({ searchParams }: DashboardProps) {
 
       {/* Report Incident Button */}
       <AlertModalWrapper>
-      <Button className="h-14 w-full rounded-xl bg-red-500 text-lg font-medium text-white hover:bg-red-600">
-        <AlertTriangle className="mr-2 h-5 w-5" />
-        Report Incident
-        <div className="ml-2 text-xs opacity-80">to Safety Centre</div>
-      </Button>
+        <Button className="h-14 w-full rounded-xl bg-red-500 text-lg font-medium text-white hover:bg-red-600">
+          <AlertTriangle className="mr-2 h-5 w-5" />
+          Report Incident
+          <div className="ml-2 text-xs opacity-80">to Safety Centre</div>
+        </Button>
       </AlertModalWrapper>
     </>
   );

@@ -1,6 +1,7 @@
 import { getCurrentUser } from "@/server/lib/auth";
 import { Button } from "@/components/ui/button";
 import { redirect } from "next/navigation";
+import { Heart, Rocket } from "lucide-react"
 
 export default async function Home() {
   const user = await getCurrentUser();
@@ -11,50 +12,36 @@ export default async function Home() {
   }
 
   return (
-    <div className="flex min-h-svh flex-col items-center justify-center gap-8 p-8">
-      <div className="max-w-2xl text-center">
-        <h1 className="mb-4 text-4xl font-bold">NiteLite</h1>
-        <p className="mb-2 text-xl text-muted-foreground">
-          Your Personal Campus Beacon
-        </p>
-        <p className="mb-8 text-muted-foreground">
-          A friendly digital companion that acts as a personal light in the
-          dark, ensuring every student on campus feels connected and safe during
-          any walk, day or night.
-        </p>
-      </div>
-
-      <div className="flex flex-col gap-4 sm:flex-row">
-        <Button asChild size="lg">
-          <a href="/sign-up">Get Started</a>
-        </Button>
-        <Button asChild variant="outline" size="lg">
-          <a href="/sign-in">Sign In</a>
-        </Button>
-      </div>
-
-      <div className="mt-8 max-w-2xl text-center">
-        <h2 className="mb-4 text-2xl font-semibold">How NiteLite Works</h2>
-        <div className="grid gap-6 md:grid-cols-3">
-          <div className="text-center">
-            <h3 className="mb-2 font-semibold">Your Buddy System</h3>
-            <p className="text-sm text-muted-foreground">
-              Add trusted friends who can track your walks in real-time
-            </p>
-          </div>
-          <div className="text-center">
-            <h3 className="mb-2 font-semibold">AI Guardian</h3>
-            <p className="text-sm text-muted-foreground">
-              Smart monitoring that checks in if you stop moving unexpectedly
-            </p>
-          </div>
-          <div className="text-center">
-            <h3 className="mb-2 font-semibold">Community Glow Map</h3>
-            <p className="text-sm text-muted-foreground">
-              See safe routes and areas shared by your campus community
-            </p>
+    <div className="min-h-screen bg-gradient-to-b from-purple-100 to-purple-300 flex flex-col items-center justify-center p-6">
+      <div className="flex flex-col items-center space-y-8 max-w-sm w-full">
+        {/* App Icon */}
+        <div className="relative">
+          <div className="w-16 h-16 bg-blue-500 rounded-full flex items-center justify-center">
+            <Heart className="w-8 h-8 text-red-500 fill-current" />
           </div>
         </div>
+
+        {/* Rocket Icon */}
+        <div className="text-gray-700">
+          <Rocket className="w-12 h-12" />
+        </div>
+
+        {/* Main Heading */}
+        <div className="text-center space-y-2">
+          <h1 className="text-3xl font-bold text-black">Stay Safe. Feel Seen.</h1>
+          <p className="text-gray-700 italic text-lg">You don't have to be alone.</p>
+        </div>
+
+        {/* Spacer */}
+        <div className="flex-1 min-h-[100px]"></div>
+
+        {/* Discord Login Button */}
+        <Button
+          className="w-full bg-transparent border-none text-gray-700 hover:bg-white/20 text-base font-normal"
+          variant="ghost"
+        >
+          Log in with Discord
+        </Button>
       </div>
     </div>
   );

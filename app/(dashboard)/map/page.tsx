@@ -9,5 +9,5 @@ export default async function CommunityMapPage() {
     redirect("/sign-in");
   }
 
-  return <MapComponent userId={user.id} />;
+  return <MapComponent />;
 }

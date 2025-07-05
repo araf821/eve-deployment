@@ -1,14 +1,6 @@
 "use client";
 
-import {
-  Search,
-  MessageCircleHeart,
-  Users,
-  Navigation,
-  MapPin,
-  Clock,
-  User,
-} from "lucide-react";
+import { Search, MapPin, Clock, User, X } from "lucide-react";
 import {
   Dialog,
   DialogContent,
@@ -29,17 +21,18 @@ import {
 } from "./map/hooks";
 import { Input } from "./ui/input";
 import { useEffect, useRef } from "react";
+import MapFab from "./map/MapFab";
 
-export default function MapComponent({ userId }: { userId: string }) {
+export default function MapComponent() {
   const { updateLocation } = useLocation();
 
   const { mapRef, map, isClient } = useGoogleMaps({
     onLocationUpdate: updateLocation,
   });
 
-  const { users } = useUserMarkers({ map, isClient });
+  useUserMarkers({ map, isClient });
 
-  const { alerts, loadAlerts } = useAlertMarkers({
+  const { loadAlerts } = useAlertMarkers({
     map,
     isClient,
     onAlertClick: alert => openModal(alert),
@@ -91,6 +84,16 @@ export default function MapComponent({ userId }: { userId: string }) {
     });
   };
 
+  const handleFindBuddies = () => {
+    // TODO: Implement find buddies functionality
+    console.log("Find buddies clicked");
+  };
+
+  const handleFindRoute = () => {
+    // TODO: Implement find route functionality
+    console.log("Find route clicked");
+  };
+
   if (!isClient) {
     return (
       <div className="relative flex h-screen w-full items-center justify-center bg-gray-100">
@@ -110,49 +113,37 @@ export default function MapComponent({ userId }: { userId: string }) {
             placeholder="Search for a location"
             value={query}
             onChange={e => handleSearchChange(e.target.value)}
-            className="w-full bg-white pr-10 pl-10 shadow-md"
+            className="h-12 w-full rounded-xl border-0 bg-white pr-10 pl-10 text-base shadow-lg placeholder:text-gray-500"
           />
           {(query || isSearchLoading) && (
             <button
               onClick={clearSearch}
-              className="absolute top-1/2 right-3 z-10 h-5 w-5 -translate-y-1/2 transform text-muted-foreground hover:text-foreground"
+              className="absolute top-1/2 right-3 z-10 flex h-6 w-6 -translate-y-1/2 transform items-center justify-center rounded-full text-muted-foreground transition-colors hover:bg-gray-100 hover:text-foreground"
             >
               {isSearchLoading ? (
-                <div className="h-4 w-4 animate-spin rounded-full border-2 border-muted border-t-primary" />
+                <div className="h-4 w-4 animate-spin rounded-full border-2 border-gray-300 border-t-primary" />
               ) : (
-                <svg
-                  className="h-4 w-4"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M6 18L18 6M6 6l12 12"
-                  />
-                </svg>
+                <X className="h-4 w-4" />
               )}
             </button>
           )}
 
           {/* Search Suggestions Dropdown */}
           {isSuggestionsOpen && suggestions.length > 0 && (
-            <div className="absolute top-full right-0 left-0 z-20 mt-1 max-h-60 overflow-y-auto rounded-lg border border-border bg-background shadow-lg">
+            <div className="absolute top-full right-0 left-0 z-20 mt-2 max-h-60 overflow-y-auto rounded-xl border-0 bg-white shadow-xl">
               {suggestions.map(suggestion => (
                 <button
                   key={suggestion.placeId}
                   onClick={() => handleSuggestionSelect(suggestion)}
-                  className="w-full border-b border-border px-4 py-3 text-left last:border-b-0 hover:bg-muted focus:bg-muted focus:outline-none"
+                  className="w-full border-b border-gray-100 px-4 py-4 text-left transition-colors first:rounded-t-xl last:rounded-b-xl last:border-b-0 hover:bg-gray-50 focus:bg-gray-50 focus:outline-none"
                 >
                   <div className="flex items-start space-x-3">
-                    <MapPin className="mt-0.5 h-4 w-4 flex-shrink-0 text-muted-foreground" />
+                    <MapPin className="mt-1 h-4 w-4 flex-shrink-0 text-gray-400" />
                     <div className="min-w-0 flex-1">
-                      <p className="truncate text-sm font-medium text-foreground">
+                      <p className="truncate text-sm font-medium text-gray-900">
                         {suggestion.description.split(",")[0]}
                       </p>
-                      <p className="truncate text-xs text-muted-foreground">
+                      <p className="mt-0.5 truncate text-xs text-gray-500">
                         {suggestion.description
                           .split(",")
                           .slice(1)
@@ -168,72 +159,44 @@ export default function MapComponent({ userId }: { userId: string }) {
         </div>
       </div>
 
-      {/* Action Buttons */}
-      <div className="absolute top-20 right-4 left-4 z-10">
-        <div className="flex items-center justify-center space-x-4">
-          <button
-            onClick={handleAddAlertPin}
-            className="flex flex-col items-center space-y-1 rounded-lg bg-white p-3 shadow-md transition-shadow hover:shadow-lg"
-          >
-            <div className="flex h-8 w-8 items-center justify-center rounded-full bg-pink-500">
-              <MessageCircleHeart className="h-4 w-4 text-white" />
-            </div>
-            <span className="text-xs text-gray-600">Add Alert</span>
-          </button>
-          <button className="flex flex-col items-center space-y-1 rounded-lg bg-white p-3 shadow-md transition-shadow hover:shadow-lg">
-            <div className="flex h-8 w-8 items-center justify-center rounded-full bg-green-500">
-              <Users className="h-4 w-4 text-white" />
-            </div>
-            <span className="text-xs text-gray-600">Find Buddies</span>
-          </button>
-          <button className="flex flex-col items-center space-y-1 rounded-lg bg-white p-3 shadow-md transition-shadow hover:shadow-lg">
-            <div className="flex h-8 w-8 items-center justify-center rounded-full bg-blue-500">
-              <Navigation className="h-4 w-4 text-white" />
-            </div>
-            <span className="text-xs text-gray-600">Find Route</span>
-          </button>
-        </div>
-      </div>
+      {/* Floating Action Button */}
+      <MapFab
+        onAddAlert={handleAddAlertPin}
+        onFindBuddies={handleFindBuddies}
+        onFindRoute={handleFindRoute}
+      />
 
       {/* Status Indicator */}
       {alertStatus.type && (
-        <div className="absolute top-40 right-4 left-4 z-20">
+        <div className="absolute top-20 right-4 left-4 z-20">
           <div
-            className={`mx-auto max-w-sm rounded-lg p-3 shadow-lg transition-all duration-300 ${
+            className={`mx-auto max-w-sm rounded-xl p-4 shadow-lg transition-all duration-300 ${
               alertStatus.type === "success"
-                ? "bg-green-500 text-white"
-                : "bg-red-500 text-white"
+                ? "bg-gradient-to-r from-green-500 to-green-600 text-white"
+                : "bg-gradient-to-r from-red-500 to-red-600 text-white"
             }`}
           >
-            <div className="flex items-center space-x-2">
+            <div className="flex items-center space-x-3">
               {alertStatus.type === "success" ? (
-                <svg
-                  className="h-5 w-5"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M5 13l4 4L19 7"
-                  ></path>
-                </svg>
+                <div className="flex h-6 w-6 items-center justify-center rounded-full bg-white/20">
+                  <svg
+                    className="h-4 w-4"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="M5 13l4 4L19 7"
+                    ></path>
+                  </svg>
+                </div>
               ) : (
-                <svg
-                  className="h-5 w-5"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M6 18L18 6M6 6l12 12"
-                  ></path>
-                </svg>
+                <div className="flex h-6 w-6 items-center justify-center rounded-full bg-white/20">
+                  <X className="h-4 w-4" />
+                </div>
               )}
               <span className="text-sm font-medium">{alertStatus.message}</span>
             </div>
@@ -243,24 +206,26 @@ export default function MapComponent({ userId }: { userId: string }) {
 
       {/* Alert Modal */}
       <Dialog open={isModalOpen} onOpenChange={closeModal}>
-        <DialogContent className="max-w-md">
-          <DialogHeader>
-            <DialogTitle>Alert Details</DialogTitle>
-            <DialogDescription>
+        <DialogContent className="max-w-md rounded-2xl border-0 shadow-xl">
+          <DialogHeader className="space-y-3">
+            <DialogTitle className="text-lg font-semibold text-gray-900">
+              Alert Details
+            </DialogTitle>
+            <DialogDescription className="text-gray-600">
               View information about this safety alert including location and
               timestamp.
             </DialogDescription>
           </DialogHeader>
 
           {selectedAlert && (
-            <div className="space-y-4">
+            <div className="space-y-6 py-2">
               {/* Timestamp */}
-              <div className="flex items-start space-x-3">
-                <div className="flex-shrink-0">
-                  <Clock className="mt-0.5 h-5 w-5 text-blue-500" />
+              <div className="flex items-start space-x-4">
+                <div className="flex h-10 w-10 items-center justify-center rounded-full bg-blue-100">
+                  <Clock className="h-5 w-5 text-blue-600" />
                 </div>
-                <div>
-                  <h3 className="text-sm font-medium text-gray-900">
+                <div className="flex-1">
+                  <h3 className="mb-1 text-sm font-semibold text-gray-900">
                     Timestamp
                   </h3>
                   <p className="text-sm text-gray-600">
@@ -271,18 +236,18 @@ export default function MapComponent({ userId }: { userId: string }) {
               </div>
 
               {/* Location */}
-              <div className="flex items-start space-x-3">
-                <div className="flex-shrink-0">
-                  <MapPin className="mt-0.5 h-5 w-5 text-red-500" />
+              <div className="flex items-start space-x-4">
+                <div className="flex h-10 w-10 items-center justify-center rounded-full bg-red-100">
+                  <MapPin className="h-5 w-5 text-red-600" />
                 </div>
-                <div>
-                  <h3 className="text-sm font-medium text-gray-900">
+                <div className="flex-1">
+                  <h3 className="mb-1 text-sm font-semibold text-gray-900">
                     Location
                   </h3>
-                  <p className="text-sm text-gray-600">
+                  <p className="mb-1 text-sm text-gray-600">
                     {selectedAlert.address || "Address not available"}
                   </p>
-                  <p className="mt-1 text-xs text-gray-500">
+                  <p className="text-xs text-gray-500">
                     {selectedAlert.lat.toFixed(6)},{" "}
                     {selectedAlert.lng.toFixed(6)}
                   </p>
@@ -290,18 +255,18 @@ export default function MapComponent({ userId }: { userId: string }) {
               </div>
 
               {/* User */}
-              <div className="flex items-start space-x-3">
-                <div className="flex-shrink-0">
-                  <User className="mt-0.5 h-5 w-5 text-green-500" />
+              <div className="flex items-start space-x-4">
+                <div className="flex h-10 w-10 items-center justify-center rounded-full bg-green-100">
+                  <User className="h-5 w-5 text-green-600" />
                 </div>
-                <div>
-                  <h3 className="text-sm font-medium text-gray-900">
+                <div className="flex-1">
+                  <h3 className="mb-1 text-sm font-semibold text-gray-900">
                     Initiated by
                   </h3>
-                  <p className="text-sm text-gray-600">
+                  <p className="mb-1 text-sm text-gray-600">
                     {selectedAlert.userName || "Unknown User"}
                   </p>
-                  <p className="mt-1 text-xs text-gray-500">
+                  <p className="text-xs text-gray-500">
                     ID: {selectedAlert.userId}
                   </p>
                 </div>
@@ -309,8 +274,12 @@ export default function MapComponent({ userId }: { userId: string }) {
             </div>
           )}
 
-          <DialogFooter>
-            <Button variant="outline" onClick={() => closeModal()}>
+          <DialogFooter className="pt-4">
+            <Button
+              variant="outline"
+              onClick={() => closeModal()}
+              className="h-12 w-full rounded-xl border-gray-200 hover:bg-gray-50"
+            >
               Close
             </Button>
           </DialogFooter>

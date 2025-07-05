@@ -12,18 +12,26 @@ interface MapFabProps {
   onAddAlert: () => void;
   onFindBuddies: () => void;
   onFindRoute: () => void;
+  isPlacementMode?: boolean;
 }
 
 export default function MapFab({
   onAddAlert,
   onFindBuddies,
   onFindRoute,
+  isPlacementMode = false,
 }: MapFabProps) {
   return (
     <div className="absolute bottom-6 left-4 z-20">
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <button className="flex size-12 items-center justify-center rounded-full bg-gradient-to-r from-primary to-purple-600 shadow-lg transition-all duration-200 hover:scale-105 hover:shadow-xl focus:ring-2 focus:ring-primary/50 focus:ring-offset-2 focus:outline-none data-[state=open]:rotate-45 data-[state=open]:bg-gradient-to-r data-[state=open]:from-gray-600 data-[state=open]:to-gray-700">
+          <button
+            className={`flex size-12 items-center justify-center rounded-full shadow-lg transition-all duration-200 hover:scale-105 hover:shadow-xl focus:ring-2 focus:ring-primary/50 focus:ring-offset-2 focus:outline-none data-[state=open]:rotate-45 ${
+              isPlacementMode
+                ? "animate-pulse bg-gradient-to-r from-orange-500 to-orange-600 data-[state=open]:from-gray-600 data-[state=open]:to-gray-700"
+                : "bg-gradient-to-r from-primary to-purple-600 data-[state=open]:from-gray-600 data-[state=open]:to-gray-700"
+            }`}
+          >
             <Plus className="size-6 text-white" />
           </button>
         </DropdownMenuTrigger>
@@ -36,16 +44,28 @@ export default function MapFab({
         >
           <DropdownMenuItem
             onClick={onAddAlert}
-            className="flex cursor-pointer items-center space-x-3 px-4 py-4 text-left transition-colors focus:bg-gray-50"
+            className={`flex cursor-pointer items-center space-x-3 px-4 py-4 text-left transition-colors focus:bg-gray-50 ${
+              isPlacementMode ? "bg-orange-50" : ""
+            }`}
           >
-            <div className="flex size-10 items-center justify-center rounded-full bg-gradient-to-r from-pink-500 to-pink-600 shadow-sm">
+            <div
+              className={`flex size-10 items-center justify-center rounded-full shadow-sm ${
+                isPlacementMode
+                  ? "bg-gradient-to-r from-orange-500 to-orange-600"
+                  : "bg-gradient-to-r from-pink-500 to-pink-600"
+              }`}
+            >
               <MessageCircleHeart className="size-5 text-white" />
             </div>
             <div>
               <span className="text-sm font-medium text-gray-900">
-                Add Alert
+                {isPlacementMode ? "Cancel Alert" : "Add Alert"}
               </span>
-              <p className="text-xs text-gray-500">Report safety concern</p>
+              <p className="text-xs text-gray-500">
+                {isPlacementMode
+                  ? "Cancel alert placement"
+                  : "Report safety concern"}
+              </p>
             </div>
           </DropdownMenuItem>
 

@@ -31,14 +31,16 @@ export default function MapComponent() {
     onAlertClick: alert => openModal(alert),
   });
 
-  const { alertStatus, addAlertPin } = useAlerts();
+  const { alertStatus, isPlacementMode, addAlertPin } = useAlerts();
 
   const { selectedAlert, isModalOpen, openModal, closeModal } = useAlertModal();
 
   const handleAddAlertPin = () => {
-    addAlertPin(() => {
-      loadAlerts();
-    });
+    if (map) {
+      addAlertPin(map, () => {
+        loadAlerts();
+      });
+    }
   };
 
   const handleFindBuddies = () => {
@@ -72,6 +74,7 @@ export default function MapComponent() {
         onAddAlert={handleAddAlertPin}
         onFindBuddies={handleFindBuddies}
         onFindRoute={handleFindRoute}
+        isPlacementMode={isPlacementMode}
       />
 
       {/* Status Indicator */}

@@ -3,7 +3,7 @@
 import { X } from "lucide-react";
 
 interface AlertStatus {
-  type: "success" | "error" | null;
+  type: "success" | "error" | "info" | null;
   message: string;
 }
 
@@ -24,7 +24,9 @@ export default function MapStatusIndicator({
         className={`mx-auto max-w-sm rounded-xl p-4 shadow-lg transition-all duration-300 ${
           alertStatus.type === "success"
             ? "bg-gradient-to-r from-green-500 to-green-600 text-white"
-            : "bg-gradient-to-r from-red-500 to-red-600 text-white"
+            : alertStatus.type === "info"
+              ? "bg-gradient-to-r from-blue-500 to-blue-600 text-white"
+              : "bg-gradient-to-r from-red-500 to-red-600 text-white"
         }`}
       >
         <div className="flex items-center space-x-3">
@@ -41,6 +43,22 @@ export default function MapStatusIndicator({
                   strokeLinejoin="round"
                   strokeWidth="2"
                   d="M5 13l4 4L19 7"
+                ></path>
+              </svg>
+            </div>
+          ) : alertStatus.type === "info" ? (
+            <div className="flex size-6 items-center justify-center rounded-full bg-white/20">
+              <svg
+                className="h-4 w-4"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
                 ></path>
               </svg>
             </div>

@@ -21,6 +21,9 @@ export default async function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <link rel="manifest" href="/manifest.json" />
+      <meta name="theme-color" content="#000000" />
+      <link rel="apple-touch-icon" href="/icons/icon-192.png" />
       <body
         className={`${playfairDisplay.variable} antialiased`}
       >

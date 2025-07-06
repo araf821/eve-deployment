@@ -1,4 +1,4 @@
-import MapComponent from "@/components/MapComponent";
+import MapComponent from "@/components/mapComponent";
 import { getCurrentUser } from "@/server/lib/auth";
 import { redirect } from "next/navigation";
 

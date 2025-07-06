@@ -138,18 +138,6 @@ export default async function Dashboard({ searchParams }: DashboardProps) {
             <MiniMapComponent className="h-full w-full rounded-xl" />
           </div>
 
-          <div className="grid grid-cols-2 gap-3">
-            <Button
-              asChild
-              variant="outline"
-              size="lg"
-              className="h-12 w-full border-border bg-card text-foreground shadow-sm hover:bg-accent"
-            >
-              <Link href="/map" className="flex-1">
-                <Expand className="mr-2 h-5 w-5" />
-                View Full Map
-              </Link>
-            </Button>
             <Button
               variant="outline"
               size="lg"
@@ -161,7 +149,6 @@ export default async function Dashboard({ searchParams }: DashboardProps) {
                 Recent Alerts
               </Link>
             </Button>
-          </div>
         </section>
       </div>
     </>

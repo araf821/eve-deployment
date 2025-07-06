@@ -14,7 +14,7 @@ export default function DashboardLayout({
 }) {
   return (
     <div className="relative min-h-svh overflow-hidden bg-gradient-to-tr from-background to-purple-100 pb-12">
-      <div className="absolute -top-20 -right-20 size-64 rounded-full bg-primary/15 blur-2xl" />
+      <div className="pointer-events-none absolute -top-20 -right-20 size-64 rounded-full bg-primary/15 blur-2xl" />
 
       <div className="mx-auto max-w-md pb-4">
         {children}

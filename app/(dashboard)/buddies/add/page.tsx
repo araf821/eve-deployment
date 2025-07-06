@@ -26,16 +26,17 @@ export default async function AddBuddyPage() {
             priority
             className="mb-8"
           />
-          <Link href="/buddies" className="mb-6 inline-block">
-            <Button
-              variant="outline"
-              size="sm"
-              className="h-10 border-border/50 px-4 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground"
-            >
+          <Button
+            variant="outline"
+            size="sm"
+            asChild
+            className="h-10 border-border/50 px-4 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground"
+          >
+            <Link href="/buddies" className="mb-6 inline-block">
               <ArrowLeft size={16} className="mr-2" />
               Back to Buddies
-            </Button>
-          </Link>
+            </Link>
+          </Button>
         </div>
         <PageHeader
           title="Add Buddy"

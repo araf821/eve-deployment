@@ -10,7 +10,7 @@ import { motion } from "motion/react";
 export function HeroSection() {
   return (
     <motion.div
-      className="relative z-10 flex w-full max-w-md flex-col items-center space-y-8"
+      className="relative z-10 flex w-full max-w-4xl flex-col items-center space-y-12 text-center"
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.8, ease: "easeOut" }}
@@ -28,12 +28,12 @@ export function HeroSection() {
           damping: 10,
         }}
       >
-        <div className="flex h-20 w-20 items-center justify-center">
+        <div className="flex h-24 w-24 items-center justify-center">
           <Image
             src="/logo.svg"
             alt="Eve Logo"
-            width={64}
-            height={64}
+            width={80}
+            height={80}
             className="drop-shadow-sm"
           />
         </div>
@@ -53,38 +53,66 @@ export function HeroSection() {
         />
       </motion.div>
 
-      {/* Main Heading with staggered animation */}
+      {/* Main Heading with enhanced content */}
       <motion.div
-        className="space-y-2 text-center"
+        className="space-y-6 text-center"
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8, delay: 0.6 }}
       >
-        <TypingAnimation />
+        <div className="space-y-2">
+          <TypingAnimation />
+          <motion.p
+            className="text-foreground/80 sm:text-lg"
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.6, delay: 1.2 }}
+          >
+            with Eve.
+          </motion.p>
+        </div>
+
         <motion.p
-          className="text-lg text-foreground/80"
-          initial={{ opacity: 0, x: -20 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.6, delay: 1.2 }}
+          className="mx-auto max-w-2xl text-lg text-foreground/70 md:text-xl"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 1.4 }}
         >
-          with Eve.
+          Building safer communities through connection, not fear. Every student
+          deserves to feel secure while exploring their campus and city.
         </motion.p>
       </motion.div>
 
-      {/* Enhanced Get Started Button */}
+      <Link href="/sign-in">
+        <div className="group relative overflow-hidden rounded-2xl bg-gradient-to-r from-primary via-purple-600 to-primary p-[2px] shadow-lg transition-all duration-300 hover:shadow-xl">
+          <div className="relative rounded-2xl bg-gradient-to-r from-primary via-purple-600 to-primary px-8 py-4 text-white transition-all duration-300 group-hover:from-primary/90 group-hover:via-purple-600/90 group-hover:to-primary/90">
+            <span className="relative z-10 text-lg font-semibold">
+              Get Started Free
+            </span>
+            <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-white/20 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+          </div>
+        </div>
+      </Link>
+
+      {/* Trust indicators */}
       <motion.div
-        initial={{ opacity: 0, y: 40 }}
+        className="flex flex-wrap items-center justify-center gap-6 text-sm text-foreground/50"
+        initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8, delay: 1.4 }}
+        transition={{ duration: 0.6, delay: 2.0 }}
       >
-        <Link href="/sign-in">
-          <Button
-            size="lg"
-            className="bg-gradient-to-r from-primary to-primary/80 text-primary-foreground shadow-lg"
-          >
-            Get Started
-          </Button>
-        </Link>
+        <div className="flex items-center gap-2">
+          <div className="h-2 w-2 rounded-full bg-green-500" />
+          <span>Trusted by students</span>
+        </div>
+        <div className="flex items-center gap-2">
+          <div className="h-2 w-2 rounded-full bg-blue-500" />
+          <span>Privacy first</span>
+        </div>
+        <div className="flex items-center gap-2">
+          <div className="h-2 w-2 rounded-full bg-purple-500" />
+          <span>Community driven</span>
+        </div>
       </motion.div>
     </motion.div>
   );

@@ -16,7 +16,7 @@ export function BuddiesSection() {
         </h2>
       </div>
       <div className="space-y-3">
-        {AI_BUDDIES.map((buddy, index) => (
+        {AI_BUDDIES.slice(0, 1).map((buddy, index) => (
           <BuddyCard
             key={index}
             name={buddy.name}

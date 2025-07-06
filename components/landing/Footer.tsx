@@ -7,7 +7,7 @@ import { Heart, Shield, Users, MapPin } from "lucide-react";
 
 export function Footer() {
   return (
-    <footer className="w-full border-t border-primary/10 bg-gradient-to-t from-primary/5 to-transparent">
+    <footer className="z-40 w-full border-t border-primary/10 bg-gradient-to-t from-primary/5 to-transparent">
       <div className="mx-auto max-w-6xl px-6 py-12">
         <motion.div
           className="grid grid-cols-1 gap-8 md:grid-cols-4"

@@ -34,7 +34,7 @@ export function BottomNav() {
 
   return (
     <nav className="fixed right-0 bottom-0 left-0 z-40 w-full max-w-screen sm:left-1/2 sm:max-w-md sm:-translate-x-1/2 sm:px-4">
-      <div className="h-16 bg-card shadow-[0_-4px_4px] shadow-black/5 max-sm:rounded-t-lg sm:mb-4 sm:rounded-xl sm:border sm:shadow-lg">
+      <div className="h-16 bg-card/70 shadow-[0_-4px_4px] shadow-black/5 backdrop-blur-md max-sm:rounded-t-lg sm:mb-4 sm:rounded-xl sm:border sm:shadow-lg">
         <div className="flex items-center justify-around px-2 py-2 sm:px-4">
           <Image
             src="navlogo.svg"

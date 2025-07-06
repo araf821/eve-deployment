@@ -8,7 +8,6 @@ import { addBuddySchema, AddBuddyFormData } from "@/lib/validations/buddy";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Card } from "@/components/ui/card";
 import {
   Accordion,
   AccordionContent,
@@ -68,7 +67,7 @@ export function AddBuddyForm() {
   };
 
   return (
-    <Card className="p-6">
+    <section className="px-4 py-6">
       <div className="mb-6 flex items-center gap-3">
         <UserPlus size={24} className="text-primary" />
         <h2 className="font-heading text-xl font-semibold text-foreground">
@@ -179,6 +178,6 @@ export function AddBuddyForm() {
           </AccordionItem>
         </Accordion>
       </form>
-    </Card>
+    </section>
   );
 }

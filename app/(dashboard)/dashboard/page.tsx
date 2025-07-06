@@ -141,8 +141,8 @@ export default async function Dashboard({ searchParams }: DashboardProps) {
             <Button
               variant="outline"
               size="lg"
-              className="h-12 w-full border-border bg-card text-foreground shadow-sm hover:bg-accent"
               asChild
+              className="h-12 w-full border-border bg-card text-foreground shadow-sm hover:bg-accent"
             >
               <Link href="/map" className="flex-1">
                 <Bell className="mr-2 h-5 w-5" />

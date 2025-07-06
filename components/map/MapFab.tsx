@@ -13,6 +13,7 @@ interface MapFabProps {
   onFindBuddies: () => void;
   onFindRoute: () => void;
   isPlacementMode?: boolean;
+  isRouteMode?: boolean;
 }
 
 export default function MapFab({
@@ -20,6 +21,7 @@ export default function MapFab({
   onFindBuddies,
   onFindRoute,
   isPlacementMode = false,
+  isRouteMode = false,
 }: MapFabProps) {
   return (
     <div className="absolute bottom-6 left-4 z-20">
@@ -29,7 +31,9 @@ export default function MapFab({
             className={`flex size-12 items-center justify-center rounded-full shadow-lg transition-all duration-200 hover:scale-105 hover:shadow-xl focus:ring-2 focus:ring-primary/50 focus:ring-offset-2 focus:outline-none data-[state=open]:rotate-45 ${
               isPlacementMode
                 ? "animate-pulse bg-gradient-to-r from-orange-500 to-orange-600 data-[state=open]:from-gray-600 data-[state=open]:to-gray-700"
-                : "bg-gradient-to-r from-primary to-purple-600 data-[state=open]:from-gray-600 data-[state=open]:to-gray-700"
+                : isRouteMode
+                  ? "animate-pulse bg-gradient-to-r from-purple-500 to-purple-600 data-[state=open]:from-gray-600 data-[state=open]:to-gray-700"
+                  : "bg-gradient-to-r from-primary to-purple-600 data-[state=open]:from-gray-600 data-[state=open]:to-gray-700"
             }`}
           >
             <Plus className="size-6 text-white" />
@@ -88,16 +92,20 @@ export default function MapFab({
 
           <DropdownMenuItem
             onClick={onFindRoute}
-            className="flex cursor-pointer items-center space-x-3 px-4 py-4 text-left transition-colors hover:bg-gray-50 focus:bg-gray-50"
+            className={`flex cursor-pointer items-center space-x-3 px-4 py-4 text-left transition-colors focus:bg-gray-50 ${
+              isRouteMode ? "bg-purple-50" : "hover:bg-gray-50"
+            }`}
           >
             <div className="flex size-10 items-center justify-center rounded-full bg-gradient-to-r from-blue-500 to-blue-600 shadow-sm">
               <Navigation className="size-5 text-white" />
             </div>
             <div>
               <span className="text-sm font-medium text-gray-900">
-                Find Route
+                {isRouteMode ? "Cancel Route" : "Find Route"}
               </span>
-              <p className="text-xs text-gray-500">Get safe directions</p>
+              <p className="text-xs text-gray-500">
+                {isRouteMode ? "Cancel route selection" : "Get safe directions"}
+              </p>
             </div>
           </DropdownMenuItem>
         </DropdownMenuContent>

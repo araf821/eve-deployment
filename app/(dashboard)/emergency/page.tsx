@@ -106,7 +106,7 @@ export default function EmergencyPage() {
               Notify All Buddies
             </div>
             <div className="text-xs text-muted-foreground md:text-sm">
-              Send alert to your crew
+              Send alert to your buddies
             </div>
           </div>
         </Button>

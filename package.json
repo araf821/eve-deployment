@@ -16,6 +16,9 @@
   },
   "dependencies": {
     "@auth/drizzle-adapter": "^1.10.0",
+    "@elevenlabs/client": "^0.2.1",
+    "@google/genai": "^1.8.0",
+    "@google/generative-ai": "^0.24.1",
     "@hookform/resolvers": "^5.1.1",
     "@neondatabase/serverless": "^1.0.1",
     "@radix-ui/react-accordion": "^1.2.11",
@@ -28,6 +31,7 @@
     "clsx": "^2.1.1",
     "drizzle-kit": "^0.31.4",
     "drizzle-orm": "^0.44.2",
+    "elevenlabs": "^1.59.0",
     "google": "^2.1.0",
     "google-maps": "^4.3.3",
     "lucide-react": "^0.525.0",

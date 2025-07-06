@@ -1,0 +1,74 @@
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
+import { Home, MapPin, Shield, Sparkles } from "lucide-react";
+
+export default function NotFound() {
+  return (
+    <div className="min-h-screen bg-background flex items-center justify-center px-4 relative overflow-hidden">
+      <div className="max-w-md w-full text-center space-y-8 relative z-10">
+        {/* 404 Number with unique font */}
+        <div className="relative">
+          <h1 className="text-9xl font-black text-primary/10 select-none" style={{ fontFamily: 'Georgia, serif', letterSpacing: '-0.05em' }}>
+            404
+          </h1>
+          <div className="absolute inset-0 flex items-center justify-center">
+            <div className="text-6xl font-black text-primary" style={{ fontFamily: 'Georgia, serif', letterSpacing: '-0.05em' }}>
+              404
+            </div>
+          </div>
+        </div>
+
+        {/* Main Content */}
+        <div className="space-y-4">
+          <h2 className="text-3xl font-bold text-foreground">
+            You're lost, buddy.
+          </h2>
+          
+          <p className="text-muted-foreground text-lg leading-relaxed">
+            Looks like you wandered into the digital dark alley.
+            <br />
+            We can't find this page... but don't worry.
+          </p>
+
+          {/* Eve Logo and comforting text */}
+          <div className="pt-4 space-y-2">
+            <div className="flex items-center justify-center space-x-2">
+              <Sparkles className="w-5 h-5 text-primary animate-pulse" />
+              <span className="text-sm text-muted-foreground">but you have</span>
+              <Sparkles className="w-5 h-5 text-primary animate-pulse" />
+            </div>
+            <div className="flex mt-4 justify-center">
+              <svg 
+                width="80" 
+                height="26" 
+                viewBox="0 0 64 21" 
+                fill="none" 
+                xmlns="http://www.w3.org/2000/svg"
+                className="text-primary"
+              >
+                <path d="M27.2773 16.0195L40.4727 0H45L28.5283 20H23.9248L24 0H27.3379L27.2773 16.0195Z" fill="currentColor"/>
+                <path d="M10.5 0C15.7897 0 20.1657 3.91157 20.8936 9H20.8966L20.8992 9.04011C20.9657 9.51723 21 10.0046 21 10.5C21 10.9953 20.9657 11.4827 20.8992 11.9598L20.8966 12H14.2572C14.1632 12.0577 14.0612 12.1086 13.951 12.151L12.6511 12.6511L12.151 13.951C11.5696 15.4629 9.43051 15.4629 8.84897 13.951L8.349 12.6511L7.04892 12.151C5.53704 11.5694 5.53715 9.43046 7.04903 8.84897L8.34891 8.34891L8.84897 7.04903L8.87736 6.97922C9.48712 5.56029 11.5129 5.56036 12.1227 6.97922L12.151 7.04892L12.6511 8.349L13.951 8.84897C14.0613 8.89135 14.1632 8.94228 14.2573 9H17.9298C17.2337 5.53309 14.1719 2.92161 10.5 2.92161C6.3146 2.92161 2.92161 6.3146 2.92161 10.5C2.92161 14.6854 6.3146 18.0784 10.5 18.0784C13.0003 18.0784 15.2179 16.8674 16.5981 15H19.9892C18.304 18.5473 14.6885 21 10.5 21C4.70101 21 0 16.299 0 10.5C0 4.70101 4.70101 0 10.5 0ZM10.5097 7.68033C10.5063 7.67149 10.4938 7.67149 10.4904 7.68033L9.9276 9.14335L9.87406 9.28156C9.826 9.40299 9.79172 9.47812 9.74495 9.54391C9.68966 9.62166 9.62166 9.68966 9.54391 9.74495C9.4562 9.80731 9.35189 9.8474 9.14335 9.9276L7.68901 10.487L7.68033 10.4904C7.67149 10.4938 7.67149 10.5063 7.68033 10.5097L9.14335 11.0724C9.35189 11.1526 9.4562 11.1927 9.54391 11.2551C9.62166 11.3103 9.68967 11.3784 9.74495 11.4561C9.80731 11.5438 9.8474 11.6482 9.9276 11.8566L10.4904 13.3198C10.4934 13.3274 10.5033 13.3284 10.508 13.3226L10.5097 13.3198L10.513 13.311L11.0724 11.8566C11.1527 11.6481 11.1927 11.5438 11.2551 11.4561C11.3103 11.3784 11.3784 11.3103 11.4561 11.2551C11.5219 11.2083 11.5971 11.1741 11.7184 11.1261L11.8566 11.0724L13.311 10.513L13.3198 10.5097C13.3274 10.5067 13.3284 10.4967 13.3226 10.492L13.3198 10.4904L11.8566 9.9276C11.6482 9.8474 11.5438 9.80731 11.4561 9.74495C11.3784 9.68967 11.3103 9.62165 11.2551 9.54391C11.2083 9.47813 11.1741 9.40297 11.1261 9.28156L11.0724 9.14335L10.5097 7.68033Z" fill="currentColor"/>
+                <path d="M53.5 0C58.7897 0 63.1657 3.91157 63.8936 9H63.8966L63.8992 9.04011C63.9657 9.51723 64 10.0046 64 10.5C64 10.9953 63.9657 11.4827 63.8992 11.9598L63.8966 12H57.2572C57.1632 12.0577 57.0612 12.1086 56.951 12.151L55.6511 12.6511L55.151 13.951C54.5696 15.4629 52.4305 15.4629 51.849 13.951L51.349 12.6511L50.0489 12.151C48.537 11.5694 48.5372 9.43046 50.049 8.84897L51.3489 8.34891L51.849 7.04903L51.8774 6.97922C52.4871 5.56029 54.5129 5.56036 55.1227 6.97922L55.151 7.04892L55.6511 8.349L56.951 8.84897C57.0613 8.89135 57.1632 8.94228 57.2573 9H60.9298C60.2337 5.53309 57.1719 2.92161 53.5 2.92161C49.3146 2.92161 45.9216 6.3146 45.9216 10.5C45.9216 14.6854 49.3146 18.0784 53.5 18.0784C56.0003 18.0784 58.2179 16.8674 59.5981 15H62.9892C61.304 18.5473 57.6885 21 53.5 21C47.701 21 43 16.299 43 10.5C43 4.70101 47.701 0 53.5 0ZM53.5097 7.68033C53.5063 7.67149 53.4938 7.67149 53.4904 7.68033L52.9276 9.14335L52.8741 9.28156C52.826 9.40299 52.7917 9.47812 52.745 9.54391C52.6897 9.62166 52.6217 9.68966 52.5439 9.74495C52.4562 9.80731 52.3519 9.8474 52.1433 9.9276L50.689 10.487L50.6803 10.4904C50.6715 10.4938 50.6715 10.5063 50.6803 10.5097L52.1433 11.0724C52.3519 11.1526 52.4562 11.1927 52.5439 11.2551C52.6217 11.3103 52.6897 11.3784 52.745 11.4561C52.8073 11.5438 52.8474 11.6482 52.9276 11.8566L53.4904 13.3198C53.4934 13.3274 53.5033 13.3284 53.508 13.3226L53.5097 13.3198L53.513 13.311L54.0724 11.8566C54.1527 11.6481 54.1927 11.5438 54.2551 11.4561C54.3103 11.3784 54.3784 11.3103 54.4561 11.2551C54.5219 11.2083 54.5971 11.1741 54.7184 11.1261L54.8566 11.0724L56.311 10.513L56.3198 10.5097C56.3274 10.5067 56.3284 10.4967 56.3226 10.492L56.3198 10.4904L54.8566 9.9276C54.6482 9.8474 54.5438 9.80731 54.4561 9.74495C54.3784 9.68967 54.3103 9.62165 54.2551 9.54391C54.2083 9.47813 54.1741 9.40297 54.1261 9.28156L54.0724 9.14335L53.5097 7.68033Z" fill="currentColor"/>
+              </svg>
+            </div>
+          </div>
+        </div>
+
+        {/* Action Button */}
+        <div className="pt-4">
+          <Button asChild size="lg" className="text-lg px-8 py-4">
+            <Link href="/">
+              Return to safety :D
+            </Link>
+          </Button>
+        </div>
+      </div>
+
+      {/* Enhanced Decorative Elements */}
+      <div className="absolute top-10 left-10 w-20 h-20 bg-primary/5 rounded-full blur-xl animate-pulse"></div>
+      <div className="absolute bottom-10 right-10 w-32 h-32 bg-primary/5 rounded-full blur-xl animate-pulse"></div>
+      <div className="absolute top-1/2 left-1/4 w-16 h-16 bg-primary/3 rounded-full blur-lg"></div>
+      <div className="absolute top-1/3 right-1/4 w-12 h-12 bg-primary/4 rounded-full blur-md"></div>
+    </div>
+  );
+} 

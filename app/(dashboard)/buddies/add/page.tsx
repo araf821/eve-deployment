@@ -15,17 +15,17 @@ export default async function AddBuddyPage() {
   }
 
   return (
-    <div className="container mx-auto max-w-md">
-      <header className="mt-12 mb-8">
-        <Image
-          src="/logo.svg"
-          alt="NiteLite Logo"
-          width={64}
-          height={64}
-          priority
-          className="mb-8"
-        />
-        <div className="mb-6">
+    <div>
+      <header className="px-4 pt-12 pb-8">
+        <div className="flex items-center justify-between">
+          <Image
+            src="/logo.svg"
+            alt="NiteLite Logo"
+            width={64}
+            height={64}
+            priority
+            className="mb-8"
+          />
           <Link href="/buddies" className="mb-6 inline-block">
             <Button
               variant="outline"
@@ -36,16 +36,16 @@ export default async function AddBuddyPage() {
               Back to Buddies
             </Button>
           </Link>
-          <PageHeader
-            title="Add Buddy"
-            subtitle="Invite a friend to join your safety network"
-          />
         </div>
-        <div className="mt-6 h-px bg-border"></div>
+        <PageHeader
+          title="Add Buddy"
+          subtitle="Invite a friend to join your safety network"
+        />
       </header>
-      <main>
-        <AddBuddyForm />
-      </main>
+
+      <hr />
+
+      <AddBuddyForm />
     </div>
   );
 }

@@ -25,7 +25,7 @@ export default async function Dashboard({ searchParams }: DashboardProps) {
   return (
     <>
       {/* Header */}
-      <header className="bg-accent px-4 pt-12 pb-6">
+      <header className="bg-accent/50 px-4 pt-12 pb-6">
         <Image
           src="/logo.svg"
           alt="NiteLite Logo"

@@ -1,12 +1,21 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent } from "@/components/ui/card";
-import { Upload, Camera, Send, X, CheckCircle, ArrowLeft, MapPin } from "lucide-react";
+import {
+  Upload,
+  Camera,
+  Send,
+  X,
+  CheckCircle,
+  ArrowLeft,
+  MapPin,
+} from "lucide-react";
+import Image from "next/image";
 
 interface IncidentReportModalProps {
   isOpen: boolean;
@@ -15,11 +24,11 @@ interface IncidentReportModalProps {
   onAlertSubmitted?: () => void;
 }
 
-export function IncidentReportModal({ 
-  isOpen, 
-  onClose, 
+export function IncidentReportModal({
+  isOpen,
+  onClose,
   selectedLocation,
-  onAlertSubmitted
+  onAlertSubmitted,
 }: IncidentReportModalProps) {
   const [selectedImage, setSelectedImage] = useState<File | null>(null);
   const [description, setDescription] = useState("");
@@ -47,7 +56,7 @@ export function IncidentReportModal({
       formData.append("location", location);
       formData.append("lat", selectedLocation?.lat.toString() || "");
       formData.append("lng", selectedLocation?.lng.toString() || "");
-      
+
       if (selectedImage) {
         formData.append("image", selectedImage);
       }
@@ -75,7 +84,7 @@ export function IncidentReportModal({
       if (selectedImage) {
         const imageFormData = new FormData();
         imageFormData.append("image", selectedImage);
-        
+
         const imageResponse = await fetch("/api/alerts/image", {
           method: "POST",
           body: imageFormData,
@@ -88,7 +97,7 @@ export function IncidentReportModal({
 
       setIsSubmitting(false);
       setIsSubmitted(true);
-      
+
       // Call the callback to reload alerts on the map
       onAlertSubmitted?.();
     } catch (err) {
@@ -116,70 +125,84 @@ export function IncidentReportModal({
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-[100] bg-black/80 flex items-center justify-center p-4 overflow-hidden h-full">
-      <div className="bg-white rounded-lg max-w-md w-full h-[95vh] flex flex-col overflow-hidden">
+    <div className="fixed inset-0 z-[100] flex h-full items-center justify-center overflow-hidden bg-black/80 p-4">
+      <div className="flex h-[95vh] w-full max-w-md flex-col overflow-hidden rounded-lg bg-white">
         {isSubmitted ? (
           // Success Screen
-          <div className="p-6 text-center flex flex-col h-full">
-            <div className="flex-1 flex flex-col justify-center">
+          <div className="flex h-full flex-col p-6 text-center">
+            <div className="flex flex-1 flex-col justify-center">
               <div className="mb-6">
-                <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <CheckCircle className="w-8 h-8 text-green-600" />
+                <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-green-100">
+                  <CheckCircle className="h-8 w-8 text-green-600" />
                 </div>
-                <h2 className="text-xl font-semibold text-gray-900 mb-2">
+                <h2 className="mb-2 text-xl font-semibold text-gray-900">
                   Incident Report Submitted!
                 </h2>
-                <p className="text-gray-600 text-sm">
-                  Your detailed incident report has been submitted and will be reviewed by the safety team.
+                <p className="text-sm text-gray-600">
+                  Your detailed incident report has been submitted and will be
+                  reviewed by the safety team.
                 </p>
               </div>
 
-              <div className="bg-gray-50 rounded-lg p-4 text-left">
-                <h3 className="font-medium text-gray-900 mb-2">Report Summary:</h3>
+              <div className="rounded-lg bg-gray-50 p-4 text-left">
+                <h3 className="mb-2 font-medium text-gray-900">
+                  Report Summary:
+                </h3>
                 <div className="space-y-1 text-sm text-gray-600">
                   <div>
                     <span className="font-medium">Location:</span> {location}
                   </div>
                   <div>
-                    <span className="font-medium">Description:</span> {description.slice(0, 50)}...
+                    <span className="font-medium">Description:</span>{" "}
+                    {description.slice(0, 50)}...
                   </div>
                   {selectedImage && (
                     <div>
-                      <span className="font-medium">Photo:</span> {selectedImage.name}
+                      <span className="font-medium">Photo:</span>{" "}
+                      {selectedImage.name}
                     </div>
                   )}
                   <div>
-                    <span className="font-medium">Report ID:</span> #INC-{Date.now().toString().slice(-6)}
+                    <span className="font-medium">Report ID:</span> #INC-
+                    {Date.now().toString().slice(-6)}
                   </div>
                   <div>
-                    <span className="font-medium">Submitted:</span> {new Date().toLocaleString()}
+                    <span className="font-medium">Submitted:</span>{" "}
+                    {new Date().toLocaleString()}
                   </div>
                 </div>
               </div>
             </div>
 
-            <div className="space-y-3 mt-auto">
-              <Button onClick={handleClose} className="w-full bg-green-600 hover:bg-green-700 text-white">
-                <CheckCircle className="w-4 h-4 mr-2" />
+            <div className="mt-auto space-y-3">
+              <Button
+                onClick={handleClose}
+                className="w-full bg-green-600 text-white hover:bg-green-700"
+              >
+                <CheckCircle className="mr-2 h-4 w-4" />
                 Done
               </Button>
-              <Button onClick={handleBackToForm} variant="outline" className="w-full bg-transparent">
-                <ArrowLeft className="w-4 h-4 mr-2" />
+              <Button
+                onClick={handleBackToForm}
+                variant="outline"
+                className="w-full bg-transparent"
+              >
+                <ArrowLeft className="mr-2 h-4 w-4" />
                 Submit Another Report
               </Button>
             </div>
           </div>
         ) : (
           // Form Screen
-          <div className="flex flex-col h-full">
+          <div className="flex h-full flex-col">
             {/* Header */}
-            <div className="flex items-center justify-between p-6 pb-4 border-b">
+            <div className="flex items-center justify-between border-b p-6 pb-4">
               <div className="flex items-center gap-2">
-                <Camera className="w-5 h-5" />
+                <Camera className="h-5 w-5" />
                 <h2 className="text-lg font-semibold">Report Incident</h2>
               </div>
               <Button onClick={handleClose} variant="ghost" size="sm">
-                <X className="w-4 h-4" />
+                <X className="h-4 w-4" />
               </Button>
             </div>
 
@@ -190,10 +213,11 @@ export function IncidentReportModal({
                 {selectedLocation && (
                   <div className="space-y-2">
                     <Label>Selected Location</Label>
-                    <div className="flex items-center gap-2 p-3 bg-blue-50 rounded-md">
-                      <MapPin className="w-4 h-4 text-blue-600" />
+                    <div className="flex items-center gap-2 rounded-md bg-blue-50 p-3">
+                      <MapPin className="h-4 w-4 text-blue-600" />
                       <span className="text-sm text-blue-800">
-                        {selectedLocation.address || `${selectedLocation.lat.toFixed(6)}, ${selectedLocation.lng.toFixed(6)}`}
+                        {selectedLocation.address ||
+                          `${selectedLocation.lat.toFixed(6)}, ${selectedLocation.lng.toFixed(6)}`}
                       </span>
                     </div>
                   </div>
@@ -202,28 +226,34 @@ export function IncidentReportModal({
                 {/* Image Upload */}
                 <div className="space-y-2">
                   <Label htmlFor="image">Photo Evidence (Optional)</Label>
-                  <div className="border-2 border-dashed border-gray-300 rounded-md p-4 text-center">
-                    <input 
-                      id="image" 
-                      type="file" 
-                      accept="image/*" 
-                      onChange={handleImageUpload} 
-                      className="hidden" 
+                  <div className="rounded-md border-2 border-dashed border-gray-300 p-4 text-center">
+                    <input
+                      id="image"
+                      type="file"
+                      accept="image/*"
+                      onChange={handleImageUpload}
+                      className="hidden"
                     />
-                    <label htmlFor="image" className="cursor-pointer block">
+                    <label htmlFor="image" className="block cursor-pointer">
                       {selectedImage ? (
                         <div className="space-y-2">
-                          <img
+                          <Image
                             src={URL.createObjectURL(selectedImage)}
                             alt="Selected"
-                            className="w-full h-24 object-cover rounded-md"
+                            className="h-24 w-full rounded-md object-cover"
+                            width={96}
+                            height={96}
                           />
-                          <p className="text-xs text-gray-600">{selectedImage.name}</p>
+                          <p className="text-xs text-gray-600">
+                            {selectedImage.name}
+                          </p>
                         </div>
                       ) : (
                         <>
-                          <Upload className="w-6 h-6 mx-auto text-gray-400 mb-1" />
-                          <p className="text-xs text-gray-600">Click to upload photo</p>
+                          <Upload className="mx-auto mb-1 h-6 w-6 text-gray-400" />
+                          <p className="text-xs text-gray-600">
+                            Click to upload photo
+                          </p>
                         </>
                       )}
                     </label>
@@ -237,7 +267,7 @@ export function IncidentReportModal({
                     id="description"
                     placeholder="Describe what happened, any suspicious activity, or safety concerns..."
                     value={description}
-                    onChange={(e) => setDescription(e.target.value)}
+                    onChange={e => setDescription(e.target.value)}
                     className="min-h-[11vh] resize-none"
                     required
                   />
@@ -250,27 +280,30 @@ export function IncidentReportModal({
                     id="location"
                     placeholder="Enter specific address or location details..."
                     value={location}
-                    onChange={(e) => setLocation(e.target.value)}
+                    onChange={e => setLocation(e.target.value)}
                     required
                   />
                   <p className="text-xs text-gray-500">
-                    e.g., "Near the entrance of Robarts Library, University of Toronto"
+                    e.g., &quot;Near the entrance of Robarts Library, University
+                    of Toronto&quot;
                   </p>
                 </div>
 
                 {/* Map Preview */}
                 <Card>
                   <CardContent className="p-0">
-                    <div className="relative h-48 bg-gray-100 rounded-md overflow-hidden">
+                    <div className="relative h-48 overflow-hidden rounded-md bg-gray-100">
                       <div className="absolute inset-0 flex items-center justify-center">
                         <div className="text-center">
-                          <MapPin className="w-8 h-8 text-red-500 mx-auto mb-2" />
-                          <p className="text-sm text-gray-600">Selected Location</p>
+                          <MapPin className="mx-auto mb-2 h-8 w-8 text-red-500" />
+                          <p className="text-sm text-gray-600">
+                            Selected Location
+                          </p>
                         </div>
                       </div>
                       {selectedLocation && (
                         <div className="absolute top-2 left-2">
-                          <div className="w-3 h-3 bg-red-500 rounded-full border border-white" />
+                          <div className="h-3 w-3 rounded-full border border-white bg-red-500" />
                         </div>
                       )}
                     </div>
@@ -278,7 +311,7 @@ export function IncidentReportModal({
                 </Card>
 
                 {error && (
-                  <div className="p-3 bg-red-50 border border-red-200 rounded-md">
+                  <div className="rounded-md border border-red-200 bg-red-50 p-3">
                     <p className="text-sm text-red-600">{error}</p>
                   </div>
                 )}
@@ -286,7 +319,7 @@ export function IncidentReportModal({
             </div>
 
             {/* Footer Buttons */}
-            <div className="p-6 pt-4 border-t">
+            <div className="border-t p-6 pt-4">
               <div className="flex gap-3">
                 <Button
                   type="button"
@@ -297,19 +330,19 @@ export function IncidentReportModal({
                 >
                   Cancel
                 </Button>
-                <Button 
-                  onClick={handleSubmit} 
-                  className="flex-1 bg-red-500 hover:bg-red-600" 
+                <Button
+                  onClick={handleSubmit}
+                  className="flex-1 bg-red-500 hover:bg-red-600"
                   disabled={isSubmitting}
                 >
                   {isSubmitting ? (
                     <>
-                      <div className="w-4 h-4 mr-2 animate-spin rounded-full border-2 border-white border-t-transparent" />
+                      <div className="mr-2 h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent" />
                       Submitting...
                     </>
                   ) : (
                     <>
-                      <Send className="w-4 h-4 mr-2" />
+                      <Send className="mr-2 h-4 w-4" />
                       Submit Report
                     </>
                   )}
@@ -321,4 +354,4 @@ export function IncidentReportModal({
       </div>
     </div>
   );
-} 
+}

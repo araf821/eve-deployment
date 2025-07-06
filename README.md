@@ -61,7 +61,7 @@ DATABASE_URL="postgresql://username:password@host/database"
 
 # NextAuth
 NEXTAUTH_SECRET="your-secret-key-here"
-NEXTAUTH_URL="http://localhost:3000"
+NEXTAUTH_URL="https://eve.codelikecrazy.dev"
 
 # Google OAuth
 GOOGLE_CLIENT_ID="your-google-client-id"
@@ -84,12 +84,12 @@ OPENAI_API_KEY="your-openai-api-key"
 1. Go to [Google Cloud Console](https://console.cloud.google.com/)
 2. Create/select project and enable Google+ API
 3. Create OAuth 2.0 credentials
-4. Add redirect URI: `http://localhost:3000/api/auth/callback/google`
+4. Add redirect URI: `https://eve.codelikecrazy.dev/api/auth/callback/google`
 
 #### Discord OAuth
 1. Go to [Discord Developer Portal](https://discord.com/developers/applications)
 2. Create new application
-3. Add redirect URI: `http://localhost:3000/api/auth/callback/discord`
+3. Add redirect URI: `https://eve.codelikecrazy.dev/api/auth/callback/discord`
 
 ### 3. Google Maps Setup
 
@@ -119,7 +119,7 @@ bun install
 bun dev
 ```
 
-Visit `http://localhost:3000` to start using Eve!
+Visit `https://eve.codelikecrazy.dev` to start using Eve!
 
 ## 📜 Available Scripts
 

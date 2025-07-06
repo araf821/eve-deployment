@@ -6,26 +6,32 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import SocialLogin from "@/components/auth/SocialLogin";
+import Link from "next/link";
 
 export default function SignInPage() {
   return (
-    <div className="bg-transparent border-transparent">
-      <CardHeader className="text-center">
-        <CardTitle className="text-2xl">Welcome Back to Eve</CardTitle>
-        <CardDescription>
-          Sign in to your account to continue your safe campus journey
+    <Card className="border-border/50 bg-card/80 shadow-lg backdrop-blur-sm">
+      <CardHeader className="space-y-2 text-center">
+        <CardTitle className="font-heading text-2xl font-semibold text-foreground">
+          Welcome Back
+        </CardTitle>
+        <CardDescription className="text-muted-foreground">
+          Sign in to continue your safe campus journey
         </CardDescription>
       </CardHeader>
-      <div className="flex-1 min-h-[2vh]"></div>
-      <CardContent>
+      <CardContent className="space-y-6">
         <SocialLogin providers={["google", "discord"]} />
-        <div className="mt-4 text-center text-sm text-muted-foreground">
+
+        <div className="text-center text-sm text-muted-foreground">
           Don&apos;t have an account?{" "}
-          <a href="/sign-up" className="text-primary hover:underline">
+          <Link
+            href="/sign-up"
+            className="font-medium text-primary transition-colors hover:text-primary/80 hover:underline"
+          >
             Sign up
-          </a>
+          </Link>
         </div>
       </CardContent>
-    </div>
+    </Card>
   );
 }

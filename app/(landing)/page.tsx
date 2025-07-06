@@ -1,44 +1,60 @@
-import { getCurrentUser } from "@/server/lib/auth";
-import { Button } from "@/components/ui/button";
-import { redirect } from "next/navigation";
-import { Sparkle } from "lucide-react";
-import { TypingAnimation } from "@/components/typing-animation";
-import Link from "next/link";
+"use client";
 
-export default async function Home() {
-  const user = await getCurrentUser();
+import {
+  BackgroundElements,
+  HeroSection,
+  FeaturesSection,
+  PhoneShowcase,
+  FAQSection,
+  Footer,
+  SectionDivider,
+} from "@/components/landing";
 
-  // If user is authenticated, redirect to dashboard
-  if (user) {
-    redirect("/dashboard");
-  }
-
+export default function Home() {
   return (
-    <div className="min-h-screen bg-gradient-to-tl from-background to-purple-300 flex flex-col items-center justify-center p-6">
-      <div className="flex flex-col items-center space-y-8 max-w-sm w-full">
-        <div className="relative">
-          <div className="w-16 h-16 flex items-center justify-center">
-            <Sparkle className="w-8 h-8 text-black animate-spin" />
-          </div>
-        </div>
-        {/* Main Heading with Typing Animation */}
-        <div className="text-center space-y-2">
-          <TypingAnimation />
-          <p className="text-black text-lg">with Eve.</p>
-        </div>
-        {/* Spacer */}
-        <div className="flex-1 min-h-[3vh]"></div>
-        {/* Discord Login Button */}
-        <Link href="/sign-in">
-        <Button
-          className="w-40 bg-transparent border-none text-gray-700 bg-white/70 hover:bg-white/20 text-base font-normal"
-          variant="ghost"
-        >
-          Get Started
-        </Button>
-        </Link>
+    <div className="relative min-h-screen overflow-hidden bg-background">
+      {/* Background with proper colors and gradients */}
+      <div className="absolute inset-0 bg-gradient-to-br from-background via-primary/5 to-background">
+        <div className="absolute inset-0 bg-gradient-to-t from-primary/10 via-transparent via-70% to-background" />
+        <div className="absolute top-0 right-0 left-0 h-[80vh] bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-primary/20 via-transparent to-transparent" />
       </div>
-      <img src="logo.svg" className="absolute bottom-0 py-10" />
+
+      <BackgroundElements />
+
+      {/* Hero Section */}
+      <section className="relative flex min-h-screen items-center justify-center p-6">
+        <HeroSection />
+      </section>
+
+      {/* Divider */}
+      <SectionDivider variant="wave" />
+
+      {/* Features Section */}
+      <section className="relative flex items-center justify-center">
+        <FeaturesSection />
+      </section>
+
+      {/* Divider */}
+      <SectionDivider variant="default" />
+
+      {/* Phone Showcase Section */}
+      <section className="relative flex items-center justify-center">
+        <PhoneShowcase />
+      </section>
+
+      {/* Divider */}
+      <SectionDivider variant="dots" />
+
+      {/* FAQ Section */}
+      <section className="relative flex items-center justify-center">
+        <FAQSection />
+      </section>
+
+      {/* Divider */}
+      <SectionDivider variant="default" />
+
+      {/* Footer */}
+      <Footer />
     </div>
   );
 }

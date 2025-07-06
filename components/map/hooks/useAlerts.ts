@@ -19,7 +19,8 @@ export function useAlerts() {
     message: "",
   });
   const [isPlacementMode, setIsPlacementMode] = useState(false);
-  const [selectedLocation, setSelectedLocation] = useState<SelectedLocation | null>(null);
+  const [selectedLocation, setSelectedLocation] =
+    useState<SelectedLocation | null>(null);
   const [showIncidentModal, setShowIncidentModal] = useState(false);
   const mapClickListenerRef = useRef<google.maps.MapsEventListener | null>(
     null
@@ -58,6 +59,7 @@ export function useAlerts() {
     setTimeout(() => setAlertStatus({ type: null, message: "" }), 3000);
   };
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const saveAlertToDatabase = async (
     lat: number,
     lng: number,
@@ -98,6 +100,7 @@ export function useAlerts() {
   };
 
   const enablePlacementMode = useCallback(
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     (map: google.maps.Map, onSuccess?: () => void) => {
       if (!map || !window.google) {
         showAlertStatus("error", "Map not ready");
@@ -140,6 +143,7 @@ export function useAlerts() {
         }
       );
     },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     []
   );
 

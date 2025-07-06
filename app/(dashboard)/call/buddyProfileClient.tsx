@@ -3,8 +3,9 @@
 
 import { useState, useEffect, useRef } from "react";
 import { Phone } from "lucide-react";
+import { User } from "@/types/next-auth";
 
-export default function BuddyProfile({ user }: { user: any }) {
+export default function BuddyProfile({ user }: { user: User | null }) {
   const [timer, setTimer] = useState(0);
   const [isRecording, setIsRecording] = useState(false);
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
@@ -12,7 +13,7 @@ export default function BuddyProfile({ user }: { user: any }) {
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setTimer((prev) => prev + 1);
+      setTimer(prev => prev + 1);
     }, 1000);
     return () => clearInterval(interval);
   }, []);
@@ -30,7 +31,7 @@ export default function BuddyProfile({ user }: { user: any }) {
       mediaRecorderRef.current = mediaRecorder;
       audioChunks.current = [];
 
-      mediaRecorder.ondataavailable = (event) => {
+      mediaRecorder.ondataavailable = event => {
         if (event.data.size > 0) {
           audioChunks.current.push(event.data);
         }
@@ -43,7 +44,7 @@ export default function BuddyProfile({ user }: { user: any }) {
       if (!recorder) return;
 
       recorder.stop();
-      recorder.stream.getTracks().forEach((track) => track.stop());
+      recorder.stream.getTracks().forEach(track => track.stop());
       setIsRecording(false);
 
       recorder.onstop = async () => {
@@ -71,32 +72,34 @@ export default function BuddyProfile({ user }: { user: any }) {
 
   return (
     <div className="flex flex-col items-center justify-center p-4">
-      <div className="bg-white rounded-3xl shadow-lg p-8 w-full max-w-sm text-center flex items-center justify-center flex-col">
+      <div className="flex w-full max-w-sm flex-col items-center justify-center rounded-3xl bg-white p-8 text-center shadow-lg">
         <div className="mb-6">
-          <div className="w-24 h-24 mx-auto mb-4 rounded-full border-4 border-black overflow-hidden">
+          <div className="mx-auto mb-4 h-24 w-24 overflow-hidden rounded-full border-4 border-black">
             <img
               src="/avatar.svg"
               alt="Buddy Avatar"
-              className="w-full h-full object-cover"
+              className="h-full w-full object-cover"
             />
           </div>
         </div>
 
-        <h1 className="text-3xl font-bold text-gray-900 mb-2">Ev</h1>
+        <h1 className="mb-2 text-3xl font-bold text-gray-900">Ev</h1>
 
-        <p className="text-gray-600 mb-4">AI Buddy</p>
+        <p className="mb-4 text-gray-600">AI Buddy</p>
 
-        <div className="text-2xl font-mono text-gray-700 mb-8">{formatTime(timer)}</div>
+        <div className="mb-8 font-mono text-2xl text-gray-700">
+          {formatTime(timer)}
+        </div>
 
         <button
           onClick={toggleRecording}
-          className={`w-16 h-16 rounded-full flex items-center justify-center shadow-lg transition-colors ${
+          className={`flex h-16 w-16 items-center justify-center rounded-full shadow-lg transition-colors ${
             isRecording
               ? "bg-green-500 hover:bg-green-400"
               : "bg-red-400 hover:bg-red-300"
           }`}
         >
-          <Phone className="w-8 h-8 -rotate-225 text-white" />
+          <Phone className="h-8 w-8 -rotate-225 text-white" />
         </button>
       </div>
     </div>

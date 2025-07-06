@@ -17,7 +17,7 @@ export default async function BuddiesPage() {
 
   return (
     <div className="">
-      <header className="px-4 pt-12 pb-8">
+      <header className="bg-accent/50 px-4 pt-12 pb-8">
         <Image
           src="/logo.svg"
           alt="NiteLite Logo"

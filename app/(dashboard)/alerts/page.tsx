@@ -61,7 +61,12 @@ export default async function AlertsPage() {
           className="mb-8"
         />
         <Link href="/dashboard" className="text-muted-foreground">
-        <Button className="absolute text-xl text-black right-0 top-0 p-8 bg-transparent border-transparent" variant="ghost">X</Button>
+          <Button
+            className="absolute top-0 right-0 border-transparent bg-transparent p-8 text-xl text-black"
+            variant="ghost"
+          >
+            X
+          </Button>
         </Link>
         <PageHeader
           title="All Alerts"
@@ -73,7 +78,7 @@ export default async function AlertsPage() {
         {/* Report Incident Button */}
         <section className="mb-6 space-y-4">
           <AlertModalWrapper>
-            <button className="w-full rounded-lg bg-[#FF6767]/50 p-1.5">
+            <button className="w-full cursor-pointer rounded-lg bg-[#FF6767]/50 p-1.5">
               <div className="flex h-16 items-center justify-center rounded-lg bg-[#FF6767] p-4 text-lg font-semibold text-red-50">
                 Report Incident
               </div>
@@ -99,24 +104,24 @@ export default async function AlertsPage() {
                   className="rounded-lg border border-border bg-card/70 p-4 shadow-sm"
                 >
                   <a href="police.pdf" download="police.pdf">
-                  <div className="flex flex-col space-y-1">
-                    <div className="flex items-center justify-between">
-                      <span className="text-sm font-medium text-foreground">
-                        {formatDate(alert.createdAt)},{" "}
-                        {formatTime(alert.createdAt)}
-                      </span>
-                    </div>
-                    <p className="text-sm text-muted-foreground">
-                      @{" "}
-                      {alert.address ||
-                        `${alert.lat.toFixed(4)}, ${alert.lng.toFixed(4)}`}
-                    </p>
-                    {alert.userName && (
-                      <p className="text-xs text-muted-foreground">
-                        Reported by {alert.userName}
+                    <div className="flex flex-col space-y-1">
+                      <div className="flex items-center justify-between">
+                        <span className="text-sm font-medium text-foreground">
+                          {formatDate(alert.createdAt)},{" "}
+                          {formatTime(alert.createdAt)}
+                        </span>
+                      </div>
+                      <p className="text-sm text-muted-foreground">
+                        @{" "}
+                        {alert.address ||
+                          `${alert.lat.toFixed(4)}, ${alert.lng.toFixed(4)}`}
                       </p>
-                    )}
-                  </div>
+                      {alert.userName && (
+                        <p className="text-xs text-muted-foreground">
+                          Reported by {alert.userName}
+                        </p>
+                      )}
+                    </div>
                   </a>
                 </div>
               ))}

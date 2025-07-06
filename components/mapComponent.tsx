@@ -7,6 +7,7 @@ import {
   useAlerts,
   useAlertModal,
   useLocation,
+  useRoute,
 } from "./map/hooks";
 import { useBuddies } from "./map/hooks/useBuddies";
 import {
@@ -60,6 +61,20 @@ export default function MapComponent() {
   } = useAlerts();
   const { selectedAlert, isModalOpen, openModal, closeModal } = useAlertModal();
   const { buddies, loading: buddiesLoading } = useBuddies();
+
+  // Route functionality
+  const {
+    isRouteMode,
+    routeStatus,
+    enableRouteMode,
+    disableRouteMode,
+    clearRoute,
+  } = useRoute({
+    map,
+    onRouteComplete: () => {
+      console.log("Route creation completed");
+    },
+  });
 
   // State and refs for buddy markers
   const [showingBuddies, setShowingBuddies] = useState(false);
@@ -195,8 +210,21 @@ export default function MapComponent() {
   };
 
   const handleFindRoute = () => {
-    // TODO: Implement find route functionality
-    console.log("Find route clicked");
+    if (!map) {
+      console.log("Map not ready");
+      return;
+    }
+
+    if (isRouteMode) {
+      // If already in route mode, disable it
+      disableRouteMode();
+      clearRoute();
+      console.log("Route mode disabled");
+    } else {
+      // Enable route mode
+      enableRouteMode();
+      console.log("Route mode enabled");
+    }
   };
 
   const handleBuddySelect = (buddy: Buddy) => {
@@ -356,10 +384,11 @@ export default function MapComponent() {
         onFindBuddies={handleFindBuddies}
         onFindRoute={handleFindRoute}
         isPlacementMode={isPlacementMode}
+        isRouteMode={isRouteMode}
       />
 
       {/* Status Indicator */}
-      <MapStatusIndicator alertStatus={alertStatus} />
+      <MapStatusIndicator alertStatus={alertStatus} routeStatus={routeStatus} />
 
       {/* Alert Modal */}
       <AlertModal

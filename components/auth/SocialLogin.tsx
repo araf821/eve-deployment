@@ -2,6 +2,7 @@
 
 import { signIn } from "next-auth/react";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import { Icons } from "../ui/icons";
 
 interface SocialLoginProps {
@@ -63,6 +64,11 @@ export default function SocialLogin({
           </Button>
         );
       })}
+      <Input
+        type="tel"
+        placeholder="Phone number"
+        className="w-full"
+      />
     </div>
   );
 }

@@ -105,7 +105,7 @@ export function ContactsSection() {
         </h2>
       </div>
 
-      {buddies.length === 0 ? (
+      {(!buddies || buddies.length === 0) ? (
         <Card className="p-8">
           <div className="text-center">
             <Users size={48} className="mx-auto mb-4 text-muted-foreground" />

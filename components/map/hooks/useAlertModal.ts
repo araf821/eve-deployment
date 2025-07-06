@@ -8,6 +8,8 @@ interface AlertData {
   lat: number;
   lng: number;
   address?: string;
+  description?: string;
+  hasImage?: string;
   createdAt: Date;
   userName?: string;
   marker?: any;

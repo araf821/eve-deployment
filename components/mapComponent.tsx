@@ -10,6 +10,7 @@ import {
 } from "./map/hooks"
 import { useBuddies } from "./map/hooks/useBuddies"
 import { MapFab, MapSearch, MapStatusIndicator, AlertModal, MapLoadingState } from "./map"
+import { IncidentReportModal } from "./map/IncidentReportModal"
 import { useRef, useState } from "react"
 
 interface SearchResult {
@@ -42,7 +43,14 @@ export default function MapComponent() {
     onAlertClick: (alert) => openModal(alert),
   })
 
-  const { alertStatus, isPlacementMode, addAlertPin } = useAlerts()
+  const { 
+    alertStatus, 
+    isPlacementMode, 
+    selectedLocation,
+    showIncidentModal,
+    addAlertPin, 
+    closeIncidentModal 
+  } = useAlerts()
   const { selectedAlert, isModalOpen, openModal, closeModal } = useAlertModal()
   const { buddies, loading: buddiesLoading } = useBuddies()
 
@@ -239,6 +247,13 @@ export default function MapComponent() {
 
       {/* Alert Modal */}
       <AlertModal selectedAlert={selectedAlert} isModalOpen={isModalOpen} onClose={closeModal} />
+      
+      {/* Incident Report Modal */}
+      <IncidentReportModal 
+        isOpen={showIncidentModal}
+        onClose={closeIncidentModal}
+        selectedLocation={selectedLocation}
+      />
 
       {/* Map */}
       <div

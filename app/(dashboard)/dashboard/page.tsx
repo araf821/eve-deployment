@@ -3,7 +3,7 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Zap, Smile, Bell, Users } from "lucide-react";
 import { redirect } from "next/navigation";
-import { AlertModalWrapper } from "@/components/alert-wrapper";
+import { InstantAlertButton } from "@/components/InstantAlertButton";
 import { SuccessMessage } from "@/components/success-msg";
 import MiniMapComponent from "@/components/MiniMapComponent";
 // import CurrentLocation from "@/components/CurrentLocation";
@@ -109,13 +109,7 @@ export default async function Dashboard({ searchParams }: DashboardProps) {
             Emergency
           </h2>
 
-          <AlertModalWrapper>
-            <button className="w-full rounded-lg bg-[#FF6767]/50 p-1.5">
-              <div className="flex h-16 items-center justify-center rounded-lg bg-[#FF6767] p-4 text-lg font-semibold text-red-50">
-                Report Incident
-              </div>
-            </button>
-          </AlertModalWrapper>
+          <InstantAlertButton />
         </section>
 
         <hr className="border-t-2" />

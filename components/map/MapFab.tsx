@@ -59,12 +59,12 @@ export default function MapFab({
             </div>
             <div>
               <span className="text-sm font-medium text-gray-900">
-                {isPlacementMode ? "Cancel Alert" : "Add Alert"}
+                {isPlacementMode ? "Cancel Report" : "Report Incident"}
               </span>
               <p className="text-xs text-gray-500">
                 {isPlacementMode
-                  ? "Cancel alert placement"
-                  : "Report safety concern"}
+                  ? "Cancel incident report"
+                  : "Report detailed incident"}
               </p>
             </div>
           </DropdownMenuItem>

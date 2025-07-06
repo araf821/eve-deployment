@@ -107,6 +107,8 @@ export const alertsTable = pgTable("alert", {
   lat: real("lat").notNull(),
   lng: real("lng").notNull(),
   address: text("address"),
+  description: text("description"),
+  hasImage: text("has_image").default("false"),
   createdAt: timestamp("created_at", { mode: "date" }).defaultNow().notNull(),
 })
 
@@ -159,3 +161,14 @@ export const alertsRelations = relations(alertsTable, ({ one }) => ({
     references: [usersTable.id],
   }),
 }))
+
+export const voiceTranscriptsTable = pgTable("voice_transcript", {
+  id: text("id")
+    .primaryKey()
+    .$defaultFn(() => crypto.randomUUID()),
+  userId: text("user_id")
+    .notNull()
+    .references(() => usersTable.id, { onDelete: "cascade" }),
+  transcript: text("transcript").notNull(),
+  createdAt: timestamp("created_at", { mode: "date" }).defaultNow().notNull(),
+});

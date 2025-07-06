@@ -232,7 +232,6 @@ export default function MapComponent() {
         onFindBuddies={handleFindBuddies}
         onFindRoute={handleFindRoute}
         isPlacementMode={isPlacementMode}
-        showingBuddies={showingBuddies}
       />
 
       {/* Status Indicator */}

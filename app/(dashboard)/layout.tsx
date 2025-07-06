@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { BottomNav } from "@/components/ui/bottom-nav";
 
 export const metadata: Metadata = {
-  title: "Eve Dashboard",
+  title: "Eve",
   description:
     "Manage your buddies, start walks, and stay connected with your campus safety community.",
 };

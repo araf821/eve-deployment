@@ -5,6 +5,8 @@ import Image from "next/image"
 import { db } from "@/server/db"
 import { alertsTable, usersTable } from "@/server/db/schema"
 import { desc, eq } from "drizzle-orm"
+import Link from "next/link"
+import { ArrowLeft } from "lucide-react"
 
 export default async function AlertsPage() {
   const user = await getCurrentUser()
@@ -47,10 +49,16 @@ export default async function AlertsPage() {
     <>
       {/* Header */}
       <header className="bg-accent px-4 pt-12 pb-6">
+        <Link
+          href="/"
+          className="absolute top-0 right-0 text-muted-foreground hover:text-foreground transition-colors m-8"
+        >
+          <span className="text-sm font-xl">X</span>
+        </Link>
         <Image src="/logo.svg" alt="NiteLite Logo" width={64} height={64} priority className="mb-8" />
         <div className="space-y-1">
           <h1 className="font-heading text-3xl font-semibold text-foreground">All Alerts</h1>
-          <p className="font-heading text-lg text-muted-foreground italic">Incidents raised by other users ⚠️</p>
+          <p className="font-heading text-lg text-muted-foreground italic">Incidents raised by other users</p>
         </div>
       </header>
 

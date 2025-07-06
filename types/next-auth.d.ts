@@ -17,3 +17,10 @@ declare module "next-auth" {
     id: string;
   }
 }
+
+export type User = {
+  id: string;
+  name?: string | null;
+  email?: string | null;
+  image?: string | null;
+};

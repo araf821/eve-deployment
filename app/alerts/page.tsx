@@ -1,18 +1,17 @@
-import { getCurrentUser } from "@/server/lib/auth"
-import { redirect } from "next/navigation"
-import { AlertModalWrapper } from "@/components/alert-wrapper"
-import Image from "next/image"
-import { db } from "@/server/db"
-import { alertsTable, usersTable } from "@/server/db/schema"
-import { desc, eq } from "drizzle-orm"
-import Link from "next/link"
-import { ArrowLeft } from "lucide-react"
+import { getCurrentUser } from "@/server/lib/auth";
+import { redirect } from "next/navigation";
+import { AlertModalWrapper } from "@/components/alert-wrapper";
+import Image from "next/image";
+import { db } from "@/server/db";
+import { alertsTable, usersTable } from "@/server/db/schema";
+import { desc, eq } from "drizzle-orm";
+import Link from "next/link";
 
 export default async function AlertsPage() {
-  const user = await getCurrentUser()
+  const user = await getCurrentUser();
 
   if (!user) {
-    redirect("/sign-in")
+    redirect("/sign-in");
   }
 
   // Fetch recent alerts from the database
@@ -28,22 +27,22 @@ export default async function AlertsPage() {
     .from(alertsTable)
     .leftJoin(usersTable, eq(alertsTable.userId, usersTable.id))
     .orderBy(desc(alertsTable.createdAt))
-    .limit(20)
+    .limit(20);
 
   const formatDate = (date: Date) => {
     return date.toLocaleDateString("en-US", {
       month: "long",
       day: "numeric",
-    })
-  }
+    });
+  };
 
   const formatTime = (date: Date) => {
     return date.toLocaleTimeString("en-US", {
       hour: "numeric",
       minute: "2-digit",
       hour12: true,
-    })
-  }
+    });
+  };
 
   return (
     <>
@@ -51,14 +50,25 @@ export default async function AlertsPage() {
       <header className="bg-accent px-4 pt-12 pb-6">
         <Link
           href="/"
-          className="absolute top-0 right-0 text-muted-foreground hover:text-foreground transition-colors m-8"
+          className="absolute top-0 right-0 m-8 text-muted-foreground transition-colors hover:text-foreground"
         >
-          <span className="text-sm font-xl">X</span>
+          <span className="font-xl text-sm">X</span>
         </Link>
-        <Image src="/logo.svg" alt="NiteLite Logo" width={64} height={64} priority className="mb-8" />
+        <Image
+          src="/logo.svg"
+          alt="NiteLite Logo"
+          width={64}
+          height={64}
+          priority
+          className="mb-8"
+        />
         <div className="space-y-1">
-          <h1 className="font-heading text-3xl font-semibold text-foreground">All Alerts</h1>
-          <p className="font-heading text-lg text-muted-foreground italic">Incidents raised by other users</p>
+          <h1 className="font-heading text-3xl font-semibold text-foreground">
+            All Alerts
+          </h1>
+          <p className="font-heading text-lg text-muted-foreground italic">
+            Incidents raised by other users
+          </p>
         </div>
       </header>
 
@@ -66,25 +76,37 @@ export default async function AlertsPage() {
         <hr className="mb-6" />
 
         {/* Alerts List */}
-        <section className="space-y-4 mb-8">
+        <section className="mb-8 space-y-4">
           {alerts.length === 0 ? (
-            <div className="text-center py-8">
-              <p className="text-muted-foreground">No recent alerts in your area.</p>
+            <div className="py-8 text-center">
+              <p className="text-muted-foreground">
+                No recent alerts in your area.
+              </p>
             </div>
           ) : (
             <div className="space-y-3">
-              {alerts.map((alert) => (
-                <div key={alert.id} className="bg-card/70 border border-border rounded-lg p-4 shadow-sm">
+              {alerts.map(alert => (
+                <div
+                  key={alert.id}
+                  className="rounded-lg border border-border bg-card/70 p-4 shadow-sm"
+                >
                   <div className="flex flex-col space-y-1">
                     <div className="flex items-center justify-between">
                       <span className="text-sm font-medium text-foreground">
-                        {formatDate(alert.createdAt)}, {formatTime(alert.createdAt)}
+                        {formatDate(alert.createdAt)},{" "}
+                        {formatTime(alert.createdAt)}
                       </span>
                     </div>
                     <p className="text-sm text-muted-foreground">
-                      @ {alert.address || `${alert.lat.toFixed(4)}, ${alert.lng.toFixed(4)}`}
+                      @{" "}
+                      {alert.address ||
+                        `${alert.lat.toFixed(4)}, ${alert.lng.toFixed(4)}`}
                     </p>
-                    {alert.userName && <p className="text-xs text-muted-foreground">Reported by {alert.userName}</p>}
+                    {alert.userName && (
+                      <p className="text-xs text-muted-foreground">
+                        Reported by {alert.userName}
+                      </p>
+                    )}
                   </div>
                 </div>
               ))}
@@ -104,5 +126,5 @@ export default async function AlertsPage() {
         </section>
       </div>
     </>
-  )
+  );
 }

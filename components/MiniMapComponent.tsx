@@ -1,56 +1,61 @@
-"use client"
+"use client";
 
-import { useRouter } from "next/navigation"
-import { useGoogleMaps } from "./map/hooks"
-import { MapLoadingState } from "./map"
-import { MapPin } from "lucide-react"
+import { useCallback } from "react";
+import { useRouter } from "next/navigation";
+import { useGoogleMaps } from "./map/hooks";
+import { MapLoadingState } from "./map";
+import { MapPin } from "lucide-react";
 
 interface MiniMapComponentProps {
-  className?: string
+  className?: string;
 }
 
-export default function MiniMapComponent({ className = "" }: MiniMapComponentProps) {
-  const router = useRouter()
+export default function MiniMapComponent({
+  className = "",
+}: MiniMapComponentProps) {
+  const router = useRouter();
+
+  const onMapReady = useCallback((mapInstance: any) => {
+    // Configure mini map specific settings after a short delay to ensure marker is created first
+    setTimeout(() => {
+      if (mapInstance) {
+        mapInstance.setOptions({
+          gestureHandling: "none", // Disable all interactions
+          disableDefaultUI: true, // Remove all UI controls
+          zoomControl: false,
+          mapTypeControl: false,
+          streetViewControl: false,
+          fullscreenControl: false,
+        });
+      }
+    }, 100);
+  }, []);
 
   const { mapRef, map, isClient } = useGoogleMaps({
-    onMapReady: (mapInstance) => {
-      // Configure mini map specific settings after a short delay to ensure marker is created first
-      setTimeout(() => {
-        if (mapInstance) {
-          mapInstance.setOptions({
-            gestureHandling: "none", // Disable all interactions
-            disableDefaultUI: true, // Remove all UI controls
-            zoomControl: false,
-            mapTypeControl: false,
-            streetViewControl: false,
-            fullscreenControl: false,
-          })
-        }
-      }, 100)
-    },
-  })
+    onMapReady,
+  });
 
   const handleMapClick = () => {
-    router.push("/map")
-  }
+    router.push("/map");
+  };
 
   if (!isClient) {
     return (
       <button
         onClick={handleMapClick}
-        className={`relative flex items-center justify-center bg-gray-100 hover:bg-gray-200 transition-colors cursor-pointer ${className}`}
+        className={`relative flex cursor-pointer items-center justify-center bg-gray-100 transition-colors hover:bg-gray-200 ${className}`}
       >
         <MapLoadingState message="Loading mini map..." />
       </button>
-    )
+    );
   }
 
   return (
     <button
       onClick={handleMapClick}
-      className={`relative overflow-hidden bg-gray-100 hover:bg-gray-200 transition-colors cursor-pointer group ${className}`}
+      className={`group relative cursor-pointer overflow-hidden bg-gray-100 transition-colors hover:bg-gray-200 ${className}`}
     >
-      <div ref={mapRef} className="h-full w-full pointer-events-none" />
+      <div ref={mapRef} className="pointer-events-none h-full w-full" />
 
       {/* Location indicator overlay */}
       {map && (
@@ -61,11 +66,11 @@ export default function MiniMapComponent({ className = "" }: MiniMapComponentPro
       )}
 
       {/* Hover overlay */}
-      <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors flex items-center justify-center">
-        <div className="opacity-0 group-hover:opacity-100 transition-opacity bg-white/90 backdrop-blur-sm rounded-lg px-3 py-2 text-sm font-medium text-gray-800 shadow-lg">
+      <div className="absolute inset-0 flex items-center justify-center bg-black/0 transition-colors group-hover:bg-black/10">
+        <div className="rounded-lg bg-white/90 px-3 py-2 text-sm font-medium text-gray-800 opacity-0 shadow-lg backdrop-blur-sm transition-opacity group-hover:opacity-100">
           Click to open full map
         </div>
       </div>
     </button>
-  )
+  );
 }

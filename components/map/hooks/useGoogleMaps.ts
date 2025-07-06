@@ -64,6 +64,7 @@ export function useGoogleMaps({
           mapInstance.setZoom(12);
           onLocationUpdate?.(userPos.lat, userPos.lng);
 
+          // eslint-disable-next-line @typescript-eslint/no-unused-vars
           const userMarker = new (window as any).google.maps.Marker({
             position: userPos,
             map: mapInstance,
@@ -94,7 +95,7 @@ export function useGoogleMaps({
     } else {
       initMap();
     }
-  }, [isClient]); // Remove onMapReady and onLocationUpdate from dependencies to prevent infinite loop
+  }, [isClient]); // eslint-disable-line react-hooks/exhaustive-deps
 
   return {
     mapRef,

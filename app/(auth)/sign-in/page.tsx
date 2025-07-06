@@ -9,14 +9,14 @@ import SocialLogin from "@/components/auth/SocialLogin";
 
 export default function SignInPage() {
   return (
-    <div className="bg-transparent border-transparent">
+    <Card className="border-transparent bg-transparent p-0">
       <CardHeader className="text-center">
         <CardTitle className="text-2xl">Welcome Back to Eve</CardTitle>
         <CardDescription>
           Sign in to your account to continue your safe campus journey
         </CardDescription>
       </CardHeader>
-      <div className="flex-1 min-h-[2vh]"></div>
+      <div className="min-h-[2vh] flex-1"></div>
       <CardContent>
         <SocialLogin providers={["google", "discord"]} />
         <div className="mt-4 text-center text-sm text-muted-foreground">
@@ -26,6 +26,6 @@ export default function SignInPage() {
           </a>
         </div>
       </CardContent>
-    </div>
+    </Card>
   );
 }

@@ -9,7 +9,7 @@ import MiniMapComponent from "@/components/MiniMapComponent";
 // import CurrentLocation from "@/components/CurrentLocation";
 import Image from "next/image";
 interface DashboardProps {
-  searchParams: { success?: string };
+  searchParams: Promise<{ success?: string }>;
 }
 
 export default async function Dashboard({ searchParams }: DashboardProps) {

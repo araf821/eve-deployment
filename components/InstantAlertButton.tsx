@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { Button } from "@/components/ui/button";
 import { AlertTriangle, CheckCircle, X } from "lucide-react";
 import { useRouter } from "next/navigation";
 
@@ -22,14 +21,14 @@ export function InstantAlertButton({ className }: InstantAlertButtonProps) {
     try {
       // Get current location
       let position: GeolocationPosition | null = null;
-      
+
       try {
         position = await new Promise<GeolocationPosition>((resolve, reject) => {
           if (!navigator.geolocation) {
             reject(new Error("Geolocation not supported"));
             return;
           }
-          
+
           navigator.geolocation.getCurrentPosition(resolve, reject, {
             enableHighAccuracy: true,
             timeout: 10000,
@@ -50,7 +49,10 @@ export function InstantAlertButton({ className }: InstantAlertButtonProps) {
             });
             console.log("Location updated in database");
           } catch (locationError) {
-            console.warn("Failed to update location in database:", locationError);
+            console.warn(
+              "Failed to update location in database:",
+              locationError
+            );
           }
         }
       } catch (geoError) {
@@ -59,14 +61,19 @@ export function InstantAlertButton({ className }: InstantAlertButtonProps) {
       }
 
       // Prepare request body
-      const requestBody: any = {};
-      
+      const requestBody: { lat?: number; lng?: number } = {};
+
       if (position) {
         requestBody.lat = position.coords.latitude;
         requestBody.lng = position.coords.longitude;
-        console.log("Using current location:", { lat: position.coords.latitude, lng: position.coords.longitude });
+        console.log("Using current location:", {
+          lat: position.coords.latitude,
+          lng: position.coords.longitude,
+        });
       } else {
-        console.log("No current location available, will use last known location from database");
+        console.log(
+          "No current location available, will use last known location from database"
+        );
       }
 
       // Send instant alert
@@ -84,23 +91,22 @@ export function InstantAlertButton({ className }: InstantAlertButtonProps) {
       }
 
       const result = await response.json();
-      
+
       console.log("Instant alert result:", result);
-      
+
       // Show success message
       setShowSuccess(true);
-      
+
       // If there's a warning about SMS, show it
       if (result.warning) {
         console.warn("SMS Warning:", result.warning);
         // You could show this warning to the user if needed
       }
-      
+
       // Redirect to dashboard with success parameter after 2 seconds
       setTimeout(() => {
         router.push("/dashboard?success=true");
       }, 2000);
-
     } catch (err) {
       console.error("Error sending instant alert:", err);
       setError(err instanceof Error ? err.message : "Failed to send alert");
@@ -141,7 +147,7 @@ export function InstantAlertButton({ className }: InstantAlertButtonProps) {
           )}
         </div>
       </button>
-      
+
       {error && (
         <div className="mt-2 flex items-center rounded-md bg-red-50 p-2 text-sm text-red-600">
           <X className="mr-1 h-4 w-4" />
@@ -150,4 +156,4 @@ export function InstantAlertButton({ className }: InstantAlertButtonProps) {
       )}
     </div>
   );
-} 
+}

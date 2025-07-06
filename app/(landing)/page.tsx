@@ -4,6 +4,7 @@ import { redirect } from "next/navigation";
 import { Sparkle } from "lucide-react";
 import { TypingAnimation } from "@/components/typing-animation";
 import Link from "next/link";
+import Image from "next/image";
 
 export default async function Home() {
   const user = await getCurrentUser();
@@ -14,31 +15,31 @@ export default async function Home() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-tl from-background to-purple-300 flex flex-col items-center justify-center p-6">
-      <div className="flex flex-col items-center space-y-8 max-w-sm w-full">
+    <div className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-tl from-background to-purple-300 p-6">
+      <div className="flex w-full max-w-sm flex-col items-center space-y-8">
         <div className="relative">
-          <div className="w-16 h-16 flex items-center justify-center">
-            <Sparkle className="w-8 h-8 text-black animate-spin" />
+          <div className="flex h-16 w-16 items-center justify-center">
+            <Sparkle className="h-8 w-8 animate-spin text-black" />
           </div>
         </div>
         {/* Main Heading with Typing Animation */}
-        <div className="text-center space-y-2">
+        <div className="space-y-2 text-center">
           <TypingAnimation />
-          <p className="text-black text-lg">with Eve.</p>
+          <p className="text-lg text-black">with Eve.</p>
         </div>
         {/* Spacer */}
-        <div className="flex-1 min-h-[3vh]"></div>
+        <div className="min-h-[3vh] flex-1"></div>
         {/* Discord Login Button */}
         <Link href="/sign-in">
-        <Button
-          className="w-40 bg-transparent border-none text-gray-700 bg-white/70 hover:bg-white/20 text-base font-normal"
-          variant="ghost"
-        >
-          Get Started
-        </Button>
+          <Button
+            className="w-40 border-none bg-white/70 text-base font-normal text-gray-700 hover:bg-white/20"
+            variant="ghost"
+          >
+            Get Started
+          </Button>
         </Link>
       </div>
-      <img src="logo.svg" className="absolute bottom-0 py-10" />
+      <Image src="logo.svg" alt="Logo" className="absolute bottom-0 py-10" />
     </div>
   );
 }

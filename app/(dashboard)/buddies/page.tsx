@@ -16,8 +16,8 @@ export default async function BuddiesPage() {
   }
 
   return (
-    <div className="container mx-auto max-w-md">
-      <header className="mt-12 mb-8">
+    <div className="">
+      <header className="mt-12 mb-8 px-4">
         <Image
           src="/logo.svg"
           alt="NiteLite Logo"
@@ -31,12 +31,15 @@ export default async function BuddiesPage() {
           subtitle="Connect with your safety network"
         />
         <BuddiesPageHeader />
-        <div className="mt-6 h-px bg-border"></div>
       </header>
-      <main className="space-y-8">
-        <BuddiesSection />
-        <ContactsSection />
-      </main>
+
+      <hr />
+
+      <BuddiesSection />
+
+      <hr />
+
+      <ContactsSection />
     </div>
   );
 }

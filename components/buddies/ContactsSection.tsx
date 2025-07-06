@@ -54,7 +54,7 @@ export function ContactsSection() {
 
   if (loading) {
     return (
-      <section>
+      <section className="px-4 py-8">
         <div className="mb-6 flex items-center gap-3">
           <Users size={24} className="text-primary" />
           <h2 className="font-heading text-2xl font-bold text-foreground">
@@ -72,7 +72,7 @@ export function ContactsSection() {
 
   if (error) {
     return (
-      <section>
+      <section className="px-4 py-8">
         <div className="mb-6 flex items-center gap-3">
           <Users size={24} className="text-primary" />
           <h2 className="font-heading text-2xl font-bold text-foreground">
@@ -97,7 +97,7 @@ export function ContactsSection() {
   }
 
   return (
-    <section>
+    <section className="px-4 py-8">
       <div className="mb-6 flex items-center gap-3">
         <Users size={24} className="text-primary" />
         <h2 className="font-heading text-2xl font-bold text-foreground">

@@ -8,7 +8,7 @@ const AI_BUDDIES = [
 
 export function BuddiesSection() {
   return (
-    <section className="mb-8">
+    <section className="px-4 py-8">
       <div className="mb-6 flex items-center gap-3">
         <Bot size={24} className="text-primary" />
         <h2 className="font-heading text-2xl font-bold text-foreground">

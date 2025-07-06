@@ -329,7 +329,8 @@ export default function MapComponent() {
       <IncidentReportModal
         isOpen={showIncidentModal}
         onClose={closeIncidentModal}
-        selectedLocation={selectedLocation}
+        selectedLocation={selectedLocation || undefined}
+        onAlertSubmitted={loadAlerts}
       />
 
       {/* Map */}

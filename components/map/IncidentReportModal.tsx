@@ -12,12 +12,14 @@ interface IncidentReportModalProps {
   isOpen: boolean;
   onClose: () => void;
   selectedLocation?: { lat: number; lng: number; address?: string };
+  onAlertSubmitted?: () => void;
 }
 
 export function IncidentReportModal({ 
   isOpen, 
   onClose, 
-  selectedLocation 
+  selectedLocation,
+  onAlertSubmitted
 }: IncidentReportModalProps) {
   const [selectedImage, setSelectedImage] = useState<File | null>(null);
   const [description, setDescription] = useState("");
@@ -86,6 +88,9 @@ export function IncidentReportModal({
 
       setIsSubmitting(false);
       setIsSubmitted(true);
+      
+      // Call the callback to reload alerts on the map
+      onAlertSubmitted?.();
     } catch (err) {
       console.error("Error submitting incident report:", err);
       setError(err instanceof Error ? err.message : "Failed to submit report");

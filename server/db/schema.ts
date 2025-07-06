@@ -107,6 +107,8 @@ export const alertsTable = pgTable("alert", {
   lat: real("lat").notNull(),
   lng: real("lng").notNull(),
   address: text("address"),
+  description: text("description"),
+  hasImage: text("has_image").default("false"),
   createdAt: timestamp("created_at", { mode: "date" }).defaultNow().notNull(),
 })
 

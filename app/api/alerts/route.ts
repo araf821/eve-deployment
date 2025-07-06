@@ -7,7 +7,7 @@ export async function POST(request: Request) {
   const user = await getCurrentUser()
   if (!user) return new Response("Unauthorized", { status: 401 })
 
-  const { lat, lng, address } = await request.json()
+  const { lat, lng, address, description, hasImage } = await request.json()
 
   try {
     const [alert] = await db
@@ -17,6 +17,8 @@ export async function POST(request: Request) {
         lat,
         lng,
         address,
+        description: description || null,
+        hasImage: hasImage ? "true" : "false",
       })
       .returning()
 
@@ -36,6 +38,8 @@ export async function GET() {
         lat: alertsTable.lat,
         lng: alertsTable.lng,
         address: alertsTable.address,
+        description: alertsTable.description,
+        hasImage: alertsTable.hasImage,
         createdAt: alertsTable.createdAt,
         userName: usersTable.name,
       })

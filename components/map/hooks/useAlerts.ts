@@ -7,12 +7,20 @@ interface AlertStatus {
   message: string;
 }
 
+interface SelectedLocation {
+  lat: number;
+  lng: number;
+  address?: string;
+}
+
 export function useAlerts() {
   const [alertStatus, setAlertStatus] = useState<AlertStatus>({
     type: null,
     message: "",
   });
   const [isPlacementMode, setIsPlacementMode] = useState(false);
+  const [selectedLocation, setSelectedLocation] = useState<SelectedLocation | null>(null);
+  const [showIncidentModal, setShowIncidentModal] = useState(false);
   const mapClickListenerRef = useRef<google.maps.MapsEventListener | null>(
     null
   );
@@ -101,7 +109,7 @@ export function useAlerts() {
 
       // Set placement mode
       setIsPlacementMode(true);
-      showAlertStatus("info", "Click on the map to place your alert");
+      showAlertStatus("info", "Click on the map to place your incident report");
 
       // Change cursor to crosshair
       map.setOptions({ draggableCursor: "crosshair" });
@@ -120,8 +128,12 @@ export function useAlerts() {
           const lat = event.latLng.lat();
           const lng = event.latLng.lng();
 
-          // Save alert at clicked location
-          await saveAlertToDatabase(lat, lng, onSuccess);
+          // Get formatted address
+          const address = await formatAddress(lat, lng);
+
+          // Set selected location and show incident modal
+          setSelectedLocation({ lat, lng, address });
+          setShowIncidentModal(true);
 
           // Exit placement mode
           disablePlacementMode();
@@ -151,7 +163,7 @@ export function useAlerts() {
       if (isPlacementMode) {
         // If already in placement mode, cancel it
         disablePlacementMode();
-        showAlertStatus("info", "Alert placement cancelled");
+        showAlertStatus("info", "Incident report placement cancelled");
       } else {
         // Enable placement mode
         enablePlacementMode(map, onSuccess);
@@ -160,11 +172,19 @@ export function useAlerts() {
     [isPlacementMode, enablePlacementMode, disablePlacementMode]
   );
 
+  const closeIncidentModal = useCallback(() => {
+    setShowIncidentModal(false);
+    setSelectedLocation(null);
+  }, []);
+
   return {
     alertStatus,
     isPlacementMode,
+    selectedLocation,
+    showIncidentModal,
     addAlertPin,
     disablePlacementMode,
+    closeIncidentModal,
     showAlertStatus,
   };
 }

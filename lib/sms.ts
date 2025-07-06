@@ -90,10 +90,14 @@ export function createIncidentAlertMessage(
   location: string,
   timestamp: string
 ): string {
+  const locationText = location === "Location unknown - user needs immediate assistance" 
+    ? "Location unknown - user needs immediate assistance" 
+    : `Location: ${location}`;
+
   return `
 ${userName} has reported an incident and needs your help.
 
-Location: ${location}
+${locationText}
 Time: ${timestamp}
 
 Check on them immediately and contact emergency if needed.

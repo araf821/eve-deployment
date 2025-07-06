@@ -395,6 +395,7 @@ export default function MapComponent() {
         selectedAlert={selectedAlert}
         isModalOpen={isModalOpen}
         onClose={closeModal}
+        onAlertDeleted={loadAlerts}
       />
 
       {/* Incident Report Modal */}

@@ -19,6 +19,31 @@ interface UseAlertMarkersProps {
   onAlertClick?: (alert: AlertData) => void;
 }
 
+// Helper function to check if an alert should be excluded based on timestamp
+const shouldExcludeAlert = (alert: AlertData): boolean => {
+  const timestamp = alert.createdAt;
+  
+  // Convert to local time string for comparison
+  const localTimeString = timestamp.toLocaleString('en-US', {
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+    hour: '2-digit',
+    minute: '2-digit',
+    second: '2-digit',
+    hour12: false
+  });
+  
+  // Define the timestamps to exclude
+  const excludedTimestamps = [
+    '2025-07-05 23:50:28', // 2025-07-05 at 11:50:28 p.m.
+    '2025-07-06 07:24:47', // 2025-07-06 at 7:24:47 a.m.
+    '2025-07-05 23:51:36', // 2025-07-05 at 11:51:36 p.m.
+  ];
+  
+  return excludedTimestamps.includes(localTimeString);
+};
+
 export function useAlertMarkers({
   map,
   isClient,
@@ -58,9 +83,12 @@ export function useAlertMarkers({
     // Clear existing alert markers
     clearAlertMarkers();
 
-    console.log("Creating alert markers:", alerts.length);
+    // Filter out excluded alerts
+    const filteredAlerts = alerts.filter(alert => !shouldExcludeAlert(alert));
+    
+    console.log("Creating alert markers:", filteredAlerts.length, "out of", alerts.length, "total alerts");
 
-    alerts.forEach(alert => {
+    filteredAlerts.forEach(alert => {
       const position = { lat: alert.lat, lng: alert.lng };
 
       const alertMarker = new (window as any).google.maps.Marker({

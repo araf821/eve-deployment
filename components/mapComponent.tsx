@@ -69,6 +69,7 @@ export default function MapComponent() {
     enableRouteMode,
     disableRouteMode,
     clearRoute,
+    clearRouteAndExit,
   } = useRoute({
     map,
     onRouteComplete: () => {
@@ -217,8 +218,7 @@ export default function MapComponent() {
 
     if (isRouteMode) {
       // If already in route mode, disable it
-      disableRouteMode();
-      clearRoute();
+      clearRouteAndExit();
       console.log("Route mode disabled");
     } else {
       // Enable route mode

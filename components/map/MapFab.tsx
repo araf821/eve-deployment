@@ -101,10 +101,10 @@ export default function MapFab({
             </div>
             <div>
               <span className="text-sm font-medium text-gray-900">
-                {isRouteMode ? "Cancel Route" : "Find Route"}
+                {isRouteMode ? "Cancel Route" : "Find Safe Route"}
               </span>
               <p className="text-xs text-gray-500">
-                {isRouteMode ? "Cancel route selection" : "Get safe directions"}
+                {isRouteMode ? "Cancel route selection" : "Get directions avoiding incidents"}
               </p>
             </div>
           </DropdownMenuItem>

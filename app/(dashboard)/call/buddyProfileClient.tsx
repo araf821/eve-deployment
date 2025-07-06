@@ -66,6 +66,21 @@ export default function BuddyProfile({ user }: { user: User | null }) {
 
         const data = await res.json();
         console.log("Transcript:", data.transcript);
+
+        const response = await fetch("/api/respond", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            transcript: data.transcript,
+            userName: user.name || "your friend"
+          }),
+        });
+
+        const audioBlobFromServer = await response.blob();
+        const audioUrl = URL.createObjectURL(audioBlobFromServer);
+
+        const audio = new Audio(audioUrl);
+        audio.play();
       };
     }
   };

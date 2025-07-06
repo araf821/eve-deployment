@@ -83,10 +83,12 @@ export default async function Dashboard({ searchParams }: DashboardProps) {
               variant="outline"
               className="flex h-32 flex-col items-center justify-center space-y-3 border-border bg-card/70 shadow-sm transition-all duration-200 hover:bg-accent hover:shadow-md"
             >
+              <Link href="/call">
               <Zap className="text-primary" size={32} />
               <span className="text-sm font-medium text-foreground">
                 Call Eve
               </span>
+              </Link>
             </Button>
 
             <Button

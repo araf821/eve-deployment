@@ -8,6 +8,8 @@ import { desc, eq } from "drizzle-orm";
 import Link from "next/link";
 import { PageHeader } from "@/components/layout/PageHeader";
 import { BuddiesPageHeader } from "@/components/buddies";
+import { Button } from "@/components/ui/button";
+import { Ghost } from "lucide-react";
 
 export default async function AlertsPage() {
   const user = await getCurrentUser();
@@ -58,6 +60,9 @@ export default async function AlertsPage() {
           priority
           className="mb-8"
         />
+        <Link href="/dashboard" className="text-muted-foreground">
+        <Button className="absolute text-xl text-black right-0 top-0 p-8 bg-transparent border-transparent" variant="ghost">X</Button>
+        </Link>
         <PageHeader
           title="All Alerts"
           subtitle="Incidents raised by other users"
@@ -93,6 +98,7 @@ export default async function AlertsPage() {
                   key={alert.id}
                   className="rounded-lg border border-border bg-card/70 p-4 shadow-sm"
                 >
+                  <a href="police.pdf" download="police.pdf">
                   <div className="flex flex-col space-y-1">
                     <div className="flex items-center justify-between">
                       <span className="text-sm font-medium text-foreground">
@@ -111,6 +117,7 @@ export default async function AlertsPage() {
                       </p>
                     )}
                   </div>
+                  </a>
                 </div>
               ))}
             </div>

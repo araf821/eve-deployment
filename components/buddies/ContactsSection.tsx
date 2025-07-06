@@ -11,12 +11,12 @@ interface Buddy {
   nickname: string;
   phoneNumber: string | null;
   createdAt: string;
-  buddy: {
-    id: string;
-    name: string | null;
-    email: string;
-    image: string | null;
-  };
+  lat?: string;
+  lng?: string;
+  name?: string;
+  email?: string;
+  image?: string;
+  lastSeen?: Date;
 }
 
 export function ContactsSection() {
@@ -34,7 +34,8 @@ export function ContactsSection() {
       const data = await response.json();
 
       if (response.ok) {
-        setBuddies(data.buddies);
+        // The API returns the buddies array directly, not wrapped in a 'buddies' property
+        setBuddies(Array.isArray(data) ? data : []);
         setError(null);
       } else {
         const errorMessage = data.error || "Failed to load buddies";
@@ -124,7 +125,7 @@ export function ContactsSection() {
               key={buddy.id}
               id={buddy.id}
               name={buddy.nickname}
-              email={buddy.buddy.email}
+              email={buddy.email || ""}
               phoneNumber={buddy.phoneNumber}
               onDeleted={handleBuddyDeleted}
             />

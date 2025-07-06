@@ -2,9 +2,11 @@
 
 import { Search, MapPin, X, User, Clock } from "lucide-react"
 import { Input } from "@/components/ui/input"
-import { useLocationSearch} from "./hooks"
+import { useLocationSearch } from "./hooks"
 import { useBuddies } from "./hooks/useBuddies"
+import { getBuddyUIColor } from "@/components/map/hooks/buddyColors"
 import { useEffect, useRef, useState } from "react"
+import type { google } from "google-maps"
 
 interface SearchResult {
   placeId: string
@@ -78,37 +80,12 @@ export default function MapSearch({ map, onLocationSelect, onBuddySelect }: MapS
   }, [closeSuggestions])
 
   const handleBuddyClick = (buddy: Buddy) => {
-    if (map && buddy.lat && buddy.lng) {
-      // Center map on buddy's location
-      const position = { lat: Number.parseFloat(buddy.lat), lng: Number.parseFloat(buddy.lng) }
-      map.setCenter(position)
-      map.setZoom(15)
+    // Clear search input and close dropdown
+    clearSearch()
+    closeSuggestions()
 
-      // Create a temporary marker for the buddy
-      const buddyMarker = new google.maps.Marker({
-        position,
-        map,
-        title: `${buddy.nickname}'s Location`,
-        icon: {
-          url: "https://maps.google.com/mapfiles/ms/icons/blue-dot.png",
-          scaledSize: new google.maps.Size(32, 32),
-        },
-        animation: google.maps.Animation.BOUNCE,
-      })
-
-      // Remove the bounce animation after 2 seconds
-      setTimeout(() => {
-        if (buddyMarker) {
-          buddyMarker.setAnimation(null)
-        }
-      }, 2000)
-
-      // Update search input and close dropdown
-      clearSearch()
-      closeSuggestions()
-
-      onBuddySelect?.(buddy)
-    }
+    // Let the parent component handle all marker creation and map operations
+    onBuddySelect?.(buddy)
   }
 
   const showDropdown = isSuggestionsOpen && (query.length > 0 || (Array.isArray(buddies) && buddies.length > 0))
@@ -196,43 +173,49 @@ export default function MapSearch({ map, onLocationSelect, onBuddySelect }: MapS
                     Your Buddies
                   </div>
                 )}
-                {filteredBuddies.map((buddy) => (
-                  <button
-                    key={buddy.id}
-                    onClick={() => handleBuddyClick(buddy)}
-                    className="w-full px-4 py-3 text-left transition-colors hover:bg-gray-50 focus:bg-gray-50 focus:outline-none border-b border-gray-50 last:border-b-0"
-                  >
-                    <div className="flex items-center space-x-3">
-                      <div className="flex-shrink-0">
-                        <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center">
-                          <User className="w-4 h-4 text-blue-600" />
+                {filteredBuddies.map((buddy) => {
+                  const buddyColor = getBuddyUIColor(buddy.id)
+                  return (
+                    <button
+                      key={buddy.id}
+                      onClick={() => handleBuddyClick(buddy)}
+                      className="w-full px-4 py-3 text-left transition-colors hover:bg-gray-50 focus:bg-gray-50 focus:outline-none border-b border-gray-50 last:border-b-0"
+                    >
+                      <div className="flex items-center space-x-3">
+                        <div className="flex-shrink-0">
+                          <div
+                            className="w-8 h-8 rounded-full flex items-center justify-center"
+                            style={{ backgroundColor: `${buddyColor}20`, border: `2px solid ${buddyColor}` }}
+                          >
+                            <User className="w-4 h-4" style={{ color: buddyColor }} />
+                          </div>
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <p className="text-sm font-medium text-gray-900 truncate">{buddy.nickname}</p>
+                          {buddy.name && <p className="text-xs text-gray-500 truncate">{buddy.name}</p>}
+                          <div className="flex items-center space-x-2 mt-1">
+                            {buddy.lat && buddy.lng ? (
+                              <span className="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-green-100 text-green-800">
+                                <MapPin className="w-3 h-3 mr-1" />
+                                Available
+                              </span>
+                            ) : (
+                              <span className="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-gray-100 text-gray-800">
+                                No location
+                              </span>
+                            )}
+                            {buddy.lastSeen && (
+                              <span className="text-xs text-gray-400">
+                                <Clock className="w-3 h-3 inline mr-1" />
+                                {new Date(buddy.lastSeen).toLocaleDateString()}
+                              </span>
+                            )}
+                          </div>
                         </div>
                       </div>
-                      <div className="flex-1 min-w-0">
-                        <p className="text-sm font-medium text-gray-900 truncate">{buddy.nickname}</p>
-                        {buddy.name && <p className="text-xs text-gray-500 truncate">{buddy.name}</p>}
-                        <div className="flex items-center space-x-2 mt-1">
-                          {buddy.lat && buddy.lng ? (
-                            <span className="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-green-100 text-green-800">
-                              <MapPin className="w-3 h-3 mr-1" />
-                              Available
-                            </span>
-                          ) : (
-                            <span className="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-gray-100 text-gray-800">
-                              No location
-                            </span>
-                          )}
-                          {buddy.lastSeen && (
-                            <span className="text-xs text-gray-400">
-                              <Clock className="w-3 h-3 inline mr-1" />
-                              {new Date(buddy.lastSeen).toLocaleDateString()}
-                            </span>
-                          )}
-                        </div>
-                      </div>
-                    </div>
-                  </button>
-                ))}
+                    </button>
+                  )
+                })}
               </div>
             )}
 

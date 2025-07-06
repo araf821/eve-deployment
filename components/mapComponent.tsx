@@ -1,16 +1,10 @@
 "use client"
 
-import {
-  useGoogleMaps,
-  useUserMarkers,
-  useAlertMarkers,
-  useAlerts,
-  useAlertModal,
-  useLocation,
-} from "./map/hooks"
+import { useGoogleMaps, useUserMarkers, useAlertMarkers, useAlerts, useAlertModal, useLocation } from "./map/hooks"
 import { useBuddies } from "./map/hooks/useBuddies"
 import { MapFab, MapSearch, MapStatusIndicator, AlertModal, MapLoadingState } from "./map"
 import { IncidentReportModal } from "./map/IncidentReportModal"
+import { getBuddyMarkerIcon } from "@/components/map/hooks/buddyColors"
 import { useRef, useState } from "react"
 
 interface SearchResult {
@@ -43,23 +37,23 @@ export default function MapComponent() {
     onAlertClick: (alert) => openModal(alert),
   })
 
-  const { 
-    alertStatus, 
-    isPlacementMode, 
-    selectedLocation,
-    showIncidentModal,
-    addAlertPin, 
-    closeIncidentModal 
-  } = useAlerts()
+  const { alertStatus, isPlacementMode, selectedLocation, showIncidentModal, addAlertPin, closeIncidentModal } =
+    useAlerts()
   const { selectedAlert, isModalOpen, openModal, closeModal } = useAlertModal()
   const { buddies, loading: buddiesLoading } = useBuddies()
 
   // State and refs for buddy markers
   const [showingBuddies, setShowingBuddies] = useState(false)
   const buddyMarkersRef = useRef<any[]>([])
+  const lastSelectedBuddyRef = useRef<string | null>(null)
 
   const clearBuddyMarkers = () => {
-    buddyMarkersRef.current.forEach((marker) => marker.setMap(null))
+    buddyMarkersRef.current.forEach((markerData) => {
+      markerData.marker.setMap(null)
+      if (markerData.infoWindow) {
+        markerData.infoWindow.close()
+      }
+    })
     buddyMarkersRef.current = []
   }
 
@@ -89,25 +83,22 @@ export default function MapComponent() {
         position,
         map,
         title: `${buddy.nickname} - ${buddy.name || "Unknown"}`,
-        icon: {
-          url: "https://maps.google.com/mapfiles/ms/icons/blue-dot.png",
-          scaledSize: new (window as any).google.maps.Size(40, 40),
-        },
+        icon: getBuddyMarkerIcon(buddy.id, 40),
         animation: (window as any).google.maps.Animation.DROP,
       })
 
       // Create info window for buddy details
       const infoWindow = new (window as any).google.maps.InfoWindow({
         content: `
-          <div style="padding: 8px; min-width: 200px;">
-            <h3 style="margin: 0 0 8px 0; color: #1f2937; font-size: 16px; font-weight: 600;">
-              ${buddy.nickname}
-            </h3>
-            ${buddy.name ? `<p style="margin: 0 0 4px 0; color: #6b7280; font-size: 14px;">${buddy.name}</p>` : ""}
-            ${buddy.phoneNumber ? `<p style="margin: 0 0 4px 0; color: #6b7280; font-size: 14px;">📞 ${buddy.phoneNumber}</p>` : ""}
-            ${buddy.lastSeen ? `<p style="margin: 0; color: #9ca3af; font-size: 12px;">Last seen: ${new Date(buddy.lastSeen).toLocaleDateString()}</p>` : ""}
-          </div>
-        `,
+        <div style="padding: 8px; min-width: 200px;">
+          <h3 style="margin: 0 0 8px 0; color: #1f2937; font-size: 16px; font-weight: 600;">
+            ${buddy.nickname}
+          </h3>
+          ${buddy.name ? `<p style="margin: 0 0 4px 0; color: #6b7280; font-size: 14px;">${buddy.name}</p>` : ""}
+          ${buddy.phoneNumber ? `<p style="margin: 0 0 4px 0; color: #6b7280; font-size: 14px;">📞 ${buddy.phoneNumber}</p>` : ""}
+          ${buddy.lastSeen ? `<p style="margin: 0; color: #9ca3af; font-size: 12px;">Last seen: ${new Date(buddy.lastSeen).toLocaleDateString()}</p>` : ""}
+        </div>
+      `,
       })
 
       // Add click listener to show info window
@@ -127,6 +118,7 @@ export default function MapComponent() {
         marker: buddyMarker,
         infoWindow: infoWindow,
         buddy: buddy,
+        isTemporary: false,
       })
 
       // Extend bounds to include this buddy's location
@@ -182,31 +174,116 @@ export default function MapComponent() {
   }
 
   const handleBuddySelect = (buddy: Buddy) => {
+    // Prevent rapid duplicate selections
+    if (lastSelectedBuddyRef.current === buddy.id) {
+      return
+    }
+    lastSelectedBuddyRef.current = buddy.id
+
+    // Clear the selection after a short delay
+    setTimeout(() => {
+      lastSelectedBuddyRef.current = null
+    }, 1000)
+
     if (map && buddy.lat && buddy.lng) {
       // Center map on buddy's location
       const position = { lat: Number.parseFloat(buddy.lat), lng: Number.parseFloat(buddy.lng) }
       map.setCenter(position)
-      map.setZoom(15) // Zoom in to show buddy's location
+      map.setZoom(15)
 
       // If not already showing buddies, create a temporary marker
       if (!showingBuddies) {
-        const buddyMarker = new (window as any).google.maps.Marker({
-          position,
-          map,
-          title: `${buddy.nickname}'s Location`,
-          icon: {
-            url: "https://maps.google.com/mapfiles/ms/icons/blue-dot.png",
-            scaledSize: new (window as any).google.maps.Size(32, 32),
-          },
-          animation: (window as any).google.maps.Animation.BOUNCE,
+        // Clear ALL existing temporary markers first to prevent any duplicates
+        buddyMarkersRef.current = buddyMarkersRef.current.filter((markerData) => {
+          if (markerData.isTemporary) {
+            markerData.marker.setMap(null)
+            if (markerData.infoWindow) {
+              markerData.infoWindow.close()
+            }
+            return false
+          }
+          return true
         })
 
-        // Remove the bounce animation after 2 seconds
+        // Small delay to ensure previous markers are fully cleared
         setTimeout(() => {
-          if (buddyMarker) {
-            buddyMarker.setAnimation(null)
+          // Double-check that no marker exists for this buddy before creating
+          const existingMarker = buddyMarkersRef.current.find((markerData) => markerData.buddy?.id === buddy.id)
+          if (existingMarker) {
+            // If marker already exists, just focus on it
+            map.setCenter(position)
+            if (existingMarker.infoWindow) {
+              existingMarker.infoWindow.open(map, existingMarker.marker)
+            }
+            return
           }
-        }, 2000)
+
+          const buddyMarker = new (window as any).google.maps.Marker({
+            position,
+            map,
+            title: `${buddy.nickname} - ${buddy.name || "Unknown"}`,
+            icon: getBuddyMarkerIcon(buddy.id, 40),
+            animation: (window as any).google.maps.Animation.DROP,
+          })
+
+          // Create info window for the temporary marker
+          const infoWindow = new (window as any).google.maps.InfoWindow({
+            content: `
+          <div style="padding: 8px; min-width: 200px;">
+            <h3 style="margin: 0 0 8px 0; color: #1f2937; font-size: 16px; font-weight: 600;">
+              ${buddy.nickname}
+            </h3>
+            ${buddy.name ? `<p style="margin: 0 0 4px 0; color: #6b7280; font-size: 14px;">${buddy.name}</p>` : ""}
+            ${buddy.phoneNumber ? `<p style="margin: 0 0 4px 0; color: #6b7280; font-size: 14px;">📞 ${buddy.phoneNumber}</p>` : ""}
+            ${buddy.lastSeen ? `<p style="margin: 0; color: #9ca3af; font-size: 12px;">Last seen: ${new Date(buddy.lastSeen).toLocaleDateString()}</p>` : ""}
+          </div>
+        `,
+          })
+
+          // Add click listener to show info window
+          buddyMarker.addListener("click", () => {
+            // Close any open info windows
+            buddyMarkersRef.current.forEach((markerData) => {
+              if (markerData.infoWindow) {
+                markerData.infoWindow.close()
+              }
+            })
+
+            infoWindow.open(map, buddyMarker)
+          })
+
+          // Track this temporary marker
+          buddyMarkersRef.current.push({
+            marker: buddyMarker,
+            infoWindow: infoWindow,
+            buddy: buddy,
+            isTemporary: true,
+          })
+
+          console.log("Created temporary marker for:", buddy.nickname)
+        }, 50) // Small delay to prevent race conditions
+      } else {
+        // If already showing buddies, just focus on the existing marker
+        const existingMarker = buddyMarkersRef.current.find((markerData) => markerData.buddy?.id === buddy.id)
+        if (existingMarker) {
+          // Close any open info windows
+          buddyMarkersRef.current.forEach((markerData) => {
+            if (markerData.infoWindow) {
+              markerData.infoWindow.close()
+            }
+          })
+
+          // Open this buddy's info window
+          if (existingMarker.infoWindow) {
+            existingMarker.infoWindow.open(map, existingMarker.marker)
+          }
+
+          // Add a brief bounce animation to highlight the marker
+          existingMarker.marker.setAnimation((window as any).google.maps.Animation.BOUNCE)
+          setTimeout(() => {
+            existingMarker.marker.setAnimation(null)
+          }, 1500)
+        }
       }
 
       console.log("Selected buddy:", buddy.nickname, "at", position)
@@ -247,19 +324,16 @@ export default function MapComponent() {
 
       {/* Alert Modal */}
       <AlertModal selectedAlert={selectedAlert} isModalOpen={isModalOpen} onClose={closeModal} />
-      
+
       {/* Incident Report Modal */}
-      <IncidentReportModal 
+      <IncidentReportModal
         isOpen={showIncidentModal}
         onClose={closeIncidentModal}
         selectedLocation={selectedLocation}
       />
 
       {/* Map */}
-      <div
-        ref={mapRef}
-        className="h-full w-full border-2 sm:rounded-lg sm:border sm:shadow-md"
-      />
+      <div ref={mapRef} className="h-full w-full border-2 sm:rounded-lg sm:border sm:shadow-md" />
     </div>
   )
 }

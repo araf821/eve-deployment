@@ -16,32 +16,38 @@ export default async function BuddyRequestsPage() {
 
   return (
     <div className="container mx-auto max-w-md">
-      <header className="mt-12 mb-8">
-        <Image
-          src="/logo.svg"
-          alt="Eve Logo"
-          width={64}
-          height={64}
-          priority
-          className="mb-8"
-        />
-        <div className="mb-6">
-          <Link href="/buddies">
-            <Button variant="ghost" size="sm" className="mb-4 -ml-2">
+      <header className="px-4 pt-12 pb-8">
+        <div className="flex items-center justify-between">
+          <Image
+            src="/logo.svg"
+            alt="NiteLite Logo"
+            width={64}
+            height={64}
+            priority
+            className="mb-8"
+          />
+          <Link href="/buddies" className="mb-6 inline-block">
+            <Button
+              variant="outline"
+              size="sm"
+              className="h-10 border-border/50 px-4 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground"
+            >
               <ArrowLeft size={16} className="mr-2" />
               Back to Buddies
             </Button>
           </Link>
-          <PageHeader
-            title="Buddy Requests"
-            subtitle="Manage your incoming and outgoing buddy requests"
-          />
         </div>
-        <div className="mt-6 h-px bg-border"></div>
+        <PageHeader
+          title="Buddy Requests"
+          subtitle="Manage your incoming and outgoing buddy requests"
+        />
       </header>
-      <main>
+
+      <hr />
+
+      <section className="px-4 py-6">
         <BuddyRequestsList />
-      </main>
+      </section>
     </div>
   );
 }

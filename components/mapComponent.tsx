@@ -58,7 +58,7 @@ export default function MapComponent() {
   }
 
   return (
-    <div className="relative h-[calc(100svh-64px)] w-full bg-gray-100">
+    <div className="relative mt-8 h-[calc(100svh-64px)] w-full bg-gray-100 sm:h-[calc(100svh-128px)] sm:rounded-sm">
       {/* Search Bar */}
       <div className="absolute top-4 right-4 left-4 z-10">
         <MapSearch
@@ -88,7 +88,10 @@ export default function MapComponent() {
       />
 
       {/* Map */}
-      <div ref={mapRef} className="h-full w-full" />
+      <div
+        ref={mapRef}
+        className="h-full w-full border-2 sm:rounded-lg sm:border sm:shadow-md"
+      />
     </div>
   );
 }

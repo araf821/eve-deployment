@@ -55,9 +55,7 @@ export default async function Dashboard({ searchParams }: DashboardProps) {
 
         {/* Buddies Section - Most Important */}
         <section className="space-y-4 px-4 py-6">
-          <h2 className="font-heading text-2xl font-bold text-foreground">
-            Quick Actions
-          </h2>
+          <h2 className="text-2xl font-bold text-foreground">Quick Actions</h2>
 
           <Button
             asChild

@@ -6,7 +6,7 @@ import { redirect } from "next/navigation";
 import { AlertModalWrapper } from "@/components/alert-wrapper";
 import { SuccessMessage } from "@/components/success-msg";
 import MiniMapComponent from "@/components/MiniMapComponent";
-import CurrentLocation from "@/components/CurrentLocation";
+// import CurrentLocation from "@/components/CurrentLocation";
 import Image from "next/image";
 interface DashboardProps {
   searchParams: { success?: string };
@@ -25,7 +25,7 @@ export default async function Dashboard({ searchParams }: DashboardProps) {
   return (
     <>
       {/* Header */}
-      <header className="mb-8">
+      <header className="px-4 pt-12 pb-6">
         <Image
           src="/logo.svg"
           alt="NiteLite Logo"
@@ -43,19 +43,20 @@ export default async function Dashboard({ searchParams }: DashboardProps) {
             Happy Saturday.
           </p>
         </div>
-        <div className="mt-6 h-px bg-border"></div>
       </header>
 
-      <div className="space-y-8">
+      <div className="">
+        <hr />
+
         {showSuccess && <SuccessMessage />}
 
         {/* Location Card */}
-        <CurrentLocation />
+        {/* <CurrentLocation /> */}
 
         {/* Buddies Section - Most Important */}
-        <section className="space-y-4">
+        <section className="space-y-4 px-4 py-6">
           <h2 className="font-heading text-2xl font-bold text-foreground">
-            Your Crew
+            Quick Actions
           </h2>
 
           <Button
@@ -100,8 +101,10 @@ export default async function Dashboard({ searchParams }: DashboardProps) {
           </div>
         </section>
 
+        <hr className="border-t-4" />
+
         {/* Emergency Section */}
-        <section className="space-y-4">
+        <section className="space-y-4 px-4 py-6">
           <h2 className="font-heading text-2xl font-bold text-foreground">
             Emergency
           </h2>
@@ -123,8 +126,10 @@ export default async function Dashboard({ searchParams }: DashboardProps) {
           </AlertModalWrapper>
         </section>
 
+        <hr className="border-t-4" />
+
         {/* Mini Map Section */}
-        <section className="space-y-4">
+        <section className="space-y-4 px-4 py-6">
           <h2 className="font-heading text-2xl font-bold text-foreground">
             Your Area
           </h2>

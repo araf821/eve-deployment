@@ -37,7 +37,7 @@ const faqs = [
   {
     question: "What if I don't have friends on campus yet?",
     answer:
-      "Eve is perfect for building those connections! You can start by using the Community Glow Map to find safe routes. As you meet people in classes or activities, you can gradually build your crew. The app also helps you discover study groups and campus events where you can meet like-minded people.",
+      "Eve is perfect for building those connections! You can start by using the Community Glow Map to find safe routes. As you meet people in classes or activities, you can gradually build your buddy network. The app also helps you discover study groups and campus events where you can meet like-minded people.",
   },
 ];
 

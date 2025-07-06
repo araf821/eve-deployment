@@ -7,9 +7,9 @@ import { Users, Shield, MapPin, Heart } from "lucide-react";
 const features = [
   {
     icon: Users,
-    title: "Your Crew's Got Your Back",
+    title: "Your Buddy's Got Your Back",
     description:
-      "Connect with trusted friends who can track your journey in real-time. No more 'made it home' texts - your crew knows you're safe.",
+      "Connect with trusted friends who can track your journey in real-time. No more 'made it home' texts, your buddies know you're safe.",
     gradient: "from-blue-500/20 to-purple-500/20",
   },
   {

@@ -1,12 +1,7 @@
 import type { Metadata } from "next";
-import { Playfair_Display } from "next/font/google";
 import "./globals.css";
 import { AuthSessionProvider } from "@/components/auth/AuthSessionProvider";
-
-const playfairDisplay = Playfair_Display({
-  variable: "--font-playfair",
-  subsets: ["latin"],
-});
+import { playfairDisplay, ubuntu } from "@/lib/fonts";
 
 export const metadata: Metadata = {
   title: "Eve - Your Personal Campus Beacon",
@@ -24,7 +19,9 @@ export default async function RootLayout({
       <link rel="manifest" href="/manifest.json" />
       <meta name="theme-color" content="#000000" />
       <link rel="apple-touch-icon" href="/icons/icon-192.png" />
-      <body className={`${playfairDisplay.variable} antialiased`}>
+      <body
+        className={`${playfairDisplay.variable} ${ubuntu.className} font-sans antialiased`}
+      >
         <AuthSessionProvider>{children}</AuthSessionProvider>
       </body>
     </html>

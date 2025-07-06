@@ -220,7 +220,7 @@ export default function MapComponent() {
   }
 
   return (
-    <div className="relative h-[calc(100svh-64px)] w-full bg-gray-100">
+    <div className="relative h-[calc(100svh-64px)] w-full bg-gray-100 sm:mt-8 sm:h-[calc(100svh-128px)] sm:rounded-sm">
       {/* Search Bar */}
       <div className="absolute top-4 right-4 left-4 z-10">
         <MapSearch map={map} onLocationSelect={handleLocationSelect} onBuddySelect={handleBuddySelect} />
@@ -242,7 +242,10 @@ export default function MapComponent() {
       <AlertModal selectedAlert={selectedAlert} isModalOpen={isModalOpen} onClose={closeModal} />
 
       {/* Map */}
-      <div ref={mapRef} className="h-full w-full" />
+      <div
+        ref={mapRef}
+        className="h-full w-full border-2 sm:rounded-lg sm:border sm:shadow-md"
+      />
     </div>
   )
 }

@@ -80,25 +80,29 @@ export default async function Dashboard({ searchParams }: DashboardProps) {
 
           <div className="grid grid-cols-2 gap-4">
             <Button
+              asChild
               variant="outline"
               className="flex h-32 flex-col items-center justify-center space-y-3 border-border bg-card/70 shadow-sm transition-all duration-200 hover:bg-accent hover:shadow-md"
             >
               <Link href="/call">
-              <Zap className="text-primary" size={32} />
-              <span className="text-sm font-medium text-foreground">
-                Call Eve
-              </span>
+                <Zap className="text-primary" size={32} />
+                <span className="text-base font-semibold text-foreground">
+                  Call Eve
+                </span>
               </Link>
             </Button>
 
             <Button
+              asChild
               variant="outline"
               className="flex h-32 flex-col items-center justify-center space-y-3 border-border bg-card/70 shadow-sm transition-all duration-200 hover:bg-accent hover:shadow-md"
             >
-              <Smile className="text-primary" size={32} />
-              <span className="text-sm font-medium text-foreground">
-                Speed Dial Jerry
-              </span>
+              <Link href="/speed-dial">
+                <Smile className="text-primary" size={32} />
+                <span className="text-base font-semibold text-foreground">
+                  Speed Dial Jerry
+                </span>
+              </Link>
             </Button>
           </div>
         </section>

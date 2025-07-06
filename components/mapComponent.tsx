@@ -58,7 +58,7 @@ export default function MapComponent() {
   }
 
   return (
-    <div className="relative h-[80svh] w-full overflow-hidden rounded-xl bg-gray-100">
+    <div className="relative h-[calc(100svh-64px)] w-full bg-gray-100">
       {/* Search Bar */}
       <div className="absolute top-4 right-4 left-4 z-10">
         <MapSearch

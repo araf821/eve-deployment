@@ -7,6 +7,8 @@ import { usersTable } from "@/server/db/schema";
 import { eq } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
 import SignOutButton from "@/components/ui/sign-out-button";
+import { PageHeader } from "@/components/layout/PageHeader";
+import Image from "next/image";
 
 // Server actions for updating user data
 async function updateUserName(formData: FormData) {
@@ -52,35 +54,40 @@ export default async function SettingsPage() {
   }
 
   return (
-    <>
+    <div className="">
       {/* Header */}
-      <div className="pt-8 pb-4">
-        <div className="mb-6 text-2xl font-bold text-black">
-          <img src="logo.svg" alt="Logo" />
-        </div>
-        <div className="space-y-1">
-          <h1 className="font-serif text-2xl font-bold text-black">Settings</h1>
-          <p className="text-black italic">
-            Manage your account and preferences
-          </p>
-        </div>
-      </div>
+      <header className="bg-accent px-4 pt-12 pb-8">
+        <Image
+          src="/logo.svg"
+          alt="NiteLite Logo"
+          width={64}
+          height={64}
+          priority
+          className="mb-8"
+        />
+        <PageHeader
+          title="Settings"
+          subtitle="Manage your account and preferences"
+        />
+      </header>
+
+      <hr />
 
       {/* Account Section */}
-      <div className="mb-6 space-y-4">
-        <h2 className="flex items-center text-lg font-semibold text-black">
-          <User className="mr-2 h-5 w-5" />
+      <section className="space-y-4 px-4 py-6">
+        <h2 className="flex items-center font-heading text-2xl font-bold text-foreground">
+          <User className="mr-3 h-6 w-6 text-primary" />
           Account
         </h2>
 
         {/* Name */}
         <form
           action={updateUserName}
-          className="rounded-lg border border-gray-200 bg-white/90 p-4 shadow-sm backdrop-blur-sm"
+          className="rounded-xl border border-border bg-card/70 p-4 shadow-sm transition-all duration-200 hover:shadow-md"
         >
           <label
             htmlFor="name"
-            className="mb-2 block text-sm font-medium text-gray-700"
+            className="mb-2 block text-sm font-medium text-foreground"
           >
             Name
           </label>
@@ -90,13 +97,13 @@ export default async function SettingsPage() {
               id="name"
               name="name"
               defaultValue={user.name || ""}
-              className="flex-1 rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-purple-500 focus:ring-2 focus:ring-purple-500 focus:outline-none"
+              className="flex-1 rounded-lg border border-border bg-background px-3 py-2 text-foreground shadow-sm transition-colors focus:border-primary focus:ring-2 focus:ring-primary/20 focus:outline-none"
               placeholder="Enter your name"
             />
             <Button
               type="submit"
               size="sm"
-              className="bg-purple-600 text-white hover:bg-purple-700"
+              className="bg-primary text-primary-foreground hover:bg-primary/90"
             >
               Save
             </Button>
@@ -106,11 +113,11 @@ export default async function SettingsPage() {
         {/* Email */}
         <form
           action={updateUserEmail}
-          className="rounded-lg border border-gray-200 bg-white/90 p-4 shadow-sm backdrop-blur-sm"
+          className="rounded-xl border border-border bg-card/70 p-4 shadow-sm transition-all duration-200 hover:shadow-md"
         >
           <label
             htmlFor="email"
-            className="mb-2 block text-sm font-medium text-gray-700"
+            className="mb-2 block text-sm font-medium text-foreground"
           >
             Email
           </label>
@@ -120,13 +127,13 @@ export default async function SettingsPage() {
               id="email"
               name="email"
               defaultValue={user.email || ""}
-              className="flex-1 rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-purple-500 focus:ring-2 focus:ring-purple-500 focus:outline-none"
+              className="flex-1 rounded-lg border border-border bg-background px-3 py-2 text-foreground shadow-sm transition-colors focus:border-primary focus:ring-2 focus:ring-primary/20 focus:outline-none"
               placeholder="Enter your email"
             />
             <Button
               type="submit"
               size="sm"
-              className="bg-purple-600 text-white hover:bg-purple-700"
+              className="bg-primary text-primary-foreground hover:bg-primary/90"
             >
               Save
             </Button>
@@ -134,38 +141,42 @@ export default async function SettingsPage() {
         </form>
 
         {/* Password */}
-        <div className="rounded-lg border border-gray-200 bg-white/90 p-4 shadow-sm backdrop-blur-sm">
+        <div className="rounded-xl border border-border bg-card/70 p-4 shadow-sm transition-all duration-200 hover:shadow-md">
           <div className="flex items-center justify-between">
             <div>
-              <h3 className="font-medium text-black">Password</h3>
-              <p className="text-sm text-gray-500">••••••••</p>
+              <h3 className="font-medium text-foreground">Password</h3>
+              <p className="text-sm text-muted-foreground">••••••••</p>
             </div>
             <Button
               variant="outline"
               size="sm"
-              className="border-gray-200 bg-white/90 hover:bg-gray-50"
+              className="border-border bg-background hover:bg-accent"
             >
               Change
             </Button>
           </div>
         </div>
-      </div>
+      </section>
 
-      {/* Other Settings */}
-      <div className="mb-6 space-y-3">
-        <h2 className="text-lg font-semibold text-black">Preferences</h2>
+      <hr />
+
+      {/* Preferences Section */}
+      <section className="space-y-4 px-4 py-6">
+        <h2 className="font-heading text-2xl font-bold text-foreground">
+          Preferences
+        </h2>
 
         {/* Notifications */}
-        <div className="rounded-lg border border-gray-200 bg-white/90 p-4 shadow-sm backdrop-blur-sm">
+        <div className="rounded-xl border border-border bg-card/70 p-4 shadow-sm transition-all duration-200 hover:bg-accent hover:shadow-md">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-3">
-              <Bell className="h-5 w-5 text-gray-600" />
-              <span className="font-medium text-black">Notifications</span>
+              <Bell className="h-5 w-5 text-primary" />
+              <span className="font-medium text-foreground">Notifications</span>
             </div>
             <Button
               variant="outline"
               size="sm"
-              className="border-gray-200 bg-white/90 hover:bg-gray-50"
+              className="border-border bg-background hover:bg-accent"
             >
               Manage
             </Button>
@@ -173,16 +184,18 @@ export default async function SettingsPage() {
         </div>
 
         {/* Privacy & Security */}
-        <div className="rounded-lg border border-gray-200 bg-white/90 p-4 shadow-sm backdrop-blur-sm">
+        <div className="rounded-xl border border-border bg-card/70 p-4 shadow-sm transition-all duration-200 hover:bg-accent hover:shadow-md">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-3">
-              <Shield className="h-5 w-5 text-gray-600" />
-              <span className="font-medium text-black">Privacy & Security</span>
+              <Shield className="h-5 w-5 text-primary" />
+              <span className="font-medium text-foreground">
+                Privacy & Security
+              </span>
             </div>
             <Button
               variant="outline"
               size="sm"
-              className="border-gray-200 bg-white/90 hover:bg-gray-50"
+              className="border-border bg-background hover:bg-accent"
             >
               Manage
             </Button>
@@ -190,16 +203,18 @@ export default async function SettingsPage() {
         </div>
 
         {/* Help and Support */}
-        <div className="rounded-lg border border-gray-200 bg-white/90 p-4 shadow-sm backdrop-blur-sm">
+        <div className="rounded-xl border border-border bg-card/70 p-4 shadow-sm transition-all duration-200 hover:bg-accent hover:shadow-md">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-3">
-              <HelpCircle className="h-5 w-5 text-gray-600" />
-              <span className="font-medium text-black">Help and Support</span>
+              <HelpCircle className="h-5 w-5 text-primary" />
+              <span className="font-medium text-foreground">
+                Help and Support
+              </span>
             </div>
             <Button
               variant="outline"
               size="sm"
-              className="border-gray-200 bg-white/90 hover:bg-gray-50"
+              className="border-border bg-background hover:bg-accent"
             >
               View
             </Button>
@@ -207,27 +222,29 @@ export default async function SettingsPage() {
         </div>
 
         {/* About */}
-        <div className="rounded-lg border border-gray-200 bg-white/90 p-4 shadow-sm backdrop-blur-sm">
+        <div className="rounded-xl border border-border bg-card/70 p-4 shadow-sm transition-all duration-200 hover:bg-accent hover:shadow-md">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-3">
-              <Info className="h-5 w-5 text-gray-600" />
-              <span className="font-medium text-black">About</span>
+              <Info className="h-5 w-5 text-primary" />
+              <span className="font-medium text-foreground">About</span>
             </div>
             <Button
               variant="outline"
               size="sm"
-              className="border-gray-200 bg-white/90 hover:bg-gray-50"
+              className="border-border bg-background hover:bg-accent"
             >
               View
             </Button>
           </div>
         </div>
-      </div>
+      </section>
 
-      {/* Sign Out Button */}
-      <div className="mt-8">
+      <hr />
+
+      {/* Sign Out Section */}
+      <section className="px-4 py-6">
         <SignOutButton />
-      </div>
-    </>
+      </section>
+    </div>
   );
 }

@@ -16,7 +16,7 @@ export default async function BuddyRequestsPage() {
 
   return (
     <div className="container mx-auto max-w-md">
-      <header className="px-4 pt-12 pb-8">
+      <header className="bg-accent/50 px-4 pt-12 pb-8">
         <div className="flex items-center justify-between">
           <Image
             src="/logo.svg"

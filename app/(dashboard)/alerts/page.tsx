@@ -6,6 +6,8 @@ import { db } from "@/server/db";
 import { alertsTable, usersTable } from "@/server/db/schema";
 import { desc, eq } from "drizzle-orm";
 import Link from "next/link";
+import { PageHeader } from "@/components/layout/PageHeader";
+import { BuddiesPageHeader } from "@/components/buddies";
 
 export default async function AlertsPage() {
   const user = await getCurrentUser();
@@ -47,13 +49,7 @@ export default async function AlertsPage() {
   return (
     <>
       {/* Header */}
-      <header className="bg-accent px-4 pt-12 pb-6">
-        <Link
-          href="/"
-          className="absolute top-0 right-0 m-8 text-muted-foreground transition-colors hover:text-foreground"
-        >
-          <span className="font-xl text-sm">X</span>
-        </Link>
+      <header className="bg-accent/50 px-4 pt-12 pb-8">
         <Image
           src="/logo.svg"
           alt="NiteLite Logo"
@@ -62,17 +58,24 @@ export default async function AlertsPage() {
           priority
           className="mb-8"
         />
-        <div className="space-y-1">
-          <h1 className="font-heading text-3xl font-semibold text-foreground">
-            All Alerts
-          </h1>
-          <p className="font-heading text-lg text-muted-foreground italic">
-            Incidents raised by other users
-          </p>
-        </div>
+        <PageHeader
+          title="All Alerts"
+          subtitle="Incidents raised by other users"
+        />
       </header>
 
       <div className="px-4 py-6">
+        {/* Report Incident Button */}
+        <section className="mb-6 space-y-4">
+          <AlertModalWrapper>
+            <button className="w-full rounded-lg bg-[#FF6767]/50 p-1.5">
+              <div className="flex h-16 items-center justify-center rounded-lg bg-[#FF6767] p-4 text-lg font-semibold text-red-50">
+                Report Incident
+              </div>
+            </button>
+          </AlertModalWrapper>
+        </section>
+
         <hr className="mb-6" />
 
         {/* Alerts List */}
@@ -112,17 +115,6 @@ export default async function AlertsPage() {
               ))}
             </div>
           )}
-        </section>
-
-        {/* Report Incident Button */}
-        <section className="space-y-4">
-          <AlertModalWrapper>
-            <button className="w-full rounded-lg bg-[#FF6767]/50 p-1.5">
-              <div className="flex h-16 items-center justify-center rounded-lg bg-[#FF6767] p-4 text-lg font-semibold text-red-50">
-                Report Incident
-              </div>
-            </button>
-          </AlertModalWrapper>
         </section>
       </div>
     </>
